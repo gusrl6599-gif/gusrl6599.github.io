@@ -63,7 +63,12 @@
 
       <div class="pill-scene__stage">
         <figure class="pill-scene__reference" aria-hidden="true">
-          <img src="images/choice-scene.webp" alt="" loading="eager">
+          <img
+            src="images/choice-scene.png"
+            alt=""
+            loading="eager"
+            onerror="this.onerror=null;this.src='images/choice-placeholder.svg';"
+          >
         </figure>
 
         <div class="pill-scene__paths">
@@ -112,7 +117,7 @@
     </div>
   </div>
 
-  <!-- 배경: images/matrix-bg.png (교체 가능) -->
+  <!-- 배경: styles.css .page-bg → images/main-neo-bg.webp (교체 가능) -->
   <div class="page-bg" aria-hidden="true"></div>
 
   <div class="page-shell">
@@ -124,7 +129,15 @@
           <div class="sidebar__top">
             <!-- 프로필: images/profile.png (본인 사진으로 덮어쓰기 가능) -->
             <div class="sidebar__photo">
-              <img src="images/profile.png" width="1024" height="429" alt="김현기 프로필 사진" decoding="async" fetchpriority="high">
+              <img
+                src="images/profile.png"
+                width="1024"
+                height="429"
+                alt="김현기 프로필 사진"
+                decoding="async"
+                fetchpriority="high"
+                onerror="this.onerror=null;this.src='images/profile-placeholder.svg';"
+              >
             </div>
             <h1 class="sidebar__name"><a href="#main">김현기</a></h1>
             <p class="sidebar__role">실행 중심 · 문제 해결 · 실전형</p>

@@ -1,6 +1,6 @@
 /*
   Brittany Chiang–style layout (reference: https://brittanychiang.com/)
-  GitHub Pages: keep images as images/profile.webp + images/matrix-bg.png (ASCII paths).
+  GitHub Pages: images/profile.png, images/main-neo-bg.webp, images/*.png (ASCII paths).
 */
 
 :root {
@@ -764,7 +764,7 @@ html.pill-already-chosen #pill-scene {
 
 /* 실제 알약처럼 보이는 캡슐 버튼 */
 .pill-3d {
-  --pill-photo: url("images/pill-texture.webp");
+  --pill-photo: url("images/blue-pill-pick.png");
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1124,7 +1124,7 @@ html.pill-choice-blue .page-shell {
     linear-gradient(180deg, rgba(6, 22, 16, 0.78) 0%, rgba(3, 14, 11, 0.92) 100%),
     radial-gradient(ellipse 92% 58% at 100% 0%, rgba(82, 255, 155, 0.08), transparent 48%),
     radial-gradient(ellipse 75% 56% at 0% 100%, rgba(6, 48, 36, 0.55), transparent 52%),
-    url("images/matrix-bg.png");
+    url("images/main-neo-bg.webp");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: auto, auto, auto, cover;
