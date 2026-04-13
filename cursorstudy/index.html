@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="김현기 — SWOT 기반 자기소개">
+  <meta name="theme-color" content="#0a192f">
+  <title>김현기 | 자기소개</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="pill-route-svg" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="pillLiquidDistortion" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.008 0.03" numOctaves="2" seed="12" result="noise">
+          <animate attributeName="baseFrequency" dur="1.3s" values="0.01 0.05;0.02 0.08;0.008 0.03" repeatCount="1" fill="freeze" />
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="B" result="warp">
+          <animate attributeName="scale" dur="1.05s" values="0;85;12;0" keyTimes="0;0.35;0.78;1" repeatCount="1" fill="freeze" />
+        </feDisplacementMap>
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Opening scene: Red pill / Blue pill -->
+  <div
+    id="pill-scene"
+    class="pill-scene"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="pill-scene-title"
+    aria-describedby="pill-copy-red pill-copy-blue"
+  >
+    <div class="pill-scene__fx" aria-hidden="true">
+      <div class="pill-scene__code"></div>
+      <div class="pill-scene__lamp"></div>
+      <div class="pill-scene__vignette"></div>
+      <div class="pill-scene__grain"></div>
+      <div class="pill-scene__rain" aria-hidden="true"></div>
+    </div>
+
+    <canvas id="pill-matrix-canvas" class="pill-scene__matrix-canvas" aria-hidden="true"></canvas>
+    <div id="pill-liquid-warp" class="pill-scene__liquid-warp" aria-hidden="true"></div>
+    <div id="pill-hud-overlay" class="pill-scene__hud" aria-hidden="true">
+      <div class="pill-scene__hud-glow"></div>
+      <div class="pill-scene__hud-ring"></div>
+      <div class="pill-scene__hud-scan"></div>
+      <div class="pill-scene__hud-copy">
+        <strong>Synchronizing reality</strong>
+        <span>Accessing curated route</span>
+      </div>
+    </div>
+
+    <div class="pill-scene__inner">
+      <header class="pill-scene__header">
+        <p class="pill-scene__brand">THE MATRIX</p>
+        <h2 id="pill-scene-title" class="pill-scene__title">“You’ve already made the choice.”</h2>
+        <p class="pill-scene__kicker" lang="ko">선택은 이미 이루어졌다.</p>
+      </header>
+
+      <div class="pill-scene__stage">
+        <figure class="pill-scene__reference" aria-hidden="true">
+          <img src="images/choice-scene.webp" alt="" loading="eager">
+        </figure>
+
+        <div class="pill-scene__paths">
+          <div class="pill-path pill-path--red">
+            <p id="pill-copy-red" class="pill-path__copy">
+              “You stay in Wonderland, and see how deep the rabbit hole goes.”
+            </p>
+            <button type="button" class="pill-3d pill-3d--red" id="pill-red" aria-describedby="pill-copy-red" aria-label="Red pill - continue to the page">
+              <span class="pill-3d__body" aria-hidden="true"></span>
+              <span class="pill-3d__shine" aria-hidden="true"></span>
+              <span class="pill-3d__label" aria-hidden="true">RED</span>
+            </button>
+            <p class="pill-path__cta">TAKE THE RED PILL</p>
+          </div>
+
+          <div class="pill-path pill-path--blue">
+            <p id="pill-copy-blue" class="pill-path__copy">
+              “Take the blue pill…
+              and everything stays exactly the same.”
+            </p>
+            <button type="button" class="pill-3d pill-3d--blue" id="pill-blue" aria-describedby="pill-copy-blue" aria-label="Blue pill - continue to the page">
+              <span class="pill-3d__route-wave" aria-hidden="true"></span>
+              <span class="pill-3d__route-ripple" aria-hidden="true"></span>
+              <span class="pill-3d__body" aria-hidden="true"></span>
+              <span class="pill-3d__shine" aria-hidden="true"></span>
+              <span class="pill-3d__label" aria-hidden="true">BLUE</span>
+            </button>
+            <p class="pill-path__cta">TAKE THE BLUE PILL</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="pill-scene__hint">Time defines the moment. Choice opens the path. Truth reveals the cost.</p>
+      <button type="button" class="pill-scene__video-link" id="play-matrix-audio">
+        ▶ Play Matrix Audio
+      </button>
+      <div class="pill-scene__audio-host" aria-hidden="true">
+        <iframe
+          id="matrix-audio-player"
+          title="Matrix audio player"
+          loading="lazy"
+          allow="autoplay; encrypted-media"
+          referrerpolicy="strict-origin-when-cross-origin"
+        ></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!-- 배경: images/matrix-bg.png (교체 가능) -->
+  <div class="page-bg" aria-hidden="true"></div>
+
+  <div class="page-shell">
+    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+    <div class="layout">
+      <header class="sidebar" aria-label="프로필 및 탐색">
+        <div class="sidebar__inner">
+          <div class="sidebar__top">
+            <!-- 프로필: images/profile.png (본인 사진으로 덮어쓰기 가능) -->
+            <div class="sidebar__photo">
+              <img src="images/profile.png" width="1024" height="429" alt="김현기 프로필 사진" decoding="async" fetchpriority="high">
+            </div>
+            <h1 class="sidebar__name"><a href="#main">김현기</a></h1>
+            <p class="sidebar__role">실행 중심 · 문제 해결 · 실전형</p>
+            <p class="sidebar__tagline">생각에 머무르지 않고 움직이고, 원인을 구조적으로 파고들며 결과에 책임지는 편입니다. 페이스와 감정 관리로 성장 방향을 다듬어 가고 있습니다.</p>
+
+            <nav class="sidebar__nav" aria-label="페이지 섹션">
+              <ul>
+                <li><a href="#about">소개</a></li>
+                <li><a href="#strengths">강점</a></li>
+                <li><a href="#weaknesses">약점</a></li>
+                <li><a href="#opportunities">기회</a></li>
+                <li><a href="#threats">위협</a></li>
+                <li><a href="#summary">한줄 요약</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <ul class="sidebar__social" aria-label="외부 링크">
+            <li>
+              <a href="https://github.com" class="sidebar__social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg class="sidebar__social-svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.linkedin.com" class="sidebar__social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg class="sidebar__social-svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </header>
+
+      <main id="main" class="content">
+        <section id="about" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main">
+              <span class="section__num">01.</span>
+              <span class="section__title">소개</span>
+            </span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <p>개인 SWOT을 바탕으로 정리한 자기소개 페이지입니다. 실행력과 현실 감각을 바탕으로 과제를 끝까지 밀고 나가며, 동시에 스스로를 객관적으로 돌아보는 것을 중요하게 생각합니다.</p>
+            <ul class="tags" aria-label="핵심 키워드">
+              <li>빠른 학습</li>
+              <li>현실적 판단</li>
+              <li>책임감</li>
+              <li>문제 해결</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="strengths" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main">
+              <span class="section__num">02.</span>
+              <span class="section__title">강점</span>
+            </span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <ul class="list">
+              <li><strong>높은 실행력</strong> — 생각에 머무르지 않고 바로 행동으로 옮기며, 시행착오를 두려워하지 않고 직접 부딪혀 배웁니다.</li>
+              <li><strong>문제 해결 중심 사고</strong> — 문제를 피하기보다 끝까지 파고들고, 원인을 구조적으로 이해하려 합니다.</li>
+              <li><strong>현실적인 판단력</strong> — 이상보다 현실을 기준으로 판단하고, 손익·결과 중심으로 사고합니다.</li>
+              <li><strong>빠른 학습 능력</strong> — 실전 경험을 통해 빠르게 습득하고, 새로운 환경 적응력이 높습니다.</li>
+              <li><strong>책임감과 몰입도</strong> — 맡은 일에 깊게 몰입하며, 결과에 대한 책임을 회피하지 않습니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="weaknesses" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main">
+              <span class="section__num">03.</span>
+              <span class="section__title">약점</span>
+            </span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <ul class="list">
+              <li><strong>감정 기복에 따른 판단 영향</strong> — 스트레스 상황에서 판단이 급해질 수 있고, 감정이 올라올 때 의사결정이 흔들릴 수 있습니다.</li>
+              <li><strong>과도한 자기 부담</strong> — 스스로에게 높은 기준을 적용하고, 혼자 해결하려는 경향이 강합니다.</li>
+              <li><strong>장기적인 균형 관리 부족</strong> — 단기 집중은 강하나 페이스 조절·체력·멘탈 관리가 변수가 될 수 있습니다.</li>
+              <li><strong>구조보다 실행 우선</strong> — 계획·시스템보다 실행을 먼저 선택해 큰 그림 설계가 뒤로 밀릴 때가 있습니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="opportunities" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main">
+              <span class="section__num">04.</span>
+              <span class="section__title">기회</span>
+            </span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <ul class="list">
+              <li><strong>경험 기반 성장</strong> — 시행착오를 통해 빠르게 성장하고, 실전 경험이 쌓일수록 경쟁력이 커집니다.</li>
+              <li><strong>자기 인식</strong> — 강·약을 객관적으로 인지하고 개선 방향을 설정할 수 있습니다.</li>
+              <li><strong>실행력 기반 확장성</strong> — 아이디어를 결과로 바꾸는 능력은 범용 역량입니다.</li>
+              <li><strong>신뢰 구축</strong> — 책임감 있는 태도로 장기 관계에서 강점으로 작용할 수 있습니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="threats" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main">
+              <span class="section__num">05.</span>
+              <span class="section__title">위협</span>
+            </span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <ul class="list">
+              <li><strong>번아웃</strong> — 몰입도가 높아 에너지 소모가 크고, 장기 과부하 위험이 있습니다.</li>
+              <li><strong>감정 기반 리스크</strong> — 중요한 선택에서 감정이 손실로 이어질 수 있습니다.</li>
+              <li><strong>고립된 판단</strong> — 혼자 해결하려다 외부 피드백을 놓칠 위험이 있습니다.</li>
+              <li><strong>방향성 불균형</strong> — 실행이 빨라 방향이 틀어지면 잘못된 방향으로 빠르게 갈 수 있습니다.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="summary" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main">
+              <span class="section__num">06.</span>
+              <span class="section__title">한줄 요약</span>
+            </span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <blockquote class="pullquote">
+              <p>강한 실행력과 현실 감각을 가진 <em>실전형</em>이지만, 감정과 페이스 관리에 따라 퍼포먼스 변동이 있는 <em>성장형</em> 타입.</p>
+            </blockquote>
+            <p>레이아웃 영감: <a href="https://brittanychiang.com/" target="_blank" rel="noopener noreferrer">Brittany Chiang</a>. 본문은 개인 SWOT 텍스트를 기반으로 했습니다.</p>
+          </div>
+        </section>
+
+        <footer class="content__footer">
+          <p><span class="content__footer-line">© 김현기 · 정적 페이지 (HTML/CSS/JS).</span> GitHub Pages 루트에 <code>index.html</code>, <code>styles.css</code>, <code>app.js</code>, <code>images/</code> 를 함께 올리면 됩니다.</p>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

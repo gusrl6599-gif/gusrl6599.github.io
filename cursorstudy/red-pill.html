@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Red Pill Route">
+  <meta name="theme-color" content="#0a192f">
+  <title>Red Pill | Route</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Rock+Salt&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    html.red-prelude-pending body {
+      background: #000;
+    }
+    html.red-prelude-pending .page-bg,
+    html.red-prelude-pending .page-shell {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    html.red-prelude-pending #red-prelude {
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+  </style>
+  <script>
+    (function () {
+      document.documentElement.classList.add("pill-choice-red", "pill-already-chosen");
+      document.documentElement.classList.add("red-prelude-pending");
+      try { sessionStorage.setItem("cursorstudy_pillChoice", "red"); } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="route route--red">
+  <div id="red-prelude" class="red-prelude" aria-live="polite">
+    <div class="red-prelude__glyphs" aria-hidden="true"></div>
+    <div class="red-prelude__noise" aria-hidden="true"></div>
+    <div class="red-prelude__scan" aria-hidden="true"></div>
+    <p class="red-prelude__line red-prelude__line--wake" data-text="Wake up, Neo..."></p>
+    <p class="red-prelude__line red-prelude__line--truth" data-text="The Matrix has you..."></p>
+    <p class="red-prelude__line red-prelude__line--rabbit" data-text="Follow the white rabbit."></p>
+    <p class="red-prelude__line red-prelude__line--knock" data-text="Knock, knock, Neo."></p>
+  </div>
+  <div class="page-bg" aria-hidden="true"></div>
+  <div class="red-route-atmosphere" aria-hidden="true">
+    <div class="red-route-atmosphere__veil"></div>
+    <div class="red-route-atmosphere__rain red-route-atmosphere__rain--a"></div>
+    <div class="red-route-atmosphere__rain red-route-atmosphere__rain--b"></div>
+    <div class="red-route-lightning" id="red-route-lightning" aria-hidden="true">
+      <div class="red-route-lightning__ambient"></div>
+      <div class="red-route-lightning__pulse"></div>
+      <div class="red-route-lightning__bolt-wrap">
+        <svg class="red-route-lightning__svg" viewBox="0 0 100 420" preserveAspectRatio="xMidYMin meet" focusable="false">
+          <defs>
+            <linearGradient id="redBoltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#feffff"/>
+              <stop offset="35%" stop-color="#d4ecff"/>
+              <stop offset="100%" stop-color="#6a9ae8"/>
+            </linearGradient>
+            <filter id="redBoltBlur" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1.4" result="b"/>
+              <feMerge>
+                <feMergeNode in="b"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <path
+            class="red-route-lightning__glow"
+            fill="none"
+            stroke="rgba(200, 230, 255, 0.45)"
+            stroke-width="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M50 2 L46 72 L53 78 L45 148 L52 156 L44 228 L50 236 L43 298 L48 306 L42 368 L47 376 L44 418"
+          />
+          <path
+            class="red-route-lightning__core"
+            fill="none"
+            stroke="url(#redBoltGrad)"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            filter="url(#redBoltBlur)"
+            d="M50 2 L46 72 L53 78 L45 148 L52 156 L44 228 L50 236 L43 298 L48 306 L42 368 L47 376 L44 418"
+          />
+          <!-- Fork + 2–3 branch bolts (angles toggled in app.js, ~1 in 5 strikes) -->
+          <g class="red-route-lightning__fork" transform="translate(48, 232)">
+            <g class="red-route-lightning__branch" opacity="0" transform="rotate(0)">
+              <path
+                class="red-route-lightning__glow"
+                fill="none"
+                stroke="rgba(200, 230, 255, 0.42)"
+                stroke-width="6.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M0 0 L-8 22 L5 48 L-10 78 L6 108 L-4 138"
+              />
+              <path
+                class="red-route-lightning__core"
+                fill="none"
+                stroke="url(#redBoltGrad)"
+                stroke-width="1.65"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                filter="url(#redBoltBlur)"
+                d="M0 0 L-8 22 L5 48 L-10 78 L6 108 L-4 138"
+              />
+            </g>
+            <g class="red-route-lightning__branch" opacity="0" transform="rotate(0)">
+              <path
+                class="red-route-lightning__glow"
+                fill="none"
+                stroke="rgba(200, 230, 255, 0.42)"
+                stroke-width="6.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M0 0 L10 20 L-5 44 L12 74 L-7 104 L9 132"
+              />
+              <path
+                class="red-route-lightning__core"
+                fill="none"
+                stroke="url(#redBoltGrad)"
+                stroke-width="1.65"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                filter="url(#redBoltBlur)"
+                d="M0 0 L10 20 L-5 44 L12 74 L-7 104 L9 132"
+              />
+            </g>
+            <g class="red-route-lightning__branch" opacity="0" transform="rotate(0)">
+              <path
+                class="red-route-lightning__glow"
+                fill="none"
+                stroke="rgba(200, 230, 255, 0.42)"
+                stroke-width="5.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M0 0 L-5 18 L7 42 L-6 70 L8 98 L-3 124"
+              />
+              <path
+                class="red-route-lightning__core"
+                fill="none"
+                stroke="url(#redBoltGrad)"
+                stroke-width="1.45"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                filter="url(#redBoltBlur)"
+                d="M0 0 L-5 18 L7 42 L-6 70 L8 98 L-3 124"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="page-shell">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="layout">
+      <header class="sidebar" aria-label="Route info">
+        <div class="sidebar__inner">
+          <div class="sidebar__top">
+            <div class="sidebar__brand-row">
+              <h1 class="sidebar__name"><a href="#main">RED PILL</a></h1>
+              <button type="button" class="route-red__clip-btn" id="red-route-matrix-clip">
+                ▶ Matrix clip
+              </button>
+            </div>
+            <p class="sidebar__role sidebar__role--scraped">Welcome to the real world</p>
+            <nav class="sidebar__nav" aria-label="Page sections">
+              <ul>
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#directives">Directives</a></li>
+                <li><a href="#execution">Execution</a></li>
+                <li><a href="#next">Next Move</a></li>
+                <li><a href="index.html?choose=1">Back to choice</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      <main id="main" class="content">
+        <figure class="route-hero">
+          <img
+            src="images/red-route-scene.webp"
+            width="1200"
+            height="675"
+            alt="Sunglasses reflection: red pill in one lens, blue pill in the other"
+            decoding="async"
+            fetchpriority="high"
+          >
+          <figcaption class="route-hero__cta">TAKE THE RED PILL</figcaption>
+        </figure>
+
+        <section id="mission" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main"><span class="section__num">01</span><span class="section__title">Mission</span></span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <p>This is the red route. This page holds my real thoughts, direction, work record, and declarations.</p>
+            <p class="section__caption-ko" lang="ko">
+              이곳은 레드 루트다. 이 페이지에는 나의 실제 생각, 방향성,
+              <span class="section__ko-nobreak">작업 기록, 그리고 선언을 담는다.</span>
+            </p>
+          </div>
+        </section>
+
+        <section id="directives" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main"><span class="section__num">02</span><span class="section__title">Directives</span></span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body section__body--pairs">
+            <p>Observe. Connect. Infer. Build.</p>
+            <p class="section__caption-ko" lang="ko">관찰하고, 연결하고, 추론하고, 만든다.</p>
+            <p>I look for patterns, pressure points, and hidden leverage.</p>
+            <p class="section__caption-ko" lang="ko">나는 패턴, 병목, 그리고 숨은 레버리지를 찾는다.</p>
+            <p>Noise hides truth. I look for signal.</p>
+            <p class="section__caption-ko" lang="ko">소음은 진실을 가린다. 나는 신호를 찾는다.</p>
+          </div>
+        </section>
+
+        <section id="execution" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main"><span class="section__num">03</span><span class="section__title">Execution</span></span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <p>I build, test, refine, and repeat.</p>
+            <p class="section__caption-ko" lang="ko">나는 만들고, 시험하고, 다듬고, 반복한다.</p>
+          </div>
+        </section>
+
+        <section id="next" class="section">
+          <h2 class="section__heading">
+            <span class="section__heading-main"><span class="section__num">04</span><span class="section__title">Next Move</span></span>
+            <span class="section__rule" aria-hidden="true"></span>
+          </h2>
+          <div class="section__body">
+            <p>From optimization to automation. From automation to scale.</p>
+            <p class="section__caption-ko" lang="ko">최적화에서 자동화로, 자동화에서 확장으로 간다.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+  <div class="route-red__clip-host" aria-hidden="true">
+    <iframe
+      id="red-route-matrix-player"
+      title="Matrix clip"
+      loading="lazy"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+  <svg class="sidebar-scraped-filter" aria-hidden="true" focusable="false" width="0" height="0">
+    <filter id="sidebar-scraped-rough" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.12 0.04" numOctaves="3" seed="4" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.38" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+  </svg>
+  <script src="app.js" defer></script>
+</body>
+</html>
