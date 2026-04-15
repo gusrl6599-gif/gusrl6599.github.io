@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="choose app icon">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a192f"/>
+      <stop offset="100%" stop-color="#020806"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#g)"/>
+  <rect x="48" y="48" width="416" height="416" rx="72" fill="none" stroke="#64ffda" stroke-width="6" opacity="0.45"/>
+  <ellipse cx="186" cy="256" rx="52" ry="28" fill="#c92a35" opacity="0.95"/>
+  <ellipse cx="326" cy="256" rx="52" ry="28" fill="#3b6fd8" opacity="0.95"/>
+  <text x="256" y="420" text-anchor="middle" fill="#8892b0" font-family="system-ui,sans-serif" font-size="28" font-weight="600" letter-spacing="0.2em">choose</text>
+</svg>

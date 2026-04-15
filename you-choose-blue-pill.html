@@ -9,79 +9,87 @@
     })();
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Blue Pill — nothing changed. The same morning.">
-  <meta name="theme-color" content="#141a22">
-  <title>Blue Pill — you choose</title>
+  <meta name="description" content="Blue Pill — Dream State">
+  <meta name="theme-color" content="#07111c">
+  <title>Blue Pill — Dream State</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400&family=Noto+Sans+KR:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="route route--blue-morning">
-  <div class="blue-morning" id="top">
-    <div class="blue-morning__grain" aria-hidden="true"></div>
-    <div class="blue-morning__vignette" aria-hidden="true"></div>
+  <a class="skip-link visually-hidden" href="#blue-dream-main">본문으로 건너뛰기</a>
 
-    <div class="blue-morning__window" aria-hidden="true">
-      <div class="blue-morning__curtain blue-morning__curtain--a"></div>
-      <div class="blue-morning__curtain blue-morning__curtain--b"></div>
-      <div class="blue-morning__dawn"></div>
-    </div>
+  <div class="blue-dream" id="top">
+    <div class="blue-dream__entry-dazzle" aria-hidden="true"></div>
+    <div class="blue-dream__noise" aria-hidden="true"></div>
+    <div class="blue-dream__mist" aria-hidden="true"></div>
+    <div class="blue-dream__stars" id="blueDreamStars" aria-hidden="true"></div>
+    <div class="blue-dream__window-light" aria-hidden="true"></div>
+    <div class="blue-dream__curtain-shadow" aria-hidden="true"></div>
+    <div class="blue-dream__scanlight" aria-hidden="true"></div>
+    <div class="blue-dream__particles" id="blueDreamParticles" aria-hidden="true"></div>
+    <div class="blue-dream__cursor-glow" id="blueDreamCursorGlow" aria-hidden="true"></div>
+    <div class="blue-dream__flash" id="blueDreamFlash" aria-hidden="true"></div>
+    <div class="blue-dream__vignette" aria-hidden="true"></div>
 
-    <div class="blue-morning__room-hint" aria-hidden="true">
-      <div class="blue-morning__bed"></div>
-      <div class="blue-morning__pillow"></div>
-      <div class="blue-morning__clock">07:12</div>
-    </div>
+    <main id="blue-dream-main" class="blue-dream__app">
+      <section class="blue-dream__panel" aria-labelledby="blue-dream-title">
+        <div class="blue-dream__topbar">
+          <div class="blue-dream__dots" aria-hidden="true">
+            <span class="blue-dream__dot"></span>
+            <span class="blue-dream__dot"></span>
+            <span class="blue-dream__dot"></span>
+          </div>
+          <span class="blue-dream__topbar-label">Dream State / Blue Pill</span>
+        </div>
 
-    <main class="blue-morning__main">
-      <p class="blue-morning__eyebrow blue-morning__fade" style="--fade-delay: 0.3s">BLUE PILL</p>
+        <section class="blue-dream__hero">
+          <div class="blue-dream__hero-inner">
+            <div class="blue-dream__label">Comfortable Reality</div>
+            <h1 id="blue-dream-title" class="blue-dream__title" lang="en">BLUE PILL</h1>
+            <p class="blue-dream__rotating-line" id="blueDreamRotatingLine" lang="en">You woke up in the same world.</p>
 
-      <div class="blue-morning__block blue-morning__fade" style="--fade-delay: 1.1s">
-        <p class="blue-morning__line" lang="en">Nothing changed.</p>
-        <p class="blue-morning__line blue-morning__line--ko" lang="ko">아무것도 변하지 않았다.</p>
-      </div>
+            <div class="blue-dream__controls">
+              <button type="button" class="blue-dream__btn" id="blueDreamChangeLineBtn">다른 문장 보기</button>
+              <button type="button" class="blue-dream__btn" id="blueDreamDreamBtn">Dream Mode</button>
+              <button type="button" class="blue-dream__btn" id="blueDreamGlowBtn">Light Pulse</button>
+            </div>
+          </div>
+        </section>
 
-      <div class="blue-morning__block blue-morning__fade" style="--fade-delay: 2.4s">
-        <p class="blue-morning__line" lang="en">Everything is fine.</p>
-        <p class="blue-morning__line blue-morning__line--ko" lang="ko">모든 것은 괜찮다.</p>
-      </div>
+        <section class="blue-dream__bottom-grid" aria-label="상태 카드">
+          <article class="blue-dream__card">
+            <strong>State</strong>
+            <p>모든 게 평소와 같다. 아무것도 요구하지 않는다. 하루는 부드럽게 시작된다.</p>
+            <span class="blue-dream__status">Stable</span>
+          </article>
+          <article class="blue-dream__card">
+            <strong>Memory</strong>
+            <p>어젯밤은 꿈처럼 흐려진다. 방은 따뜻하고 익숙하며, 의심하지 않는다.</p>
+            <span class="blue-dream__status">Calm</span>
+          </article>
+          <article class="blue-dream__card">
+            <strong>Choice</strong>
+            <p>아는 것에 머문다. 빛이 가라앉게 두고, 세상을 단순하게 둔다.</p>
+            <span class="blue-dream__status">Safe</span>
+          </article>
+        </section>
 
-      <div class="blue-morning__block blue-morning__fade" style="--fade-delay: 3.6s">
-        <p class="blue-morning__line" lang="en">You woke up, just like yesterday.</p>
-        <p class="blue-morning__line blue-morning__line--ko" lang="ko">어제처럼 다시 눈을 떴다.</p>
-      </div>
-
-      <div class="blue-morning__block blue-morning__fade" style="--fade-delay: 4.8s">
-        <p class="blue-morning__line" lang="en">Same room. Same light. Same life.</p>
-        <p class="blue-morning__line blue-morning__line--ko" lang="ko">같은 방, 같은 빛, 같은 삶.</p>
-      </div>
-
-      <div class="blue-morning__mid blue-morning__fade" style="--fade-delay: 6.2s">
-        <p class="blue-morning__mid-line" lang="en">Nothing changed.</p>
-        <p class="blue-morning__mid-line" lang="en">You are home.</p>
-        <p class="blue-morning__mid-line" lang="en">Go back to sleep.</p>
-      </div>
-
-      <blockquote class="blue-morning__essence blue-morning__fade" style="--fade-delay: 8s">
-        <p class="blue-morning__essence-en" lang="en">You wake up in the same bed, believing in the same world.</p>
-        <p class="blue-morning__essence-ko" lang="ko">너는 같은 침대에서 눈을 뜨고, 같은 세계를 믿는다.</p>
-      </blockquote>
-
-      <div class="blue-morning__meta blue-morning__fade" style="--fade-delay: 9.5s">
-        <p class="blue-morning__meta-en" lang="en">Blurry sunlight. Morning light through curtains. A quiet room with stillness.</p>
-        <p class="blue-morning__meta-ko" lang="ko">흐릿한 햇빛. 커튼 사이로 들어오는 아침빛. 살짝 정적 있는 방.</p>
-      </div>
-
-      <footer class="blue-morning__foot blue-morning__fade" style="--fade-delay: 11s">
-        <p class="blue-morning__foot-line" lang="en">Wake up. Work. Eat. Sleep. Repeat.</p>
-        <p class="blue-morning__foot-line" lang="en">The world is exactly as you remember it.</p>
-        <p class="blue-morning__foot-line blue-morning__line--ko" lang="ko">깨어나고, 일하고, 먹고, 잠들고, 반복한다. 세상은 기억 속과 똑같다.</p>
-        <p class="blue-morning__back-wrap">
-          <a class="blue-morning__back" href="index.html?choose=1">Back to choice</a>
+        <p class="blue-dream__back-wrap">
+          <a class="blue-dream__back" href="index.html?choose=1">Back to choice</a>
         </p>
-      </footer>
+      </section>
     </main>
   </div>
+
+  <div class="blue-dream__sleep" id="blueDreamSleepOverlay" aria-hidden="true">
+    <div class="blue-dream__sleep-inner">
+      <h2 class="blue-dream__sleep-title">GO BACK TO SLEEP</h2>
+      <p class="blue-dream__sleep-text" lang="en">It was only a dream.</p>
+    </div>
+  </div>
+
+  <script src="blue-pill-page.js" defer></script>
 </body>
 </html>

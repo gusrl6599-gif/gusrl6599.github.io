@@ -15,6 +15,11 @@
   <meta name="description" content="choose — Red Pill / Blue Pill. 김현기 자기소개로 들어가기.">
   <meta name="theme-color" content="#0a192f">
   <meta name="application-name" content="choose">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="images/pwa-icon.svg">
+  <meta name="push-vapid-public" content="">
   <title>choose</title>
   <link rel="canonical" href="https://gusrl6599.github.io/">
   <meta property="og:type" content="website">
@@ -82,6 +87,9 @@
         <p class="pill-scene__brand">THE MATRIX</p>
         <h2 id="pill-scene-title" class="pill-scene__title">“You’ve already made the choice.”</h2>
         <p class="pill-scene__kicker" lang="en">The choice is already made.</p>
+        <p class="pill-scene__matrix-intro-link">
+          <a href="matrix-intro.html">The Matrix 소개</a>
+        </p>
       </header>
 
       <div class="pill-scene__stage">
@@ -95,9 +103,10 @@
         </figure>
 
         <div class="pill-scene__paths">
-          <div class="pill-path pill-path--red">
+          <div class="pill-column pill-column--red">
             <p id="pill-copy-red" class="pill-path__copy">
-              “You stay in Wonderland, and I show you how deep the rabbit hole goes.”
+              <span lang="en">“You take the red pill—you stay in Wonderland, and I show you how deep the rabbit hole goes.”</span>
+              <span class="pill-path__copy-ko" lang="ko">레드 필을 삼키면—이상한 나라에 발 붙이는 거야. 토끼 굴이 어디까지 파였는지, 눈으로 확인시켜 줄게.</span>
             </p>
             <button type="button" class="pill-3d pill-3d--red" id="pill-red" aria-describedby="pill-copy-red" aria-label="Red pill — continue to the page">
               <span class="pill-3d__body" aria-hidden="true"></span>
@@ -107,9 +116,10 @@
             <p class="pill-path__cta">TAKE THE RED PILL</p>
           </div>
 
-          <div class="pill-path pill-path--blue">
+          <div class="pill-column pill-column--blue">
             <p id="pill-copy-blue" class="pill-path__copy">
-              “You take the blue pill… the story ends, you wake up in your bed and believe whatever you want to believe.”
+              <span lang="en">“You take the blue pill… the story ends, you wake up in your bed and believe whatever you want to believe.”</span>
+              <span class="pill-path__copy-ko" lang="ko">블루 필을 삼키면—이야기는 거기서 끝이야. 침대에서 눈 뜨고, 네가 믿고 싶은 것만 믿으면 돼.</span>
             </p>
             <button type="button" class="pill-3d pill-3d--blue" id="pill-blue" aria-describedby="pill-copy-blue" aria-label="Blue pill — continue to the page">
               <span class="pill-3d__route-wave" aria-hidden="true"></span>
@@ -155,6 +165,7 @@
 
             <nav class="sidebar__nav" aria-label="페이지 섹션">
               <ul>
+                <li><a href="matrix-intro.html">The Matrix</a></li>
                 <li><a href="#about">소개</a></li>
                 <li><a href="#strengths">강점</a></li>
                 <li><a href="#weaknesses">약점</a></li>
@@ -285,5 +296,6 @@
   </div>
 
   <script src="app.js" defer></script>
+  <script src="pwa.js" defer></script>
 </body>
 </html>

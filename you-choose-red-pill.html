@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8">
   <script>
@@ -15,7 +15,7 @@
     }
     html.red-prelude-pending .page-bg,
     html.red-prelude-pending .page-shell,
-    html.red-prelude-pending .red-route-atmosphere,
+    html.red-prelude-pending .red-storm,
     html.red-prelude-pending .skip-link {
       display: none !important;
       visibility: hidden !important;
@@ -34,7 +34,7 @@
   <title>Red Pill | Route</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Rock+Salt&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Rock+Salt&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="route route--red">
@@ -48,10 +48,15 @@
     <p class="red-prelude__line red-prelude__line--knock" data-text="Knock, knock, Neo."></p>
   </div>
   <div class="page-bg" aria-hidden="true"></div>
-  <div class="red-route-atmosphere" aria-hidden="true">
-    <div class="red-route-atmosphere__veil"></div>
-    <div class="red-route-atmosphere__rain red-route-atmosphere__rain--a"></div>
-    <div class="red-route-atmosphere__rain red-route-atmosphere__rain--b"></div>
+
+  <div class="red-storm" aria-hidden="true">
+    <div class="red-storm__bg"></div>
+    <div class="red-storm__fog"></div>
+    <div class="red-storm__ground-glow"></div>
+    <canvas id="redStormRainCanvas" class="red-storm__canvas red-storm__canvas--rain" width="300" height="150"></canvas>
+    <canvas id="redStormFxCanvas" class="red-storm__canvas red-storm__canvas--fx" width="300" height="150"></canvas>
+    <div class="red-storm__window-wet"></div>
+    <div class="red-storm__pointer-aura" id="redStormPointerAura"></div>
     <div class="red-route-lightning" id="red-route-lightning" aria-hidden="true">
       <div class="red-route-lightning__ambient"></div>
       <div class="red-route-lightning__pulse"></div>
@@ -90,7 +95,6 @@
             filter="url(#redBoltBlur)"
             d="M50 2 L46 72 L53 78 L45 148 L52 156 L44 228 L50 236 L43 298 L48 306 L42 368 L47 376 L44 418"
           />
-          <!-- Fork + 2–3 branch bolts (angles toggled in app.js, ~1 in 5 strikes) -->
           <g class="red-route-lightning__fork" transform="translate(48, 232)">
             <g class="red-route-lightning__branch" opacity="0" transform="rotate(0)">
               <path
@@ -159,7 +163,9 @@
         </svg>
       </div>
     </div>
+    <div class="red-storm__vignette"></div>
   </div>
+
   <div class="page-shell">
     <a class="skip-link" href="#main">Skip to content</a>
     <div class="layout">
@@ -219,6 +225,9 @@
               This is the red route. This page holds my real thoughts, direction,
               <span class="section__nobreak">work record, and declarations.</span>
             </p>
+            <p class="section__caption section__caption--ko-sub" lang="ko">
+              여기는 레드 루트다. 이 페이지에는 나의 실제 생각·방향·작업 기록·선언이 담긴다.
+            </p>
           </div>
         </section>
 
@@ -229,8 +238,11 @@
           </h2>
           <div class="section__body section__body--pairs">
             <p class="section__caption" lang="en">Observe. Connect. Infer. Build.</p>
+            <p class="section__caption section__caption--ko-sub" lang="ko">관찰하고, 연결하고, 추론하고, 만든다.</p>
             <p class="section__caption" lang="en">I look for patterns, pressure points, and hidden leverage.</p>
+            <p class="section__caption section__caption--ko-sub" lang="ko">패턴·압박 지점·숨은 레버리지를 찾는다.</p>
             <p class="section__caption" lang="en">Noise hides truth. I look for signal.</p>
+            <p class="section__caption section__caption--ko-sub" lang="ko">소음은 진실을 가린다. 나는 신호를 찾는다.</p>
           </div>
         </section>
 
@@ -241,6 +253,7 @@
           </h2>
           <div class="section__body">
             <p class="section__caption" lang="en">I build, test, refine, and repeat.</p>
+            <p class="section__caption section__caption--ko-sub" lang="ko">만들고, 시험하고, 다듬고, 반복한다.</p>
           </div>
         </section>
 
@@ -251,8 +264,13 @@
           </h2>
           <div class="section__body">
             <p class="section__caption" lang="en">From optimization to automation. From automation to scale.</p>
+            <p class="section__caption section__caption--ko-sub" lang="ko">최적화에서 자동화로, 자동화에서 확장으로 간다.</p>
           </div>
         </section>
+
+        <p class="route-red__back-bottom">
+          <a class="route-red__back-link" href="index.html?choose=1">Back to choice</a>
+        </p>
       </main>
     </div>
   </div>
@@ -266,5 +284,6 @@
     </filter>
   </svg>
   <script src="app.js" defer></script>
+  <script src="red-pill-storm.js" defer></script>
 </body>
 </html>
