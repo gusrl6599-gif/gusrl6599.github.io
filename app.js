@@ -1200,7 +1200,6 @@
     var overlay = document.getElementById("matrixGate");
     var accessBtn = document.getElementById("enterMatrixBtn");
     var escapeBtn = document.getElementById("blueEscapeBtn");
-    var seenKey = "matrix_signal_seen";
     var gateEnterMs = 850;
     var isClosing = false;
     if (!overlay || !accessBtn || !escapeBtn) return;
@@ -1210,13 +1209,6 @@
       return;
     }
 
-    if (window.localStorage.getItem(seenKey) === "true") {
-      overlay.classList.add("hidden", "is-hidden");
-      overlay.classList.remove("is-active");
-      document.body.classList.remove("signal-open", "gate-lock");
-      document.body.classList.add("entered");
-      return;
-    }
     document.body.classList.remove("entered");
     document.body.classList.add("signal-open", "gate-lock");
     overlay.classList.add("is-active");
@@ -1232,7 +1224,6 @@
         overlay.classList.remove("is-active");
         document.body.classList.remove("signal-open", "gate-lock");
         document.body.classList.add("entered");
-        window.localStorage.setItem(seenKey, "true");
 
         var cta = ctaId ? document.getElementById(ctaId) : null;
         if (cta) {
@@ -1251,7 +1242,7 @@
       finishEnter("red", "pill-red-cta");
     });
     escapeBtn.addEventListener("click", function () {
-      finishEnter("blue", "pill-blue-cta");
+      /* Requested behavior: blue button does nothing. */
     });
 
     document.addEventListener("keydown", function (e) {

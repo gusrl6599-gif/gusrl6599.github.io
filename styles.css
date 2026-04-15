@@ -230,9 +230,7 @@ body.entered .page-root{
   display:grid;
   place-items:center;
   overflow:hidden;
-  background:
-    radial-gradient(circle at center, rgba(0,255,157,.08), transparent 26%),
-    linear-gradient(180deg, rgba(0,8,4,.96), rgba(0,0,0,.985));
+  background:#000;
   opacity:1;
   visibility:visible;
   transition:opacity .8s ease, visibility .8s ease;
@@ -254,9 +252,7 @@ body.entered .page-root{
 .gate-scanlines,
 .gate-tunnel,
 .gate-flash{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
+  display:none;
 }
 
 .gate-bg{
@@ -338,13 +334,9 @@ body.entered .page-root{
   position:relative;
   width:min(860px, calc(100% - 28px));
   padding:clamp(22px, 4vw, 36px) clamp(16px, 3vw, 34px) 24px;
-  background:
-    linear-gradient(180deg, rgba(8,24,18,.95), rgba(2,8,6,.96));
-  border:1px solid rgba(123,255,207,.16);
-  box-shadow:
-    0 0 0 1px rgba(123,255,207,.05),
-    0 0 40px rgba(0,255,157,.12),
-    inset 0 0 22px rgba(123,255,207,.05);
+  background:#0a0a0a;
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:none;
   overflow:hidden;
   isolation:isolate;
   transform:translateY(0) scale(1);
@@ -352,24 +344,11 @@ body.entered .page-root{
 }
 
 .signal-box::before{
-  content:"";
-  position:absolute;
-  inset:10px;
-  border:1px solid rgba(180,255,233,.13);
-  pointer-events:none;
+  content:none;
 }
 
 .signal-box::after{
-  content:"";
-  position:absolute;
-  left:-20%;
-  top:18px;
-  width:140%;
-  height:2px;
-  background:linear-gradient(90deg, transparent, rgba(180,255,233,1), transparent);
-  box-shadow:0 0 16px rgba(123,255,207,.45);
-  animation:signalSweep 4s linear infinite;
-  pointer-events:none;
+  content:none;
 }
 
 @keyframes signalSweep{
@@ -379,10 +358,7 @@ body.entered .page-root{
 }
 
 .signal-frame{
-  position: absolute;
-  pointer-events: none;
-  background: rgba(178,255,232,0.9);
-  box-shadow: 0 0 12px rgba(123,255,207,0.45);
+  display:none;
 }
 
 .frame-top{
@@ -414,12 +390,7 @@ body.entered .page-root{
 }
 
 .corner{
-  position:absolute;
-  width:24px;
-  height:24px;
-  border-color:#9effd6;
-  box-shadow:0 0 10px rgba(123,255,207,.42);
-  pointer-events:none;
+  display:none;
 }
 
 .corner.tl{ top:8px; left:8px; border-top:2px solid; border-left:2px solid; }
@@ -446,7 +417,7 @@ body.entered .page-root{
   letter-spacing:.06em;
   line-height:1.2;
   font-size:clamp(1.45rem, 3vw, 2.6rem);
-  text-shadow:0 0 8px rgba(123,255,207,.18);
+  text-shadow:none;
 }
 
 .signal-subtitle{
