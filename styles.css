@@ -1826,6 +1826,70 @@ html.pill-choice-red .page-shell {
   margin: 0;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.route-red__media-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.55rem;
+  max-width: 100%;
+}
+
+.route-red__mute-btn {
+  margin: 0;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.35rem;
+  border: 1px solid rgba(100, 255, 170, 0.28);
+  font-family: "Noto Sans KR", var(--font);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: rgba(170, 240, 200, 0.9);
+  background: rgba(7, 28, 18, 0.5);
+  cursor: pointer;
+}
+
+.route-red__mute-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.route-red__mute-btn:not(:disabled):hover,
+.route-red__mute-btn:not(:disabled):focus-visible {
+  border-color: rgba(120, 255, 190, 0.5);
+  color: #e8fff2;
+}
+
+.route-red__volume {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  flex: 1 1 120px;
+  max-width: 160px;
+}
+
+.route-red__volume input[type="range"] {
+  width: 100%;
+  height: 0.35rem;
+  accent-color: rgba(100, 255, 170, 0.85);
+  cursor: pointer;
+}
+
+.route-red__volume input[type="range"]:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
 .route-red__clip-btn {
   margin: 0;
   padding: 0.38rem 0.72rem;
@@ -1869,7 +1933,8 @@ html.pill-choice-red .page-shell {
   white-space: nowrap;
 }
 
-.route-red__clip-host iframe {
+.route-red__clip-host iframe,
+.route-red__yt-root iframe {
   width: 1px;
   height: 1px;
   border: 0;
@@ -3528,10 +3593,21 @@ html.red-prelude-pending .red-route-atmosphere {
   }
 }
 
-/* Narrow viewports: avoid backdrop-filter jank; stabilize viewport height */
+/* Narrow viewports: backdrop blur off, less motion, stable pill viewport, calmer red-route layers */
 @media screen and (max-width: 768px) {
   html {
     overflow-x: hidden;
+  }
+
+  html.pill-scene-open,
+  html.pill-scene-open body {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100dvh;
+    overflow: hidden;
+    touch-action: none;
   }
 
   html.pill-choice-blue .page-shell {
@@ -3548,5 +3624,25 @@ html.red-prelude-pending .red-route-atmosphere {
   .pill-scene__grain {
     animation: none;
     opacity: 0.42;
+  }
+
+  .route--red .red-route-atmosphere__rain--a,
+  .route--red .red-route-atmosphere__rain--b {
+    animation: none !important;
+    opacity: 0.12;
+  }
+
+  .route--red .red-route-lightning {
+    display: none !important;
+  }
+
+  body.route--red,
+  body.route--blue {
+    overscroll-behavior-y: none;
+  }
+
+  .page-shell {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
   }
 }

@@ -3,8 +3,7 @@
 
   var PILL_KEY = "cursorstudy_pillChoice";
   var MATRIX_AUDIO_SRC = "https://www.youtube.com/embed/gVtitA8RA2Y?autoplay=1&playsinline=1";
-  var RED_ROUTE_CLIP_SRC =
-    "https://www.youtube.com/embed/lJmcOWb3pU8?autoplay=1&playsinline=1&rel=0&modestbranding=1";
+  var RED_ROUTE_YT_VIDEO_ID = "lJmcOWb3pU8";
 
   function resetMainPillChoiceUI() {
     try {
@@ -311,20 +310,153 @@
     window.setTimeout(strike, 500 + Math.random() * 1200);
   }
 
+  function loadYouTubeIframeAPI(callback) {
+    if (window.YT && window.YT.Player) {
+      callback();
+      return;
+    }
+    if (!window._ytApiQueue) window._ytApiQueue = [];
+    window._ytApiQueue.push(callback);
+    if (window._ytApiLoading) return;
+    window._ytApiLoading = true;
+    var prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () {
+      if (typeof prev === "function") prev();
+      var q = window._ytApiQueue || [];
+      window._ytApiQueue = [];
+      for (var i = 0; i < q.length; i++) q[i]();
+    };
+    var tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    var first = document.getElementsByTagName("script")[0];
+    first.parentNode.insertBefore(tag, first);
+  }
+
   function initRedRouteClip() {
     var btn = document.getElementById("red-route-matrix-clip");
-    var player = document.getElementById("red-route-matrix-player");
-    if (!btn || !player) return;
+    var host = document.getElementById("red-route-matrix-player");
+    var muteBtn = document.getElementById("red-route-clip-mute");
+    var vol = document.getElementById("red-route-clip-volume");
+    if (!btn || !host) return;
+
+    var ytPlayer = null;
+    var creating = false;
+
+    function setControlsEnabled(on) {
+      if (muteBtn) {
+        muteBtn.disabled = !on;
+        muteBtn.removeAttribute("title");
+      }
+      if (vol) vol.disabled = !on;
+    }
+
+    function syncMuteLabel() {
+      if (!muteBtn || !ytPlayer) return;
+      var m = ytPlayer.isMuted && ytPlayer.isMuted();
+      muteBtn.textContent = m ? "소리 켜기" : "음소거";
+      muteBtn.setAttribute("aria-label", m ? "소리 켜기" : "음소거");
+    }
+
+    function createPlayer() {
+      if (ytPlayer || creating) return;
+      creating = true;
+      btn.textContent = "불러오는 중…";
+      btn.disabled = true;
+      loadYouTubeIframeAPI(function () {
+        try {
+          ytPlayer = new window.YT.Player("red-route-matrix-player", {
+            videoId: RED_ROUTE_YT_VIDEO_ID,
+            width: "1",
+            height: "1",
+            playerVars: {
+              autoplay: 1,
+              playsinline: 1,
+              rel: 0,
+              modestbranding: 1,
+              controls: 0,
+              fs: 0,
+              enablejsapi: 1,
+              origin: window.location.origin || undefined
+            },
+            events: {
+              onReady: function (e) {
+                creating = false;
+                btn.disabled = false;
+                var p = e.target;
+                var v = vol ? parseInt(vol.value, 10) : 80;
+                if (!isNaN(v)) p.setVolume(v);
+                setControlsEnabled(true);
+                syncMuteLabel();
+                p.playVideo();
+                btn.textContent = "■ 정지";
+              },
+              onStateChange: function (e) {
+                var YPS = window.YT && window.YT.PlayerState;
+                if (YPS && e.data === YPS.ENDED) {
+                  btn.textContent = "▶ 매트릭스 클립";
+                }
+              },
+              onError: function () {
+                creating = false;
+                btn.disabled = false;
+                btn.textContent = "▶ 매트릭스 클립";
+                setControlsEnabled(false);
+              }
+            }
+          });
+        } catch (err) {
+          creating = false;
+          btn.disabled = false;
+          btn.textContent = "▶ 매트릭스 클립";
+        }
+      });
+    }
 
     btn.addEventListener("click", function () {
-      if (!player.getAttribute("src")) {
-        player.setAttribute("src", RED_ROUTE_CLIP_SRC);
-        btn.textContent = "재생 중…";
+      if (creating) return;
+      if (!ytPlayer) {
+        createPlayer();
         return;
       }
-      player.setAttribute("src", "");
-      btn.textContent = "▶ 매트릭스 클립";
+      try {
+        var st = ytPlayer.getPlayerState();
+        var YPS = window.YT && window.YT.PlayerState;
+        var isPlaying = YPS ? st === YPS.PLAYING : st === 1;
+        if (isPlaying) {
+          ytPlayer.pauseVideo();
+          btn.textContent = "▶ 매트릭스 클립";
+        } else {
+          ytPlayer.playVideo();
+          btn.textContent = "■ 정지";
+        }
+      } catch (err2) {
+        createPlayer();
+      }
     });
+
+    if (muteBtn) {
+      muteBtn.addEventListener("click", function () {
+        if (!ytPlayer || muteBtn.disabled) return;
+        if (ytPlayer.isMuted()) {
+          ytPlayer.unMute();
+        } else {
+          ytPlayer.mute();
+        }
+        syncMuteLabel();
+      });
+    }
+
+    if (vol) {
+      vol.addEventListener("input", function () {
+        if (!ytPlayer || vol.disabled) return;
+        var n = parseInt(vol.value, 10);
+        if (!isNaN(n)) ytPlayer.setVolume(n);
+        if (n > 0 && ytPlayer.isMuted && ytPlayer.isMuted()) {
+          ytPlayer.unMute();
+          syncMuteLabel();
+        }
+      });
+    }
   }
 
   /** Blue pill: full-viewport Matrix endless code rain (#blue-matrix-backdrop) */

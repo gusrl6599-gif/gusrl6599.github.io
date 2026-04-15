@@ -163,9 +163,18 @@
           <div class="sidebar__top">
             <div class="sidebar__brand-row">
               <h1 class="sidebar__name"><a href="#main">레드 필</a></h1>
-              <button type="button" class="route-red__clip-btn" id="red-route-matrix-clip">
-                ▶ 매트릭스 클립
-              </button>
+              <div class="route-red__media-strip" role="group" aria-label="매트릭스 클립 재생">
+                <button type="button" class="route-red__clip-btn" id="red-route-matrix-clip">
+                  ▶ 매트릭스 클립
+                </button>
+                <button type="button" class="route-red__mute-btn" id="red-route-clip-mute" disabled aria-label="음소거" title="먼저 클립을 재생하세요">
+                  음소거
+                </button>
+                <label class="route-red__volume">
+                  <span class="visually-hidden">볼륨</span>
+                  <input type="range" id="red-route-clip-volume" min="0" max="100" value="80" disabled aria-label="클립 볼륨" />
+                </label>
+              </div>
             </div>
             <p class="sidebar__role sidebar__role--scraped">진짜 세상에 온 것을 환영한다</p>
             <nav class="sidebar__nav" aria-label="페이지 섹션">
@@ -243,13 +252,7 @@
     </div>
   </div>
   <div class="route-red__clip-host" aria-hidden="true">
-    <iframe
-      id="red-route-matrix-player"
-      title="매트릭스 클립"
-      loading="lazy"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      referrerpolicy="strict-origin-when-cross-origin"
-    ></iframe>
+    <div id="red-route-matrix-player" class="route-red__yt-root" title="매트릭스 클립"></div>
   </div>
   <svg class="sidebar-scraped-filter" aria-hidden="true" focusable="false" width="0" height="0">
     <filter id="sidebar-scraped-rough" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
