@@ -635,6 +635,8 @@
     var canvas = document.getElementById("pill-matrix-canvas");
     if (!canvas) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    /* 모바일: 풀뷰포트 RAF + shadowBlur 합성 비용이 큼 → 깜빡임·유령 레이어 체감 유발, CSS 레이어만 사용 */
+    if (window.matchMedia("(max-width: 768px)").matches) return;
 
     var ctx = canvas.getContext("2d");
     if (!ctx) return;

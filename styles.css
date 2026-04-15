@@ -57,6 +57,10 @@ html.pill-scene-open:not(.pill-already-chosen) .page-shell {
   display: none !important;
 }
 
+html.pill-scene-open:not(.pill-already-chosen) body {
+  background-color: #020806;
+}
+
 html.pill-already-chosen #pill-scene {
   display: none !important;
 }
@@ -3636,6 +3640,21 @@ html.red-prelude-pending .red-route-atmosphere {
   .pill-scene__grain {
     animation: none;
     opacity: 0.42;
+  }
+
+  /* 무한 box-shadow 펄스는 모바일에서 합성/리페인트 유발 → 정적 그림자만 */
+  .pill-scene__inner {
+    animation: none;
+  }
+
+  .pill-scene {
+    isolation: isolate;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+  }
+
+  .pill-scene__matrix-canvas {
+    display: none;
   }
 
   /* 블루 루트 ‘동기화’ 구간: 전체 패널 blur는 모바일에서 버벅임·번쩍임 유발 → 약하게 */
