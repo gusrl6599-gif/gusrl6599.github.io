@@ -198,11 +198,11 @@
 
     window.setTimeout(function () {
       prelude.classList.add("is-leaving");
-      /* Start page reveal during prelude fade for cleaner handoff. */
-      document.documentElement.classList.remove("red-prelude-pending");
     }, 15550);
 
     window.setTimeout(function () {
+      /* Reveal main page only after prelude layer is removed (no spoiler during fade). */
+      document.documentElement.classList.remove("red-prelude-pending");
       prelude.remove();
     }, 16120);
   }
@@ -215,18 +215,15 @@
       reveal.classList.add("is-expanding");
     }, 40);
 
-    /* Portal + tunnel motion (~2.05s), then fade overlay */
-    window.setTimeout(function () {
-      document.documentElement.classList.remove("blue-reveal-pending");
-    }, 2140);
-
+    /* Keep page hidden until overlay finishes fading out (avoid iris “spoiler”). */
     window.setTimeout(function () {
       reveal.classList.add("is-done");
     }, 2220);
 
     window.setTimeout(function () {
+      document.documentElement.classList.remove("blue-reveal-pending");
       if (reveal.parentNode) reveal.remove();
-    }, 3050);
+    }, 3060);
   }
 
   function initRedRouteLightning() {
@@ -696,6 +693,8 @@
     function beginLeaveOverlay(choice) {
       if (scene.classList.contains("is-leaving")) return;
 
+      document.documentElement.classList.add("pill-route-transition");
+
       if (liquidWarp) {
         liquidWarp.classList.remove("pill-scene__liquid-warp--active");
       }
@@ -715,6 +714,8 @@
         scene.setAttribute("hidden", "");
         scene.setAttribute("aria-hidden", "true");
         scene.classList.remove("is-leaving");
+        applySessionAndRouteClass(choice);
+        document.documentElement.classList.remove("pill-route-transition");
         document.documentElement.classList.add("pill-already-chosen");
         go(choice);
       }
@@ -739,7 +740,6 @@
       }
 
       if (scene.classList.contains("is-leaving")) return;
-      applySessionAndRouteClass(choice);
       beginLeaveOverlay(choice);
     }
 
@@ -747,7 +747,7 @@
       if (scene.classList.contains("is-leaving") || blueRouteStarted) return;
       blueRouteStarted = true;
 
-      applySessionAndRouteClass("blue");
+      document.documentElement.classList.add("pill-route-transition");
 
       scene.classList.add("pill-scene--blue-route");
       if (blue) blue.classList.add("pill-3d--routing");
