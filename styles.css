@@ -1100,8 +1100,8 @@ html.pill-route-transition .page-shell {
   border-radius: 2px;
 }
 
-/* 선택 후 미세한 분위기 (선택 사항) */
-html.pill-choice-red .page-bg {
+/* 선택 후 미세한 분위기 — 인트로(프롤로그/리빌) 중에는 적용하지 않음 (스포 방지) */
+html.pill-choice-red:not(.red-prelude-pending) .page-bg {
   filter: saturate(1.05) contrast(1.02);
   background-image:
     linear-gradient(180deg, rgba(3, 10, 18, 0.55) 0%, rgba(2, 8, 15, 0.72) 100%),
@@ -1116,13 +1116,13 @@ html.pill-choice-red .page-bg {
     filter 0.62s var(--easing);
 }
 
-html.pill-choice-blue .page-bg {
+html.pill-choice-blue:not(.blue-reveal-pending) .page-bg {
   filter: saturate(0.88) brightness(1.02);
   opacity: 0.2;
 }
 
 /* Light scrim (20% opacity) over code rain for readability */
-html.pill-choice-blue .page-shell {
+html.pill-choice-blue:not(.blue-reveal-pending) .page-shell {
   min-height: 100vh;
   background: linear-gradient(180deg, rgba(5, 12, 24, 0.2) 0%, rgba(4, 10, 20, 0.2) 100%);
   backdrop-filter: blur(4px);
@@ -1723,7 +1723,7 @@ html.pill-choice-blue .page-shell {
   }
 }
 
-html.pill-choice-red .page-shell {
+html.pill-choice-red:not(.red-prelude-pending) .page-shell {
   opacity: 1;
   transform: translateY(0);
   transition:
@@ -3610,7 +3610,7 @@ html.red-prelude-pending .red-route-atmosphere {
     touch-action: none;
   }
 
-  html.pill-choice-blue .page-shell {
+  html.pill-choice-blue:not(.blue-reveal-pending) .page-shell {
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
     background: linear-gradient(

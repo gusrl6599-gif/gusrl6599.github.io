@@ -2,6 +2,32 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
+  <script>
+    (function () {
+      document.documentElement.classList.add("pill-choice-red", "pill-already-chosen", "red-prelude-pending");
+      try { sessionStorage.setItem("cursorstudy_pillChoice", "red"); } catch (e) {}
+    })();
+  </script>
+  <style>
+    html.red-prelude-pending body {
+      background: #000 !important;
+      margin: 0;
+    }
+    html.red-prelude-pending .page-bg,
+    html.red-prelude-pending .page-shell,
+    html.red-prelude-pending .red-route-atmosphere,
+    html.red-prelude-pending .skip-link {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+    html.red-prelude-pending #red-prelude {
+      display: flex !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="김현기 레드 필 루트">
   <meta name="theme-color" content="#0a192f">
@@ -10,27 +36,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Rock+Salt&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <style>
-    html.red-prelude-pending body {
-      background: #000;
-    }
-    html.red-prelude-pending .page-bg,
-    html.red-prelude-pending .page-shell {
-      opacity: 0 !important;
-      pointer-events: none !important;
-    }
-    html.red-prelude-pending #red-prelude {
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-  </style>
-  <script>
-    (function () {
-      document.documentElement.classList.add("pill-choice-red", "pill-already-chosen");
-      document.documentElement.classList.add("red-prelude-pending");
-      try { sessionStorage.setItem("cursorstudy_pillChoice", "red"); } catch (e) {}
-    })();
-  </script>
 </head>
 <body class="route route--red">
   <div id="red-prelude" class="red-prelude" aria-live="polite">

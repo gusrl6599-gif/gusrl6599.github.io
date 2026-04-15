@@ -2,17 +2,16 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="김현기 SWOT 분석 · 블루 필 루트">
-  <meta name="theme-color" content="#0a192f">
-  <title>SWOT 분석 | 블루 필 | 김현기</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <script>
+    (function () {
+      document.documentElement.classList.add("pill-choice-blue", "pill-already-chosen", "blue-reveal-pending");
+      try { sessionStorage.setItem("cursorstudy_pillChoice", "blue"); } catch (e) {}
+    })();
+  </script>
   <style>
     html.blue-reveal-pending body {
-      background: #050b18;
+      background: #050b18 !important;
+      margin: 0;
     }
     .page-bg,
     .page-shell,
@@ -21,18 +20,27 @@
     }
     html.blue-reveal-pending .page-bg,
     html.blue-reveal-pending .page-shell,
-    html.blue-reveal-pending .blue-matrix-backdrop {
+    html.blue-reveal-pending .blue-matrix-backdrop,
+    html.blue-reveal-pending .skip-link {
+      display: none !important;
+      visibility: hidden !important;
       opacity: 0 !important;
       pointer-events: none !important;
     }
+    html.blue-reveal-pending #blue-reveal {
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
   </style>
-  <script>
-    (function () {
-      document.documentElement.classList.add("pill-choice-blue", "pill-already-chosen");
-      document.documentElement.classList.add("blue-reveal-pending");
-      try { sessionStorage.setItem("cursorstudy_pillChoice", "blue"); } catch (e) {}
-    })();
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="김현기 SWOT 분석 · 블루 필 루트">
+  <meta name="theme-color" content="#0a192f">
+  <title>SWOT 분석 | 블루 필 | 김현기</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="route route--blue">
   <div id="blue-reveal" class="blue-reveal" aria-hidden="true">
