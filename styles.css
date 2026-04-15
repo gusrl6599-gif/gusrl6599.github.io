@@ -58,6 +58,14 @@ html.pill-route-transition .page-shell {
   pointer-events: none !important;
 }
 
+/* Mobile WebKit: fully remove main column from paint until unload (avoids name/tagline flash). */
+@media screen and (max-width: 768px) {
+  html.pill-route-transition .page-bg,
+  html.pill-route-transition .page-shell {
+    display: none !important;
+  }
+}
+
 /* 첫 장면: 레드필 / 블루필 (영화 호텔 룸 톤 + 손 위 알약 구도) */
 .pill-scene {
   --pill-warm: #c9a227;

@@ -679,19 +679,6 @@
       );
     }
 
-    function applySessionAndRouteClass(choice) {
-      try {
-        if (choice) sessionStorage.setItem(PILL_KEY, choice);
-        else sessionStorage.setItem(PILL_KEY, "skip");
-      } catch (e) {
-        /* ignore */
-      }
-      document.documentElement.classList.remove("pill-scene-open");
-      document.documentElement.classList.remove("pill-choice-red", "pill-choice-blue");
-      if (choice === "red") document.documentElement.classList.add("pill-choice-red");
-      if (choice === "blue") document.documentElement.classList.add("pill-choice-blue");
-    }
-
     function beginLeaveOverlay(choice) {
       if (scene.classList.contains("is-leaving")) return;
 
@@ -716,8 +703,13 @@
         scene.setAttribute("hidden", "");
         scene.setAttribute("aria-hidden", "true");
         scene.classList.remove("is-leaving");
-        applySessionAndRouteClass(choice);
-        document.documentElement.classList.remove("pill-route-transition");
+        try {
+          if (choice) sessionStorage.setItem(PILL_KEY, choice);
+          else sessionStorage.setItem(PILL_KEY, "skip");
+        } catch (e) {
+          /* ignore */
+        }
+        /* Keep pill-route-transition until unload — removing it was flashing .page-shell (sidebar) on mobile before navigation. */
         document.documentElement.classList.add("pill-already-chosen");
         go(choice);
       }
@@ -742,6 +734,7 @@
       }
 
       if (scene.classList.contains("is-leaving")) return;
+      document.documentElement.classList.add("pill-route-transition");
       beginLeaveOverlay(choice);
     }
 
