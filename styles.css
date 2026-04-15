@@ -827,6 +827,7 @@ body.entered .page-root{
   position: absolute;
   inset: 2.5%;
   border: 1px solid rgba(176, 255, 231, 0.2);
+  pointer-events: none;
 }
 
 .matrix-gate .title {

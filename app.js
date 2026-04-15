@@ -45,6 +45,75 @@
     var glyphs = prelude.querySelector(".red-prelude__glyphs");
     var audioCtx = null;
     var typeTickAt = 0;
+    var rainSource = null;
+    var rainGain = null;
+    var rainFilter = null;
+
+    function ensureAudioCtx() {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return null;
+      if (!audioCtx) audioCtx = new Ctx();
+      if (audioCtx.state === "suspended") audioCtx.resume();
+      return audioCtx;
+    }
+
+    function startRainBed() {
+      var ctx = ensureAudioCtx();
+      if (!ctx || rainSource) return;
+      try {
+        var seconds = 2.8;
+        var length = Math.floor(ctx.sampleRate * seconds);
+        var buffer = ctx.createBuffer(1, length, ctx.sampleRate);
+        var data = buffer.getChannelData(0);
+        var white = 0;
+        var i;
+        for (i = 0; i < length; i += 1) {
+          /* Lightly low-passed random stream creates calmer rain texture. */
+          white = white * 0.975 + (Math.random() * 2 - 1) * 0.06;
+          data[i] = white;
+        }
+
+        rainSource = ctx.createBufferSource();
+        rainGain = ctx.createGain();
+        rainFilter = ctx.createBiquadFilter();
+
+        rainSource.buffer = buffer;
+        rainSource.loop = true;
+
+        rainFilter.type = "highpass";
+        rainFilter.frequency.setValueAtTime(900, ctx.currentTime);
+        rainFilter.Q.setValueAtTime(0.5, ctx.currentTime);
+
+        rainGain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        rainGain.gain.exponentialRampToValueAtTime(0.0105, ctx.currentTime + 0.45);
+
+        rainSource.connect(rainFilter);
+        rainFilter.connect(rainGain);
+        rainGain.connect(ctx.destination);
+        rainSource.start(ctx.currentTime);
+      } catch (e) {
+        rainSource = null;
+        rainGain = null;
+        rainFilter = null;
+        /* ignore audio issues */
+      }
+    }
+
+    function stopRainBed() {
+      if (!audioCtx || !rainSource || !rainGain) return;
+      try {
+        var now = audioCtx.currentTime;
+        rainGain.gain.cancelScheduledValues(now);
+        rainGain.gain.setValueAtTime(Math.max(rainGain.gain.value, 0.0001), now);
+        rainGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.75);
+        rainSource.stop(now + 0.8);
+      } catch (e) {
+        /* ignore audio issues */
+      }
+      rainSource = null;
+      rainGain = null;
+      rainFilter = null;
+    }
 
     function initGlyphColumns() {
       if (!glyphs) return;
@@ -101,16 +170,14 @@
     }
 
     function playKnockSound() {
-      var Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) return;
+      var ctx = ensureAudioCtx();
+      if (!ctx) return;
       try {
-        if (!audioCtx) audioCtx = new Ctx();
-        if (audioCtx.state === "suspended") audioCtx.resume();
-        var now = audioCtx.currentTime;
+        var now = ctx.currentTime;
 
         function knock(at) {
-          var osc = audioCtx.createOscillator();
-          var gain = audioCtx.createGain();
+          var osc = ctx.createOscillator();
+          var gain = ctx.createGain();
           osc.type = "triangle";
           osc.frequency.setValueAtTime(170, at);
           osc.frequency.exponentialRampToValueAtTime(85, at + 0.08);
@@ -118,7 +185,7 @@
           gain.gain.exponentialRampToValueAtTime(0.22, at + 0.01);
           gain.gain.exponentialRampToValueAtTime(0.0001, at + 0.11);
           osc.connect(gain);
-          gain.connect(audioCtx.destination);
+          gain.connect(ctx.destination);
           osc.start(at);
           osc.stop(at + 0.12);
         }
@@ -131,39 +198,61 @@
     }
 
     function playTypeTickSound() {
-      var Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) return;
+      var ctx = ensureAudioCtx();
+      if (!ctx) return;
       try {
-        if (!audioCtx) audioCtx = new Ctx();
-        if (audioCtx.state === "suspended") audioCtx.resume();
-
         var nowMs = Date.now();
         if (nowMs - typeTickAt < 18) return;
         typeTickAt = nowMs;
 
-        var now = audioCtx.currentTime;
-        var osc = audioCtx.createOscillator();
-        var gain = audioCtx.createGain();
-        var filter = audioCtx.createBiquadFilter();
+        var now = ctx.currentTime;
+        var clickOsc = ctx.createOscillator();
+        var clickGain = ctx.createGain();
+        var clickFilter = ctx.createBiquadFilter();
+        var noiseBuffer = ctx.createBuffer(1, 256, ctx.sampleRate);
+        var noiseData = noiseBuffer.getChannelData(0);
+        var i;
 
-        osc.type = "square";
-        osc.frequency.setValueAtTime(1300 + Math.random() * 700, now);
-        osc.frequency.exponentialRampToValueAtTime(500 + Math.random() * 260, now + 0.016);
+        for (i = 0; i < noiseData.length; i += 1) {
+          noiseData[i] = (Math.random() * 2 - 1) * 0.6;
+        }
 
-        filter.type = "bandpass";
-        filter.frequency.setValueAtTime(1900 + Math.random() * 900, now);
-        filter.Q.setValueAtTime(5, now);
+        var noiseSource = ctx.createBufferSource();
+        var noiseFilter = ctx.createBiquadFilter();
+        var noiseGain = ctx.createGain();
 
-        gain.gain.setValueAtTime(0.0001, now);
-        gain.gain.exponentialRampToValueAtTime(0.018, now + 0.003);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+        clickOsc.type = "triangle";
+        clickOsc.frequency.setValueAtTime(900 + Math.random() * 280, now);
+        clickOsc.frequency.exponentialRampToValueAtTime(320 + Math.random() * 120, now + 0.02);
 
-        osc.connect(filter);
-        filter.connect(gain);
-        gain.connect(audioCtx.destination);
+        clickFilter.type = "bandpass";
+        clickFilter.frequency.setValueAtTime(1300 + Math.random() * 350, now);
+        clickFilter.Q.setValueAtTime(1.2, now);
 
-        osc.start(now);
-        osc.stop(now + 0.022);
+        clickGain.gain.setValueAtTime(0.0001, now);
+        clickGain.gain.exponentialRampToValueAtTime(0.012, now + 0.002);
+        clickGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.028);
+
+        noiseSource.buffer = noiseBuffer;
+        noiseFilter.type = "highpass";
+        noiseFilter.frequency.setValueAtTime(2200 + Math.random() * 1000, now);
+        noiseFilter.Q.setValueAtTime(0.8, now);
+        noiseGain.gain.setValueAtTime(0.0001, now);
+        noiseGain.gain.exponentialRampToValueAtTime(0.008, now + 0.001);
+        noiseGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.012);
+
+        clickOsc.connect(clickFilter);
+        clickFilter.connect(clickGain);
+        clickGain.connect(ctx.destination);
+
+        noiseSource.connect(noiseFilter);
+        noiseFilter.connect(noiseGain);
+        noiseGain.connect(ctx.destination);
+
+        clickOsc.start(now);
+        clickOsc.stop(now + 0.03);
+        noiseSource.start(now);
+        noiseSource.stop(now + 0.014);
       } catch (e) {
         /* ignore audio issues */
       }
@@ -195,6 +284,7 @@
     }
 
     initGlyphColumns();
+    startRainBed();
 
     function clearLine(el, done) {
       el.classList.add("is-clearing");
@@ -240,6 +330,7 @@
 
     window.setTimeout(function () {
       prelude.classList.add("is-leaving");
+      stopRainBed();
     }, 15550);
 
     window.setTimeout(function () {
@@ -1205,11 +1296,10 @@
     var accessBtn = document.getElementById("enterMatrixBtn");
     var escapeBtn = document.getElementById("blueEscapeBtn");
     var params = new URLSearchParams(window.location.search);
-    var gateSeenKey = "matrix_signal_seen";
     var gateEnterMs = 850;
     var isClosing = false;
     if (!overlay || !accessBtn || !escapeBtn) return;
-    if (params.get("choose") === "1" || window.localStorage.getItem(gateSeenKey) === "true") {
+    if (params.get("choose") === "1") {
       overlay.classList.add("hidden", "is-hidden");
       overlay.classList.remove("is-active");
       document.body.classList.remove("signal-open", "gate-lock");
@@ -1237,10 +1327,6 @@
         overlay.classList.remove("is-active");
         document.body.classList.remove("signal-open", "gate-lock");
         document.body.classList.add("entered");
-        if (mode === "red") {
-          window.localStorage.setItem(gateSeenKey, "true");
-          document.documentElement.classList.add("gate-seen");
-        }
 
         var cta = ctaId ? document.getElementById(ctaId) : null;
         if (cta) {
@@ -1256,7 +1342,7 @@
     }
 
     accessBtn.addEventListener("click", function () {
-      window.location.href = "you-choose-red-pill.html";
+      finishEnter("red");
     });
     escapeBtn.addEventListener("click", function () {
       window.location.href = "you-choose-blue-pill.html";

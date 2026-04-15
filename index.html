@@ -2,15 +2,6 @@
 <html lang="ko" class="pill-scene-open">
 <head>
   <meta charset="utf-8">
-  <script>
-    try {
-      if (window.localStorage.getItem("matrix_signal_seen") === "true") {
-        document.documentElement.classList.add("gate-seen");
-      }
-    } catch (e) {
-      /* ignore storage access errors */
-    }
-  </script>
   <style>
     html.pill-scene-open:not(.pill-already-chosen) .page-bg,
     html.pill-scene-open:not(.pill-already-chosen) .page-shell {
@@ -18,9 +9,6 @@
     }
     html.pill-scene-open:not(.pill-already-chosen) body {
       background-color: #020806;
-    }
-    html.gate-seen .matrix-gate {
-      display: none !important;
     }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -160,41 +148,6 @@
         ></iframe>
       </div>
     </div>
-  </div>
-
-  <div id="matrixGate" class="matrix-gate signal-overlay is-active" aria-hidden="false">
-    <main class="screen">
-      <div class="noise"></div>
-      <div class="dust"></div>
-      <div class="scanlines"></div>
-      <div class="vignette"></div>
-
-      <section class="frame-wrap" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
-        <div class="beam-top"></div>
-        <div class="beam-side"></div>
-        <div class="beam-bottom"></div>
-        <div class="spark one"></div>
-        <div class="spark two"></div>
-
-        <div class="panel">
-          <div class="flash-line"></div>
-          <h1 id="gateTitle" class="title">SIGNAL BOX</h1>
-          <div class="headline">ENTRANCE TO THE MATRIX SYSTEM</div>
-
-          <div class="divider-wrap">
-            <div class="divider"></div>
-            <div class="subhead">FILE DEPTH UNDEFINED</div>
-          </div>
-
-          <div class="button-row">
-            <button class="choice red" id="enterMatrixBtn" type="button">ACCESS THE CODE</button>
-            <button class="choice blue" id="blueEscapeBtn" type="button">ESCAPE INTO THE SYSTEM</button>
-          </div>
-
-          <div class="footer">OPT OUT DATA ALTERATION VALID (0x0007-F-B) / VERIFY (0x00CC-1990)</div>
-        </div>
-      </section>
-    </main>
   </div>
 
   <div id="pageRoot" class="page-root">
