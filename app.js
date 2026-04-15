@@ -1200,9 +1200,16 @@
     var overlay = document.getElementById("matrixGate");
     var accessBtn = document.getElementById("enterMatrixBtn");
     var escapeBtn = document.getElementById("blueEscapeBtn");
+    var params = new URLSearchParams(window.location.search);
     var gateEnterMs = 850;
     var isClosing = false;
     if (!overlay || !accessBtn || !escapeBtn) return;
+    if (params.get("choose") === "1") {
+      overlay.classList.add("hidden", "is-hidden");
+      overlay.classList.remove("is-active");
+      document.body.classList.remove("signal-open", "gate-lock");
+      return;
+    }
     if (document.documentElement.classList.contains("pill-already-chosen")) {
       document.body.classList.remove("signal-open", "gate-lock");
       document.body.classList.add("entered");
