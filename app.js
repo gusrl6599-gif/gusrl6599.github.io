@@ -4,6 +4,8 @@
   var PILL_KEY = "cursorstudy_pillChoice";
   var MATRIX_AUDIO_SRC = "https://www.youtube.com/embed/gVtitA8RA2Y?autoplay=1&playsinline=1";
   var RED_ROUTE_YT_VIDEO_ID = "lJmcOWb3pU8";
+  var INDEX_THEME_YT_VIDEO_ID = "TXoSPAGUH2M";
+  var INDEX_MACHINE_THEME_YT_VIDEO_ID = "pFS4zYWxzNA";
 
   function resetMainPillChoiceUI() {
     try {
@@ -500,6 +502,248 @@
     }
   }
 
+  function initIndexMatrixThemePlayer() {
+    var btn = document.getElementById("index-matrix-theme-btn");
+    var host = document.getElementById("index-matrix-theme-player");
+    var muteBtn = document.getElementById("index-matrix-theme-mute");
+    var vol = document.getElementById("index-matrix-theme-volume");
+    if (!btn || !host) return;
+
+    var ytPlayer = null;
+    var creating = false;
+
+    function setControlsEnabled(on) {
+      if (muteBtn) muteBtn.disabled = !on;
+      if (vol) vol.disabled = !on;
+    }
+
+    function syncMuteLabel() {
+      if (!muteBtn || !ytPlayer) return;
+      var isMuted = ytPlayer.isMuted && ytPlayer.isMuted();
+      muteBtn.textContent = isMuted ? "Unmute" : "Mute";
+      muteBtn.setAttribute("aria-label", isMuted ? "Unmute" : "Mute");
+    }
+
+    function createPlayer() {
+      if (creating || ytPlayer) return;
+      creating = true;
+      btn.disabled = true;
+      btn.textContent = "Loading…";
+
+      loadYouTubeIframeAPI(function () {
+        try {
+          ytPlayer = new window.YT.Player("index-matrix-theme-player", {
+            videoId: INDEX_THEME_YT_VIDEO_ID,
+            width: "1",
+            height: "1",
+            playerVars: {
+              autoplay: 1,
+              playsinline: 1,
+              rel: 0,
+              modestbranding: 1,
+              controls: 0,
+              fs: 0,
+              enablejsapi: 1,
+              origin: window.location.origin || undefined
+            },
+            events: {
+              onReady: function (e) {
+                creating = false;
+                btn.disabled = false;
+                setControlsEnabled(true);
+                var v = vol ? parseInt(vol.value, 10) : 72;
+                if (!isNaN(v)) e.target.setVolume(v);
+                syncMuteLabel();
+                e.target.playVideo();
+                btn.textContent = "■ Stop Navras";
+              },
+              onStateChange: function (e) {
+                var YPS = window.YT && window.YT.PlayerState;
+                if (YPS && e.data === YPS.ENDED) {
+                  btn.textContent = "▶ Play Navras";
+                }
+              },
+              onError: function () {
+                creating = false;
+                btn.disabled = false;
+                btn.textContent = "▶ Play Navras";
+                setControlsEnabled(false);
+              }
+            }
+          });
+        } catch (err) {
+          creating = false;
+          btn.disabled = false;
+          btn.textContent = "▶ Play Navras";
+        }
+      });
+    }
+
+    btn.addEventListener("click", function () {
+      if (creating) return;
+      if (!ytPlayer) {
+        createPlayer();
+        return;
+      }
+      try {
+        var st = ytPlayer.getPlayerState();
+        var YPS = window.YT && window.YT.PlayerState;
+        var isPlaying = YPS ? st === YPS.PLAYING : st === 1;
+        if (isPlaying) {
+          ytPlayer.pauseVideo();
+          btn.textContent = "▶ Play Navras";
+        } else {
+          ytPlayer.playVideo();
+          btn.textContent = "■ Stop Navras";
+        }
+      } catch (err2) {
+        createPlayer();
+      }
+    });
+
+    if (muteBtn) {
+      muteBtn.addEventListener("click", function () {
+        if (!ytPlayer || muteBtn.disabled) return;
+        if (ytPlayer.isMuted()) ytPlayer.unMute();
+        else ytPlayer.mute();
+        syncMuteLabel();
+      });
+    }
+
+    if (vol) {
+      vol.addEventListener("input", function () {
+        if (!ytPlayer || vol.disabled) return;
+        var n = parseInt(vol.value, 10);
+        if (!isNaN(n)) ytPlayer.setVolume(n);
+        if (n > 0 && ytPlayer.isMuted && ytPlayer.isMuted()) {
+          ytPlayer.unMute();
+          syncMuteLabel();
+        }
+      });
+    }
+  }
+
+  function initIndexMachineThemePlayer() {
+    var btn = document.getElementById("index-machine-theme-btn");
+    var host = document.getElementById("index-machine-theme-player");
+    var muteBtn = document.getElementById("index-machine-theme-mute");
+    var vol = document.getElementById("index-machine-theme-volume");
+    if (!btn || !host) return;
+
+    var ytPlayer = null;
+    var creating = false;
+
+    function setControlsEnabled(on) {
+      if (muteBtn) muteBtn.disabled = !on;
+      if (vol) vol.disabled = !on;
+    }
+
+    function syncMuteLabel() {
+      if (!muteBtn || !ytPlayer) return;
+      var isMuted = ytPlayer.isMuted && ytPlayer.isMuted();
+      muteBtn.textContent = isMuted ? "Unmute" : "Mute";
+      muteBtn.setAttribute("aria-label", isMuted ? "Unmute" : "Mute");
+    }
+
+    function createPlayer() {
+      if (creating || ytPlayer) return;
+      creating = true;
+      btn.disabled = true;
+      btn.textContent = "Loading…";
+
+      loadYouTubeIframeAPI(function () {
+        try {
+          ytPlayer = new window.YT.Player("index-machine-theme-player", {
+            videoId: INDEX_MACHINE_THEME_YT_VIDEO_ID,
+            width: "1",
+            height: "1",
+            playerVars: {
+              autoplay: 1,
+              playsinline: 1,
+              rel: 0,
+              modestbranding: 1,
+              controls: 0,
+              fs: 0,
+              enablejsapi: 1,
+              origin: window.location.origin || undefined
+            },
+            events: {
+              onReady: function (e) {
+                creating = false;
+                btn.disabled = false;
+                setControlsEnabled(true);
+                var v = vol ? parseInt(vol.value, 10) : 72;
+                if (!isNaN(v)) e.target.setVolume(v);
+                syncMuteLabel();
+                e.target.playVideo();
+                btn.textContent = "■ Stop Machine Theme";
+              },
+              onStateChange: function (e) {
+                var YPS = window.YT && window.YT.PlayerState;
+                if (YPS && e.data === YPS.ENDED) {
+                  btn.textContent = "▶ Play Machine Theme";
+                }
+              },
+              onError: function () {
+                creating = false;
+                btn.disabled = false;
+                btn.textContent = "▶ Play Machine Theme";
+                setControlsEnabled(false);
+              }
+            }
+          });
+        } catch (err) {
+          creating = false;
+          btn.disabled = false;
+          btn.textContent = "▶ Play Machine Theme";
+        }
+      });
+    }
+
+    btn.addEventListener("click", function () {
+      if (creating) return;
+      if (!ytPlayer) {
+        createPlayer();
+        return;
+      }
+      try {
+        var st = ytPlayer.getPlayerState();
+        var YPS = window.YT && window.YT.PlayerState;
+        var isPlaying = YPS ? st === YPS.PLAYING : st === 1;
+        if (isPlaying) {
+          ytPlayer.pauseVideo();
+          btn.textContent = "▶ Play Machine Theme";
+        } else {
+          ytPlayer.playVideo();
+          btn.textContent = "■ Stop Machine Theme";
+        }
+      } catch (err2) {
+        createPlayer();
+      }
+    });
+
+    if (muteBtn) {
+      muteBtn.addEventListener("click", function () {
+        if (!ytPlayer || muteBtn.disabled) return;
+        if (ytPlayer.isMuted()) ytPlayer.unMute();
+        else ytPlayer.mute();
+        syncMuteLabel();
+      });
+    }
+
+    if (vol) {
+      vol.addEventListener("input", function () {
+        if (!ytPlayer || vol.disabled) return;
+        var n = parseInt(vol.value, 10);
+        if (!isNaN(n)) ytPlayer.setVolume(n);
+        if (n > 0 && ytPlayer.isMuted && ytPlayer.isMuted()) {
+          ytPlayer.unMute();
+          syncMuteLabel();
+        }
+      });
+    }
+  }
+
   /** Blue pill: full-viewport Matrix endless code rain (#blue-matrix-backdrop) */
   function initBlueMatrixEndless() {
     var wrap = document.getElementById("blue-matrix-backdrop");
@@ -952,6 +1196,94 @@
     if (blue) blue.addEventListener("click", function () { dismiss("blue"); });
   }
 
+  function initSignalOverlay() {
+    var overlay = document.getElementById("matrixGate");
+    var accessBtn = document.getElementById("enterMatrixBtn");
+    var escapeBtn = document.getElementById("blueEscapeBtn");
+    var titleEl = document.getElementById("gateTitle");
+    var subtitleEl = overlay ? overlay.querySelector(".signal-subtitle") : null;
+    var footerEl = overlay ? overlay.querySelector(".signal-footer") : null;
+    var seenKey = "matrix_signal_seen";
+    var blockedKey = "matrix_signal_blocked";
+    var overlayFadeMs = 450;
+    var isClosing = false;
+    if (!overlay || !accessBtn || !escapeBtn) return;
+    if (document.documentElement.classList.contains("pill-already-chosen")) {
+      document.body.classList.remove("signal-open");
+      return;
+    }
+    function applyDeniedState() {
+      overlay.classList.remove("hidden");
+      document.body.classList.add("signal-open");
+      if (titleEl) titleEl.textContent = "ACCESS DENIED";
+      if (subtitleEl) subtitleEl.textContent = "BLUE PILL LOCK ACTIVE";
+      if (footerEl) footerEl.textContent = "ENTRY REJECTED / RED CHANNEL REQUIRED";
+      accessBtn.disabled = true;
+      escapeBtn.disabled = true;
+      accessBtn.setAttribute("aria-disabled", "true");
+      escapeBtn.setAttribute("aria-disabled", "true");
+    }
+
+    if (window.sessionStorage.getItem(blockedKey) === "true") {
+      applyDeniedState();
+      return;
+    }
+
+    if (window.localStorage.getItem(seenKey) === "true") {
+      overlay.classList.add("hidden");
+      document.body.classList.remove("signal-open");
+      return;
+    }
+    document.body.classList.add("signal-open");
+
+    function closeSignalOverlay(mode, ctaId) {
+      if (isClosing) return;
+      isClosing = true;
+      if (mode === "red") {
+        document.body.style.transition = "filter .45s ease";
+        document.body.style.filter = "contrast(1.08) saturate(1.08)";
+      } else if (mode === "blue") {
+        document.body.style.transition = "filter .45s ease";
+        document.body.style.filter = "blur(1px) brightness(0.95)";
+      }
+
+      overlay.classList.add("hidden");
+      document.body.classList.remove("signal-open");
+      window.localStorage.setItem(seenKey, "true");
+
+      window.setTimeout(function () {
+        var cta = ctaId ? document.getElementById(ctaId) : null;
+        if (cta) {
+          cta.click();
+        } else if (ctaId) {
+          /* Fallback: if CTA is unavailable, preserve selected state. */
+          document.documentElement.classList.add("pill-already-chosen");
+        }
+      }, overlayFadeMs);
+
+      window.setTimeout(function () {
+        document.body.style.filter = "";
+        document.body.style.transition = "";
+        isClosing = false;
+      }, 600);
+    }
+
+    accessBtn.addEventListener("click", function () {
+      window.sessionStorage.removeItem(blockedKey);
+      closeSignalOverlay("red", "pill-red-cta");
+    });
+    escapeBtn.addEventListener("click", function () {
+      window.sessionStorage.setItem(blockedKey, "true");
+      applyDeniedState();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !overlay.classList.contains("hidden")) {
+        closeSignalOverlay("red");
+      }
+    });
+  }
+
   function initNavScroll() {
     var links = document.querySelectorAll('.sidebar__nav a[href^="#"]');
     if (!links.length) return;
@@ -1037,7 +1369,10 @@
     initRedPrelude();
     initBlueReveal();
     initPillScene();
+    initSignalOverlay();
     initRedRouteClip();
+    initIndexMatrixThemePlayer();
+    initIndexMachineThemePlayer();
     initRedRouteLightning();
     initBlueMatrixEndless();
     initNavScroll();

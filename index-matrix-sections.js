@@ -5,6 +5,7 @@
     neo: {
       ko: "네오",
       en: "Neo",
+      cardRole: "The One Who Awoke",
       kicker: "Awakening / Fracture",
       keywords: "각성 / 선택 / 균열 / 구원",
       name: "네오 (Neo)",
@@ -15,6 +16,7 @@
     trinity: {
       ko: "트리니티",
       en: "Trinity",
+      cardRole: "The Devoted Warrior",
       kicker: "Speed / Devotion",
       keywords: "속도 / 헌신 / 사랑 / 신념",
       name: "트리니티 (Trinity)",
@@ -25,6 +27,7 @@
     morpheus: {
       ko: "모피어스",
       en: "Morpheus",
+      cardRole: "The Guide to Reality",
       kicker: "Choice / Truth",
       keywords: "선택 / 진실 / 인도 / 믿음",
       name: "모피어스 (Morpheus)",
@@ -35,6 +38,7 @@
     smith: {
       ko: "스미스",
       en: "Agent Smith",
+      cardRole: "The Agent of Control",
       kicker: "Replication / Fear",
       keywords: "복제 / 공포 / 혐오 / 폭주",
       name: "에이전트 스미스 (Agent Smith)",
@@ -45,6 +49,7 @@
     oracle: {
       ko: "오라클",
       en: "Oracle",
+      cardRole: "The Prophet of Choice",
       kicker: "Warm Prophecy / Suggestion",
       keywords: "예언 / 암시 / 선택 / 온기",
       name: "오라클 (Oracle)",
@@ -55,6 +60,7 @@
     architect: {
       ko: "아키텍트",
       en: "The Architect",
+      cardRole: "The Designer of the System",
       kicker: "Cold Design / Repetition",
       keywords: "설계 / 통제 / 계산 / 반복",
       name: "아키텍트 (The Architect)",
@@ -65,6 +71,7 @@
     merovingian: {
       ko: "메로빈지언",
       en: "The Merovingian",
+      cardRole: "The Dealer of Desire",
       kicker: "Desire / Transaction",
       keywords: "욕망 / 거래 / 인과 / 권력",
       name: "메로빈지언 (The Merovingian)",
@@ -75,6 +82,7 @@
     deus: {
       ko: "데우스 엑스 마키나",
       en: "Deus Ex Machina",
+      cardRole: "The Machine Overlord",
       kicker: "Absolute Machine Order",
       keywords: "절대성 / 기계 질서 / 존속 / 통제",
       name: "데우스 엑스 마키나 (Deus Ex Machina)",
@@ -87,6 +95,12 @@
     red: ["neo", "trinity", "morpheus", "oracle"],
     blue: ["smith", "architect", "merovingian", "deus"]
   };
+  var NEO_PAGE_BG_IMAGE = "file:///C:/Users/USER/.cursor/projects/c-Users-USER-Desktop/assets/c__Users_USER_AppData_Roaming_Cursor_User_workspaceStorage_30a625b2b0bf7c94c66d8dae01dd52b0_images______-704ff38b-2dbe-4d10-a2e3-ca9cf7162e42.png";
+  var MORPHEUS_PAGE_BG_IMAGE = "file:///C:/Users/USER/.cursor/projects/c-Users-USER-Desktop/assets/c__Users_USER_AppData_Roaming_Cursor_User_workspaceStorage_30a625b2b0bf7c94c66d8dae01dd52b0_images________-7718ddf3-cf3c-46a7-8a5f-09c8553bed36.png";
+  var TRINITY_PAGE_BG_IMAGE = "file:///C:/Users/USER/.cursor/projects/c-Users-USER-Desktop/assets/c__Users_USER_AppData_Roaming_Cursor_User_workspaceStorage_30a625b2b0bf7c94c66d8dae01dd52b0_images________-706e8d3b-99ce-4f3d-b90b-0afc08da8834.png";
+  var ORACLE_PAGE_BG_IMAGE = "file:///C:/Users/USER/.cursor/projects/c-Users-USER-Desktop/assets/c__Users_USER_AppData_Roaming_Cursor_User_workspaceStorage_30a625b2b0bf7c94c66d8dae01dd52b0_images_______-f131f1e1-2604-4ea6-ba0b-a405078b94a9.png";
+  var ARCHITECT_PAGE_BG_IMAGE = "file:///C:/Users/USER/.cursor/projects/c-Users-USER-Desktop/assets/c__Users_USER_AppData_Roaming_Cursor_User_workspaceStorage_30a625b2b0bf7c94c66d8dae01dd52b0_images________-f8923c83-f7b7-481e-8c5a-e0b3aeb63b34.png";
+  var DEUS_PAGE_BG_IMAGE = "file:///C:/Users/USER/.cursor/projects/c-Users-USER-Desktop/assets/c__Users_USER_AppData_Roaming_Cursor_User_workspaceStorage_30a625b2b0bf7c94c66d8dae01dd52b0_images______________-d280594e-3a34-43c2-8429-34007b9a682f.png";
 
   function smoothScrollTo(selector) {
     var target = document.querySelector(selector);
@@ -170,9 +184,36 @@
     });
   }
 
+  function syncThemePanels(groupName) {
+    var redPanel = document.querySelector(".matrix-home-audio[aria-label='Matrix theme player']");
+    var bluePanel = document.getElementById("index-machine-theme-panel");
+    if (!redPanel || !bluePanel) return;
+    var isBlue = groupName === "blue";
+    redPanel.classList.toggle("is-hidden", isBlue);
+    bluePanel.classList.toggle("is-hidden", !isBlue);
+  }
+
+  function syncCharacterGroupPanels(groupName) {
+    var truthGroup = document.querySelector(".matrix-home-group--truth");
+    var systemGroup = document.querySelector(".matrix-home-group--system");
+    if (!truthGroup || !systemGroup) return;
+    if (groupName === "blue") {
+      truthGroup.classList.add("is-hidden");
+      systemGroup.classList.remove("is-hidden");
+      return;
+    }
+    if (groupName === "red") {
+      systemGroup.classList.add("is-hidden");
+      truthGroup.classList.remove("is-hidden");
+      return;
+    }
+    truthGroup.classList.remove("is-hidden");
+    systemGroup.classList.remove("is-hidden");
+  }
+
   function initCharacterPanel() {
-    var grid = document.querySelector(".matrix-home-char-grid");
-    if (!grid) return;
+    var grids = Array.prototype.slice.call(document.querySelectorAll(".matrix-home-char-grid"));
+    if (!grids.length) return;
 
     var kicker = document.getElementById("matrix-home-detail-kicker");
     var name = document.getElementById("matrix-home-detail-name");
@@ -181,8 +222,35 @@
     var quoteKo = document.getElementById("matrix-home-detail-quote-ko");
     var quoteEn = document.getElementById("matrix-home-detail-quote-en");
     var thumb = document.getElementById("matrix-home-detail-thumb");
+    var pageBg = document.querySelector(".page-bg");
     if (!kicker || !name || !keywords || !desc || !quoteKo || !quoteEn || !thumb) return;
-    var cards = Array.prototype.slice.call(grid.querySelectorAll(".matrix-home-char-card"));
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".matrix-home-char-card"));
+
+    function syncPageBackground(charKey) {
+      if (!pageBg) return;
+      if (charKey === "neo") {
+        pageBg.style.setProperty("--page-bg-char", "url(\"" + NEO_PAGE_BG_IMAGE + "\")");
+        pageBg.style.setProperty("--page-bg-pos", "center center");
+      } else if (charKey === "morpheus") {
+        pageBg.style.setProperty("--page-bg-char", "url(\"" + MORPHEUS_PAGE_BG_IMAGE + "\")");
+        pageBg.style.setProperty("--page-bg-pos", "center center");
+      } else if (charKey === "trinity") {
+        pageBg.style.setProperty("--page-bg-char", "url(\"" + TRINITY_PAGE_BG_IMAGE + "\")");
+        pageBg.style.setProperty("--page-bg-pos", "center center");
+      } else if (charKey === "oracle") {
+        pageBg.style.setProperty("--page-bg-char", "url(\"" + ORACLE_PAGE_BG_IMAGE + "\")");
+        pageBg.style.setProperty("--page-bg-pos", "center center");
+      } else if (charKey === "architect") {
+        pageBg.style.setProperty("--page-bg-char", "url(\"" + ARCHITECT_PAGE_BG_IMAGE + "\")");
+        pageBg.style.setProperty("--page-bg-pos", "center center");
+      } else if (charKey === "deus") {
+        pageBg.style.setProperty("--page-bg-char", "url(\"" + DEUS_PAGE_BG_IMAGE + "\")");
+        pageBg.style.setProperty("--page-bg-pos", "center center");
+      } else {
+        pageBg.style.removeProperty("--page-bg-char");
+        pageBg.style.removeProperty("--page-bg-pos");
+      }
+    }
 
     function renderCardContent() {
       cards.forEach(function (btn) {
@@ -192,14 +260,8 @@
         btn.setAttribute("aria-label", data.name);
         btn.innerHTML =
           "<span class=\"matrix-home-char-card__thumb is-" + key + "\" aria-hidden=\"true\"></span>" +
-          "<span class=\"matrix-home-char-card__ko\">" + data.ko + "</span>" +
-          "<span class=\"matrix-home-char-card__en\" lang=\"en\">" + data.en + "</span>" +
-          "<span class=\"matrix-home-char-card__keywords\">핵심 키워드: " + data.keywords + "</span>" +
-          "<span class=\"matrix-home-char-card__desc\">" + data.desc + "</span>" +
-          "<span class=\"matrix-home-char-card__quote\">"
-            + "<span class=\"matrix-home-char-card__quote-label\">명대사</span>"
-            + "<span class=\"matrix-home-char-card__quote-ko\">" + data.quoteKo + "</span>"
-          + "</span>";
+          "<span class=\"matrix-home-char-card__name-main\" lang=\"en\">" + data.en + "</span>" +
+          "<span class=\"matrix-home-char-card__name-sub\" lang=\"en\">" + data.cardRole + "</span>";
       });
     }
 
@@ -213,6 +275,7 @@
       quoteKo.textContent = data.quoteKo;
       quoteEn.textContent = data.quoteEn;
       thumb.className = "matrix-home-detail-panel__thumb is-" + charKey;
+      syncPageBackground(charKey);
     }
 
     function setActiveButton(btn) {
@@ -224,6 +287,8 @@
     function applyGroup(groupName) {
       var allowed = GROUPS[groupName];
       if (!allowed) return;
+      syncThemePanels(groupName);
+      syncCharacterGroupPanels(groupName);
 
       cards.forEach(function (btn) {
         var key = btn.getAttribute("data-char");
@@ -233,22 +298,24 @@
         btn.disabled = !isAllowed;
       });
 
-      var current = grid.querySelector(".matrix-home-char-card.is-active:not(.is-hidden)");
-      var next = current || grid.querySelector(".matrix-home-char-card:not(.is-hidden)");
+      var current = document.querySelector(".matrix-home-char-card.is-active:not(.is-hidden)");
+      var next = current || document.querySelector(".matrix-home-char-card:not(.is-hidden)");
       if (!next) return;
       setActiveButton(next);
       render(next.getAttribute("data-char"));
     }
 
-    grid.addEventListener("click", function (ev) {
-      var btn = ev.target.closest(".matrix-home-char-card");
-      if (!btn) return;
-      var key = btn.getAttribute("data-char");
-      if (!key || !CHAR_DATA[key]) return;
-      if (btn.classList.contains("is-hidden")) return;
-      setActiveButton(btn);
-      render(key);
-      smoothScrollTo("#character-detail");
+    grids.forEach(function (grid) {
+      grid.addEventListener("click", function (ev) {
+        var btn = ev.target.closest(".matrix-home-char-card");
+        if (!btn) return;
+        var key = btn.getAttribute("data-char");
+        if (!key || !CHAR_DATA[key]) return;
+        if (btn.classList.contains("is-hidden")) return;
+        setActiveButton(btn);
+        render(key);
+        smoothScrollTo("#character-detail");
+      });
     });
 
     renderCardContent();
