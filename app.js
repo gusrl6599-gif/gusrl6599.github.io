@@ -1200,86 +1200,63 @@
     var overlay = document.getElementById("matrixGate");
     var accessBtn = document.getElementById("enterMatrixBtn");
     var escapeBtn = document.getElementById("blueEscapeBtn");
-    var titleEl = document.getElementById("gateTitle");
-    var subtitleEl = overlay ? overlay.querySelector(".signal-subtitle") : null;
-    var footerEl = overlay ? overlay.querySelector(".signal-footer") : null;
     var seenKey = "matrix_signal_seen";
-    var blockedKey = "matrix_signal_blocked";
-    var overlayFadeMs = 450;
+    var gateEnterMs = 850;
     var isClosing = false;
     if (!overlay || !accessBtn || !escapeBtn) return;
     if (document.documentElement.classList.contains("pill-already-chosen")) {
-      document.body.classList.remove("signal-open");
-      return;
-    }
-    function applyDeniedState() {
-      overlay.classList.remove("hidden");
-      document.body.classList.add("signal-open");
-      if (titleEl) titleEl.textContent = "ACCESS DENIED";
-      if (subtitleEl) subtitleEl.textContent = "BLUE PILL LOCK ACTIVE";
-      if (footerEl) footerEl.textContent = "ENTRY REJECTED / RED CHANNEL REQUIRED";
-      accessBtn.disabled = true;
-      escapeBtn.disabled = true;
-      accessBtn.setAttribute("aria-disabled", "true");
-      escapeBtn.setAttribute("aria-disabled", "true");
-    }
-
-    if (window.sessionStorage.getItem(blockedKey) === "true") {
-      applyDeniedState();
+      document.body.classList.remove("signal-open", "gate-lock");
+      document.body.classList.add("entered");
       return;
     }
 
     if (window.localStorage.getItem(seenKey) === "true") {
-      overlay.classList.add("hidden");
-      document.body.classList.remove("signal-open");
+      overlay.classList.add("hidden", "is-hidden");
+      overlay.classList.remove("is-active");
+      document.body.classList.remove("signal-open", "gate-lock");
+      document.body.classList.add("entered");
       return;
     }
-    document.body.classList.add("signal-open");
+    document.body.classList.remove("entered");
+    document.body.classList.add("signal-open", "gate-lock");
+    overlay.classList.add("is-active");
+    overlay.classList.remove("hidden", "is-hidden", "enter-red", "enter-blue");
 
-    function closeSignalOverlay(mode, ctaId) {
+    function finishEnter(mode, ctaId) {
       if (isClosing) return;
       isClosing = true;
-      if (mode === "red") {
-        document.body.style.transition = "filter .45s ease";
-        document.body.style.filter = "contrast(1.08) saturate(1.08)";
-      } else if (mode === "blue") {
-        document.body.style.transition = "filter .45s ease";
-        document.body.style.filter = "blur(1px) brightness(0.95)";
-      }
-
-      overlay.classList.add("hidden");
-      document.body.classList.remove("signal-open");
-      window.localStorage.setItem(seenKey, "true");
+      overlay.classList.add(mode === "red" ? "enter-red" : "enter-blue");
 
       window.setTimeout(function () {
+        overlay.classList.add("hidden", "is-hidden");
+        overlay.classList.remove("is-active");
+        document.body.classList.remove("signal-open", "gate-lock");
+        document.body.classList.add("entered");
+        window.localStorage.setItem(seenKey, "true");
+
         var cta = ctaId ? document.getElementById(ctaId) : null;
         if (cta) {
           cta.click();
         } else if (ctaId) {
-          /* Fallback: if CTA is unavailable, preserve selected state. */
           document.documentElement.classList.add("pill-already-chosen");
         }
-      }, overlayFadeMs);
 
-      window.setTimeout(function () {
         document.body.style.filter = "";
         document.body.style.transition = "";
         isClosing = false;
-      }, 600);
+      }, gateEnterMs);
     }
 
     accessBtn.addEventListener("click", function () {
-      window.sessionStorage.removeItem(blockedKey);
-      closeSignalOverlay("red", "pill-red-cta");
+      finishEnter("red", "pill-red-cta");
     });
     escapeBtn.addEventListener("click", function () {
-      window.sessionStorage.setItem(blockedKey, "true");
-      applyDeniedState();
+      finishEnter("blue", "pill-blue-cta");
     });
 
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && !overlay.classList.contains("hidden")) {
-        closeSignalOverlay("red");
+      if (e.key === "Enter" && overlay.classList.contains("is-active")) {
+        finishEnter("red", "pill-red-cta");
       }
     });
   }
