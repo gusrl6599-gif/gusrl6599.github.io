@@ -94,6 +94,25 @@
     target.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  function redPill() {
+    document.body.style.filter = "hue-rotate(-20deg)";
+    document.body.style.transition = "0.6s";
+    window.setTimeout(function () {
+      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    }, 500);
+  }
+
+  function bluePill() {
+    document.body.style.filter = "blur(2px)";
+    document.body.style.transition = "0.6s";
+    window.setTimeout(function () {
+      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+    }, 500);
+  }
+
+  window.redPill = redPill;
+  window.bluePill = bluePill;
+
   function revealMainSections() {
     var html = document.documentElement;
     var scene = document.getElementById("pill-scene");
@@ -126,6 +145,8 @@
           ev.preventDefault();
           ev.stopPropagation();
           ev.stopImmediatePropagation();
+          if (item.id.indexOf("red") !== -1) redPill();
+          if (item.id.indexOf("blue") !== -1) bluePill();
           revealMainSections();
           if (panelController && typeof panelController.applyGroup === "function") {
             if (item.id.indexOf("red") !== -1) panelController.applyGroup("red");

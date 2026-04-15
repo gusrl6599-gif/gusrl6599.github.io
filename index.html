@@ -79,9 +79,9 @@
     </div>
 
     <div class="pill-scene__inner">
-      <header class="pill-scene__header">
+      <header class="pill-scene__header hero">
         <p class="pill-scene__brand">THE MATRIX</p>
-        <h2 id="pill-scene-title" class="pill-scene__title">“You’ve already made the choice.”</h2>
+        <h1 id="pill-scene-title" class="pill-scene__title main-text"></h1>
         <p class="pill-scene__kicker" lang="en">The choice is already made.</p>
         <p class="pill-scene__matrix-intro-link">
           <a href="matrix-intro.html">The Matrix 소개</a>
@@ -104,7 +104,7 @@
         </figure>
 
         <div class="pill-scene__paths">
-          <div class="pill-column pill-column--red">
+          <div class="pill-column pill-column--red card red-card">
             <p id="pill-copy-red" class="pill-path__copy">
               <span lang="en">“You take the red pill—you stay in Wonderland, and I show you how deep the rabbit hole goes.”</span>
               <span class="pill-path__copy-ko" lang="ko">진실은 불편하다.<br />하지만 그 끝에서, 현실은 처음 시작된다.</span>
@@ -114,10 +114,10 @@
               <span class="pill-3d__shine" aria-hidden="true"></span>
               <span class="pill-3d__label" aria-hidden="true">RED</span>
             </button>
-            <button id="pill-red-cta" type="button" class="pill-path__cta pill-path__cta-btn">TAKE THE RED PILL</button>
+            <button id="pill-red-cta" type="button" class="pill-path__cta pill-path__cta-btn" onclick="redPill()">TAKE THE RED PILL</button>
           </div>
 
-          <div class="pill-column pill-column--blue">
+          <div class="pill-column pill-column--blue card blue-card">
             <p id="pill-copy-blue" class="pill-path__copy">
               <span lang="en">“You take the blue pill… the story ends, you wake up in your bed and believe whatever you want to believe.”</span>
               <span class="pill-path__copy-ko" lang="ko">거짓은 편안하다.<br />그리고 대부분은 그 안에서 안심한다.</span>
@@ -129,7 +129,7 @@
               <span class="pill-3d__shine" aria-hidden="true"></span>
               <span class="pill-3d__label" aria-hidden="true">BLUE</span>
             </button>
-            <button id="pill-blue-cta" type="button" class="pill-path__cta pill-path__cta-btn">TAKE THE BLUE PILL</button>
+            <button id="pill-blue-cta" type="button" class="pill-path__cta pill-path__cta-btn" onclick="bluePill()">TAKE THE BLUE PILL</button>
           </div>
         </div>
       </div>
@@ -188,17 +188,17 @@
           </h2>
           <div class="section__body">
             <div class="matrix-home-world-grid" role="list">
-              <article class="matrix-home-world-card" role="listitem">
+              <article class="matrix-home-world-card card matrix-card" role="listitem">
                 <p class="matrix-home-world-card__label" lang="en">Season 1</p>
                 <h3 class="matrix-home-world-card__title">각성</h3>
                 <p>세계가 가짜라는 사실을 알아차리고, 선택의 문 앞에 선다.</p>
               </article>
-              <article class="matrix-home-world-card" role="listitem">
+              <article class="matrix-home-world-card card matrix-card" role="listitem">
                 <p class="matrix-home-world-card__label" lang="en">Season 2</p>
                 <h3 class="matrix-home-world-card__title">저항</h3>
                 <p>인간과 기계의 충돌은 깊어지고, 전쟁은 신념을 시험한다.</p>
               </article>
-              <article class="matrix-home-world-card" role="listitem">
+              <article class="matrix-home-world-card card matrix-card" role="listitem">
                 <p class="matrix-home-world-card__label" lang="en">Season 3</p>
                 <h3 class="matrix-home-world-card__title">균형</h3>
                 <p>파괴 대신 균형을 택하며, 질서는 새로운 형태로 갱신된다.</p>
@@ -217,35 +217,35 @@
           </h2>
           <div class="section__body">
             <div class="matrix-home-char-grid" role="list" aria-label="등장인물">
-              <button type="button" class="matrix-home-char-card is-active" role="listitem" data-char="neo">
+              <button type="button" class="matrix-home-char-card matrix-card is-active" role="listitem" data-char="neo">
                 <span class="matrix-home-char-card__ko">네오</span>
                 <span class="matrix-home-char-card__en" lang="en">Neo</span>
               </button>
-              <button type="button" class="matrix-home-char-card" role="listitem" data-char="trinity">
+              <button type="button" class="matrix-home-char-card matrix-card" role="listitem" data-char="trinity">
                 <span class="matrix-home-char-card__ko">트리니티</span>
                 <span class="matrix-home-char-card__en" lang="en">Trinity</span>
               </button>
-              <button type="button" class="matrix-home-char-card" role="listitem" data-char="morpheus">
+              <button type="button" class="matrix-home-char-card matrix-card" role="listitem" data-char="morpheus">
                 <span class="matrix-home-char-card__ko">모피어스</span>
                 <span class="matrix-home-char-card__en" lang="en">Morpheus</span>
               </button>
-              <button type="button" class="matrix-home-char-card" role="listitem" data-char="smith">
+              <button type="button" class="matrix-home-char-card matrix-card" role="listitem" data-char="smith">
                 <span class="matrix-home-char-card__ko">스미스</span>
                 <span class="matrix-home-char-card__en" lang="en">Agent Smith</span>
               </button>
-              <button type="button" class="matrix-home-char-card" role="listitem" data-char="oracle">
+              <button type="button" class="matrix-home-char-card matrix-card" role="listitem" data-char="oracle">
                 <span class="matrix-home-char-card__ko">오라클</span>
                 <span class="matrix-home-char-card__en" lang="en">Oracle</span>
               </button>
-              <button type="button" class="matrix-home-char-card" role="listitem" data-char="architect">
+              <button type="button" class="matrix-home-char-card matrix-card" role="listitem" data-char="architect">
                 <span class="matrix-home-char-card__ko">아키텍트</span>
                 <span class="matrix-home-char-card__en" lang="en">The Architect</span>
               </button>
-              <button type="button" class="matrix-home-char-card" role="listitem" data-char="merovingian">
+              <button type="button" class="matrix-home-char-card matrix-card" role="listitem" data-char="merovingian">
                 <span class="matrix-home-char-card__ko">메로빈지언</span>
                 <span class="matrix-home-char-card__en" lang="en">The Merovingian</span>
               </button>
-              <button type="button" class="matrix-home-char-card" role="listitem" data-char="deus">
+              <button type="button" class="matrix-home-char-card matrix-card" role="listitem" data-char="deus">
                 <span class="matrix-home-char-card__ko">데우스 엑스 마키나</span>
                 <span class="matrix-home-char-card__en" lang="en">Deus Ex Machina</span>
               </button>
@@ -262,7 +262,7 @@
             <span class="section__rule" aria-hidden="true"></span>
           </h2>
           <div class="section__body">
-            <article class="matrix-home-detail-panel" aria-live="polite">
+            <article class="matrix-home-detail-panel matrix-card" aria-live="polite">
               <div id="matrix-home-detail-thumb" class="matrix-home-detail-panel__thumb is-neo" aria-hidden="true"></div>
               <p id="matrix-home-detail-kicker" class="matrix-home-detail-panel__kicker" lang="en">Awakening / Fracture</p>
               <h3 id="matrix-home-detail-name" class="matrix-home-detail-panel__name">네오 <span lang="en">(Neo)</span></h3>
@@ -289,6 +289,17 @@
     </div>
   </div>
 
+  <audio id="clickSound" src="assets/sounds/glitch.mp3"></audio>
+  <script>
+    function playSound() {
+      var sound = document.getElementById("clickSound");
+      if (!sound) return;
+      sound.currentTime = 0;
+      sound.play().catch(function () {
+        /* ignore autoplay/user-gesture restrictions */
+      });
+    }
+  </script>
   <script src="index-matrix-sections.js" defer></script>
   <script src="app.js" defer></script>
   <script src="pwa.js" defer></script>

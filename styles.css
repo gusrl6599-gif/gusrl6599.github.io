@@ -40,6 +40,94 @@ body {
   color: var(--slate);
   background-color: transparent;
   -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 20px rgba(0, 255, 150, 0.3);
+}
+
+.red-card:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+}
+
+.blue-card:hover {
+  box-shadow: 0 0 30px rgba(0, 100, 255, 0.4);
+}
+
+.matrix-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(5, 12, 10, 0.72);
+  border: 1px solid rgba(120, 255, 220, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(120, 255, 220, 0.06),
+    0 0 18px rgba(120, 255, 220, 0.12),
+    inset 0 0 18px rgba(120, 255, 220, 0.03);
+  backdrop-filter: blur(6px);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.matrix-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  opacity: 0.7;
+}
+
+.matrix-card::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -60%;
+  width: 220%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 255, 235, 0.95),
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(140, 255, 235, 0.55);
+  transform: rotate(-2deg);
+  animation: scanLine 4s linear infinite;
+  pointer-events: none;
+}
+
+.matrix-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(140, 255, 235, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(140, 255, 235, 0.12),
+    0 0 26px rgba(140, 255, 235, 0.22),
+    inset 0 0 24px rgba(140, 255, 235, 0.06);
+}
+
+@keyframes scanLine {
+  0% {
+    transform: translateX(-15%) rotate(-2deg);
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(15%) rotate(-2deg);
+    opacity: 0.25;
+  }
 }
 
 html.pill-scene-open,
@@ -557,15 +645,42 @@ html.pill-route-transition .page-shell {
   margin-bottom: 1.25rem;
 }
 
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 150, 0.15),
+    transparent
+  );
+  animation: scan 5s linear infinite;
+  pointer-events: none;
+}
+
 .pill-scene__brand {
   margin: 0 0 0.5rem;
-  font-family: var(--pill-mono);
-  font-size: clamp(0.95rem, 1.9vw, 1.35rem);
+  display: inline-block;
+  padding: 0.2rem 0.55rem 0.24rem 0.75rem;
+  border-radius: 2px;
+  border: 1px solid rgba(122, 255, 200, 0.18);
+  background: linear-gradient(180deg, rgba(2, 20, 14, 0.78), rgba(2, 13, 10, 0.86));
+  font-family: "Orbitron", var(--pill-mono);
+  font-size: clamp(1.05rem, 2vw, 1.45rem);
   font-weight: 700;
-  letter-spacing: 0.34em;
-  text-indent: 0.34em;
+  letter-spacing: 0.46em;
+  text-indent: 0.46em;
   text-transform: uppercase;
-  color: rgba(130, 255, 193, 0.8);
+  color: #8fffd1;
 }
 
 .pill-scene__title {
@@ -590,6 +705,15 @@ html.pill-route-transition .page-shell {
   }
   100% {
     background-position: 0 0, 0 250px;
+  }
+}
+
+@keyframes scan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
   }
 }
 

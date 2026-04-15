@@ -956,6 +956,25 @@
     update();
   }
 
+  function initMainTyping() {
+    var text = "\"You've already made the choice.\"";
+    var i = 0;
+    var speed = 40;
+    var el = document.querySelector(".main-text");
+    if (!el) return;
+    el.textContent = "";
+
+    function typing() {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i += 1;
+        window.setTimeout(typing, speed);
+      }
+    }
+
+    typing();
+  }
+
   window.addEventListener("pageshow", function (ev) {
     if (!ev.persisted) return;
     if (!document.getElementById("pill-scene")) return;
@@ -981,5 +1000,6 @@
     initRedRouteLightning();
     initBlueMatrixEndless();
     initNavScroll();
+    initMainTyping();
   });
 })();
