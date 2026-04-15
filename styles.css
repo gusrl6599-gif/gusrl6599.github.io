@@ -4230,6 +4230,24 @@ body.route--blue-morning {
   -webkit-backdrop-filter: none;
 }
 
+/* 스크롤 중에는 무거운 레이어를 잠깐 낮춰 프레임 드랍 완화 (진입 애니메이션은 유지) */
+.blue-dream.blue-dream--scrolling .blue-dream__noise,
+.blue-dream.blue-dream--scrolling .blue-dream__mist,
+.blue-dream.blue-dream--scrolling .blue-dream__scanlight,
+.blue-dream.blue-dream--scrolling .blue-dream__particles,
+.blue-dream.blue-dream--scrolling .blue-dream__cursor-glow {
+  opacity: 0 !important;
+}
+
+.blue-dream.blue-dream--scrolling .blue-dream__window-light,
+.blue-dream.blue-dream--scrolling .blue-dream__curtain-shadow {
+  animation-play-state: paused !important;
+}
+
+.blue-dream.blue-dream--scrolling .blue-dream__panel {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .blue-dream__noise,
   .blue-dream__mist,
