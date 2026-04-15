@@ -818,15 +818,6 @@
     update();
   }
 
-  function hideBrokenProfile() {
-    var img = document.querySelector(".sidebar__photo img");
-    var wrap = document.querySelector(".sidebar__photo");
-    if (!img || !wrap) return;
-    img.addEventListener("error", function () {
-      wrap.classList.add("is-hidden");
-    });
-  }
-
   window.addEventListener("pageshow", function (ev) {
     if (!ev.persisted) return;
     if (!document.getElementById("pill-scene")) return;
@@ -852,6 +843,5 @@
     initRedRouteLightning();
     initBlueMatrixEndless();
     initNavScroll();
-    hideBrokenProfile();
   });
 })();

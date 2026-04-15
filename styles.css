@@ -1,6 +1,6 @@
 /*
   Brittany Chiang–style layout (reference: https://brittanychiang.com/)
-  GitHub Pages: images/profile.png, images/main-neo-bg.webp, images/*.png (ASCII paths).
+  GitHub Pages: images/main-neo-bg.webp, images/*.png (ASCII paths).
 */
 
 :root {
@@ -1786,27 +1786,6 @@ html.pill-choice-red .page-shell {
     min-height: 100vh;
     padding: 6rem 0;
   }
-}
-
-/* 프로필: 동그란 틀 없이 이미지 원본 비율로만 표시 */
-.sidebar__photo {
-  margin: 0 0 1.25rem;
-  width: 100%;
-  max-width: min(340px, 100%);
-  flex-shrink: 0;
-  line-height: 0;
-}
-
-.sidebar__photo img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 6px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
-}
-
-.sidebar__photo.is-hidden {
-  display: none;
 }
 
 .sidebar__name {
