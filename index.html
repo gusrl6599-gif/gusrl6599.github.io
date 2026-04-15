@@ -2,6 +2,15 @@
 <html lang="ko" class="pill-scene-open">
 <head>
   <meta charset="utf-8">
+  <script>
+    try {
+      if (window.localStorage.getItem("matrix_signal_seen") === "true") {
+        document.documentElement.classList.add("gate-seen");
+      }
+    } catch (e) {
+      /* ignore storage access errors */
+    }
+  </script>
   <style>
     html.pill-scene-open:not(.pill-already-chosen) .page-bg,
     html.pill-scene-open:not(.pill-already-chosen) .page-shell {
@@ -9,6 +18,9 @@
     }
     html.pill-scene-open:not(.pill-already-chosen) body {
       background-color: #020806;
+    }
+    html.gate-seen .matrix-gate {
+      display: none !important;
     }
   </style>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -104,7 +116,7 @@
         </figure>
 
         <div class="pill-scene__paths">
-          <div class="pill-column pill-column--red card red-card box-signal">
+          <div class="pill-column pill-column--red card red-card">
             <p id="pill-copy-red" class="pill-path__copy">
               <span lang="en">“You take the red pill—you stay in Wonderland, and I show you how deep the rabbit hole goes.”</span>
               <span class="pill-path__copy-ko" lang="ko">진실은 불편하다.<br />하지만 그 끝에서, 현실은 처음 시작된다.</span>
@@ -117,7 +129,7 @@
             <button id="pill-red-cta" type="button" class="pill-path__cta pill-path__cta-btn" onclick="redPill()">TAKE THE RED PILL</button>
           </div>
 
-          <div class="pill-column pill-column--blue card blue-card box-signal">
+          <div class="pill-column pill-column--blue card blue-card">
             <p id="pill-copy-blue" class="pill-path__copy">
               <span lang="en">“You take the blue pill… the story ends, you wake up in your bed and believe whatever you want to believe.”</span>
               <span class="pill-path__copy-ko" lang="ko">거짓은 편안하다.<br />그리고 대부분은 그 안에서 안심한다.</span>
@@ -151,46 +163,38 @@
   </div>
 
   <div id="matrixGate" class="matrix-gate signal-overlay is-active" aria-hidden="false">
-    <div class="gate-bg"></div>
-    <div class="gate-noise signal-noise"></div>
-    <div class="gate-scanlines"></div>
-    <div class="gate-tunnel"></div>
-    <div class="gate-flash"></div>
+    <main class="screen">
+      <div class="noise"></div>
+      <div class="dust"></div>
+      <div class="scanlines"></div>
+      <div class="vignette"></div>
 
-    <section class="signal-box" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
-      <div class="signal-frame frame-top"></div>
-      <div class="signal-frame frame-right"></div>
-      <div class="signal-frame frame-bottom"></div>
-      <div class="signal-frame frame-left"></div>
-      <span class="corner tl"></span>
-      <span class="corner tr"></span>
-      <span class="corner bl"></span>
-      <span class="corner br"></span>
+      <section class="frame-wrap" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+        <div class="beam-top"></div>
+        <div class="beam-side"></div>
+        <div class="beam-bottom"></div>
+        <div class="spark one"></div>
+        <div class="spark two"></div>
 
-      <p class="signal-label">SIGNAL BOX</p>
-      <h1 id="gateTitle" class="signal-title">ENTRANCE TO THE MATRIX SYSTEM</h1>
-      <p class="signal-subtitle">FILE DEPTH UNDEFINED</p>
+        <div class="panel">
+          <div class="flash-line"></div>
+          <h1 id="gateTitle" class="title">SIGNAL BOX</h1>
+          <div class="headline">ENTRANCE TO THE MATRIX SYSTEM</div>
 
-      <div class="signal-divider"></div>
+          <div class="divider-wrap">
+            <div class="divider"></div>
+            <div class="subhead">FILE DEPTH UNDEFINED</div>
+          </div>
 
-      <div class="signal-meta">
-        <span>NODE STATUS // UNSTABLE</span>
-        <span>ACCESS LEVEL // RESTRICTED</span>
-      </div>
+          <div class="button-row">
+            <button class="choice red" id="enterMatrixBtn" type="button">ACCESS THE CODE</button>
+            <button class="choice blue" id="blueEscapeBtn" type="button">ESCAPE INTO THE SYSTEM</button>
+          </div>
 
-      <div class="signal-actions">
-        <button id="enterMatrixBtn" class="signal-btn red" type="button">
-          ACCESS THE CODE
-        </button>
-        <button id="blueEscapeBtn" class="signal-btn blue" type="button">
-          ESCAPE INTO THE SYSTEM
-        </button>
-      </div>
-
-      <p class="signal-footer">
-        OPT OUT DATA ALTERATION VALID (0x0007-F-B) / VERIFY (0x00CC-1990)
-      </p>
-    </section>
+          <div class="footer">OPT OUT DATA ALTERATION VALID (0x0007-F-B) / VERIFY (0x00CC-1990)</div>
+        </div>
+      </section>
+    </main>
   </div>
 
   <div id="pageRoot" class="page-root">
@@ -240,6 +244,7 @@
               <article class="matrix-home-group matrix-home-group--truth box-signal matrix-box" aria-label="진실을 택한 자들">
                 <h3 class="matrix-home-group__title" lang="en">Those Who Chose the Truth</h3>
                 <p class="matrix-home-group__sub">Awakened souls who seek the truth beyond the illusion.</p>
+                <p class="matrix-home-group__sub-ko">환상을 넘어 진실을 붙잡은 각성자들.</p>
                 <div class="matrix-home-char-grid matrix-home-char-grid--truth" role="list" aria-label="진실 진영">
                   <button type="button" class="matrix-home-char-card box-signal matrix-box is-active" role="listitem" data-char="neo"></button>
                   <button type="button" class="matrix-home-char-card box-signal matrix-box" role="listitem" data-char="trinity"></button>
@@ -251,6 +256,7 @@
               <article class="matrix-home-group matrix-home-group--system box-signal matrix-box" aria-label="시스템에 남은 자들">
                 <h3 class="matrix-home-group__title" lang="en">Those Who Remained in the System</h3>
                 <p class="matrix-home-group__sub">Guardians of the system who embrace control and comfort.</p>
+                <p class="matrix-home-group__sub-ko">통제와 안락을 택해 시스템에 남은 수호자들.</p>
                 <div class="matrix-home-char-grid matrix-home-char-grid--system" role="list" aria-label="시스템 진영">
                   <button type="button" class="matrix-home-char-card box-signal matrix-box" role="listitem" data-char="smith"></button>
                   <button type="button" class="matrix-home-char-card box-signal matrix-box" role="listitem" data-char="architect"></button>

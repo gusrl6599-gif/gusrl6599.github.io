@@ -1067,7 +1067,11 @@
     var moved = false;
     var blueRouteStarted = false;
 
-    initPillMatrixCanvas();
+    var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var mobileLike = window.matchMedia("(max-width: 900px)").matches;
+    if (!reduceMotion && !mobileLike) {
+      initPillMatrixCanvas();
+    }
 
     function go(choice) {
       if (moved) return;
@@ -1201,11 +1205,11 @@
     var accessBtn = document.getElementById("enterMatrixBtn");
     var escapeBtn = document.getElementById("blueEscapeBtn");
     var params = new URLSearchParams(window.location.search);
-    var gateSeenKey = "matrix_signal_seen_session";
+    var gateSeenKey = "matrix_signal_seen";
     var gateEnterMs = 850;
     var isClosing = false;
     if (!overlay || !accessBtn || !escapeBtn) return;
-    if (params.get("choose") === "1" || window.sessionStorage.getItem(gateSeenKey) === "true") {
+    if (params.get("choose") === "1" || window.localStorage.getItem(gateSeenKey) === "true") {
       overlay.classList.add("hidden", "is-hidden");
       overlay.classList.remove("is-active");
       document.body.classList.remove("signal-open", "gate-lock");
@@ -1234,7 +1238,8 @@
         document.body.classList.remove("signal-open", "gate-lock");
         document.body.classList.add("entered");
         if (mode === "red") {
-          window.sessionStorage.setItem(gateSeenKey, "true");
+          window.localStorage.setItem(gateSeenKey, "true");
+          document.documentElement.classList.add("gate-seen");
         }
 
         var cta = ctaId ? document.getElementById(ctaId) : null;
@@ -1251,14 +1256,10 @@
     }
 
     accessBtn.addEventListener("click", function () {
-      finishEnter("red");
+      window.location.href = "you-choose-red-pill.html";
     });
     escapeBtn.addEventListener("click", function () {
-      if (isClosing) return;
-      overlay.classList.add("enter-blue");
-      window.setTimeout(function () {
-        overlay.classList.remove("enter-blue");
-      }, 520);
+      window.location.href = "you-choose-blue-pill.html";
     });
 
     document.addEventListener("keydown", function (e) {
