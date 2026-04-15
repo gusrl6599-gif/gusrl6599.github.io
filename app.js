@@ -31,9 +31,9 @@
     document.documentElement.classList.add("pill-scene-open");
   }
   var PILL_ROUTES = {
-    red: "red-pill.html",
-    blue: "blue-pill.html",
-    skip: "red-pill.html"
+    red: "you-choose-red-pill.html",
+    blue: "you-choose-blue-pill.html",
+    skip: "you-choose-red-pill.html"
   };
 
   function initRedPrelude() {
