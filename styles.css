@@ -47,6 +47,16 @@ html.pill-scene-open body {
   overscroll-behavior: none;
 }
 
+/*
+  인덱스에서 필 씬이 떠 있는 동안 본문(.page-shell)은 z-index로만 가리면,
+  모바일 WebKit이 스크롤·레이어 합성 시 아래를 다시 그리며 사이드바 글자가 반투명 겹침처럼 비침.
+  선택 완료·전환 중(pill-already-chosen / pill-route-transition)은 아래 규칙과 함께 유지.
+*/
+html.pill-scene-open:not(.pill-already-chosen) .page-bg,
+html.pill-scene-open:not(.pill-already-chosen) .page-shell {
+  display: none !important;
+}
+
 html.pill-already-chosen #pill-scene {
   display: none !important;
 }
