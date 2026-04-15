@@ -1239,15 +1239,19 @@
     }
 
     accessBtn.addEventListener("click", function () {
-      finishEnter("red", "pill-red-cta");
+      finishEnter("red");
     });
     escapeBtn.addEventListener("click", function () {
-      /* Requested behavior: blue button does nothing. */
+      if (isClosing) return;
+      overlay.classList.add("enter-blue");
+      window.setTimeout(function () {
+        overlay.classList.remove("enter-blue");
+      }, 520);
     });
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Enter" && overlay.classList.contains("is-active")) {
-        finishEnter("red", "pill-red-cta");
+        finishEnter("red");
       }
     });
   }
