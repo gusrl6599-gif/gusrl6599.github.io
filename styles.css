@@ -3669,10 +3669,6 @@ html.red-prelude-pending .red-route-atmosphere {
     opacity: 0.12;
   }
 
-  .route--red .red-route-lightning {
-    display: none !important;
-  }
-
   body.route--red,
   body.route--blue {
     overscroll-behavior-y: none;
