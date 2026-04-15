@@ -319,11 +319,11 @@
     btn.addEventListener("click", function () {
       if (!player.getAttribute("src")) {
         player.setAttribute("src", RED_ROUTE_CLIP_SRC);
-        btn.textContent = "Playing…";
+        btn.textContent = "재생 중…";
         return;
       }
       player.setAttribute("src", "");
-      btn.textContent = "▶ Matrix clip";
+      btn.textContent = "▶ 매트릭스 클립";
     });
   }
 
@@ -385,7 +385,9 @@
     }
 
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var rawDpr = window.devicePixelRatio || 1;
+      var cap = width < 600 ? 1.25 : 2;
+      var dpr = Math.min(rawDpr, cap);
       var w = wrap.clientWidth;
       var h = wrap.clientHeight;
       width = Math.floor(w);
@@ -769,11 +771,11 @@
       audioBtn.addEventListener("click", function () {
         if (!audioPlayer.getAttribute("src")) {
           audioPlayer.setAttribute("src", MATRIX_AUDIO_SRC);
-          audioBtn.textContent = "Playing Matrix Audio...";
+          audioBtn.textContent = "매트릭스 오디오 재생 중…";
           return;
         }
         audioPlayer.setAttribute("src", "");
-        audioBtn.textContent = "▶ Play Matrix Audio";
+        audioBtn.textContent = "▶ 매트릭스 오디오 재생";
       });
     }
 
