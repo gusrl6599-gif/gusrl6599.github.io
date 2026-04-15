@@ -1201,17 +1201,11 @@
     var accessBtn = document.getElementById("enterMatrixBtn");
     var escapeBtn = document.getElementById("blueEscapeBtn");
     var params = new URLSearchParams(window.location.search);
-    var seenKey = "matrix_signal_seen";
+    var gateSeenKey = "matrix_signal_seen_session";
     var gateEnterMs = 850;
     var isClosing = false;
     if (!overlay || !accessBtn || !escapeBtn) return;
-    if (params.get("choose") === "1") {
-      overlay.classList.add("hidden", "is-hidden");
-      overlay.classList.remove("is-active");
-      document.body.classList.remove("signal-open", "gate-lock");
-      return;
-    }
-    if (window.localStorage.getItem(seenKey) === "true") {
+    if (params.get("choose") === "1" || window.sessionStorage.getItem(gateSeenKey) === "true") {
       overlay.classList.add("hidden", "is-hidden");
       overlay.classList.remove("is-active");
       document.body.classList.remove("signal-open", "gate-lock");
@@ -1240,7 +1234,7 @@
         document.body.classList.remove("signal-open", "gate-lock");
         document.body.classList.add("entered");
         if (mode === "red") {
-          window.localStorage.setItem(seenKey, "true");
+          window.sessionStorage.setItem(gateSeenKey, "true");
         }
 
         var cta = ctaId ? document.getElementById(ctaId) : null;
