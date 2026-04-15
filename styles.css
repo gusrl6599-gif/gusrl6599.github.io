@@ -221,14 +221,21 @@ body.signal-open{
 
 .page-root{
   min-height:100svh;
+  transform:scale(1);
+  filter:none;
+  transition:transform .9s ease, filter .9s ease, opacity .9s ease;
+}
+
+/* Keep gate-era blur only when gate lock is active. */
+body.signal-open .page-root,
+body.gate-lock .page-root{
   transform:scale(1.03);
   filter:blur(12px) brightness(.45);
-  transition:transform .9s ease, filter .9s ease, opacity .9s ease;
 }
 
 body.entered .page-root{
   transform:scale(1);
-  filter:blur(0) brightness(1);
+  filter:none;
 }
 
 .matrix-gate{
@@ -3394,6 +3401,14 @@ q {
 .content__footer-main-copy {
   margin: 0;
   text-align: left;
+}
+
+.content__footer--main-end .content__footer-line {
+  color: #a8ffd8;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 10px rgba(127, 255, 198, 0.28);
 }
 
 .content__footer-main-note {
