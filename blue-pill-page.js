@@ -1,6 +1,6 @@
 /**
  * Blue pill route — ambient layers, rotating lines, dream overlay.
- * Cursor glow is throttled via rAF; timers pause when tab hidden.
+ * 모바일·터치에서는 별·파티클 수·애니메이션·idle 펄스를 줄여 끊김을 완화합니다.
  */
 (function () {
   "use strict";
@@ -29,6 +29,15 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  function isLiteMode() {
+    if (reduceMotion) return true;
+    if (window.innerWidth <= 768) return true;
+    if (window.matchMedia("(pointer: coarse)").matches) return true;
+    return false;
+  }
+
+  let liteMode = isLiteMode();
+
   let lineIndex = 0;
   let rotateTimerId = 0;
   let idleTimerId = 0;
@@ -38,7 +47,7 @@
 
   function setLine(nextIndex) {
     if (!rotatingLine) return;
-    if (reduceMotion) {
+    if (reduceMotion || liteMode) {
       rotatingLine.textContent = lines[nextIndex];
       return;
     }
@@ -65,11 +74,12 @@
   function startRotateTimer() {
     if (reduceMotion) return;
     clearInterval(rotateTimerId);
+    const interval = liteMode ? 9000 : 5000;
     rotateTimerId = window.setInterval(() => {
       if (document.hidden) return;
       lineIndex = (lineIndex + 1) % lines.length;
       setLine(lineIndex);
-    }, 5000);
+    }, interval);
   }
 
   if (changeLineBtn) {
@@ -90,7 +100,7 @@
 
   if (glowBtn && flash) {
     glowBtn.addEventListener("click", () => {
-      if (reduceMotion) return;
+      if (reduceMotion || liteMode) return;
       flash.animate(
         [
           { opacity: 0 },
@@ -104,7 +114,7 @@
   }
 
   function scheduleCursorFlush() {
-    if (reduceMotion || !cursorGlow) return;
+    if (reduceMotion || liteMode || !cursorGlow) return;
     if (rafId) return;
     rafId = requestAnimationFrame(() => {
       rafId = 0;
@@ -113,7 +123,7 @@
     });
   }
 
-  if (cursorGlow && !reduceMotion) {
+  if (cursorGlow && !reduceMotion && !liteMode) {
     window.addEventListener(
       "mousemove",
       (e) => {
@@ -125,10 +135,20 @@
     );
   }
 
+  function starCount() {
+    if (liteMode) return 5;
+    return window.innerWidth < 1100 ? 22 : 30;
+  }
+
+  function particleCount() {
+    if (liteMode) return 0;
+    return window.innerWidth < 1100 ? 20 : 32;
+  }
+
   function createStars() {
     if (!starsHost) return;
     starsHost.textContent = "";
-    const count = window.innerWidth < 768 ? 18 : 30;
+    const count = starCount();
     for (let i = 0; i < count; i++) {
       const star = document.createElement("span");
       star.className = "blue-dream__star";
@@ -136,7 +156,11 @@
       star.style.left = `${Math.random() * 100}%`;
       star.style.top = `${Math.random() * 40}%`;
       star.style.opacity = String(0.15 + Math.random() * 0.5);
-      star.style.setProperty("--bd-twinkle", `${4 + Math.random() * 7}s`);
+      if (!liteMode) {
+        star.style.setProperty("--bd-twinkle", `${4 + Math.random() * 7}s`);
+      } else {
+        star.style.setProperty("--bd-twinkle", "0s");
+      }
       starsHost.appendChild(star);
     }
   }
@@ -144,7 +168,7 @@
   function createParticles() {
     if (!particlesHost) return;
     particlesHost.textContent = "";
-    const count = window.innerWidth < 768 ? 14 : 32;
+    const count = particleCount();
     for (let i = 0; i < count; i++) {
       const p = document.createElement("span");
       p.className = "blue-dream__particle";
@@ -162,7 +186,7 @@
   }
 
   function subtleAutoPulse() {
-    if (reduceMotion || !flash) return;
+    if (reduceMotion || liteMode || !flash) return;
     flash.animate(
       [
         { opacity: 0 },
@@ -174,13 +198,16 @@
   }
 
   function resetIdle() {
+    if (liteMode) return;
     clearTimeout(idleTimerId);
     idleTimerId = window.setTimeout(subtleAutoPulse, 7000);
   }
 
-  ["mousemove", "click", "touchstart", "keydown"].forEach((evt) => {
-    window.addEventListener(evt, resetIdle, { passive: true });
-  });
+  if (!liteMode) {
+    ["mousemove", "click", "touchstart", "keydown"].forEach((evt) => {
+      window.addEventListener(evt, resetIdle, { passive: true });
+    });
+  }
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
@@ -197,15 +224,25 @@
     () => {
       clearTimeout(resizeTid);
       resizeTid = window.setTimeout(() => {
+        const next = isLiteMode();
+        if (next !== liteMode) {
+          liteMode = next;
+          root.classList.toggle("blue-dream--lite", liteMode);
+          clearInterval(rotateTimerId);
+          startRotateTimer();
+          if (!liteMode) resetIdle();
+        }
         createStars();
         createParticles();
-      }, 180);
+      }, 200);
     },
     { passive: true }
   );
 
+  root.classList.toggle("blue-dream--lite", liteMode);
+
   createStars();
   createParticles();
   startRotateTimer();
-  resetIdle();
+  if (!liteMode) resetIdle();
 })();

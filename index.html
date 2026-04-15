@@ -35,7 +35,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body id="top">
   <svg class="pill-route-svg" width="0" height="0" aria-hidden="true" focusable="false">
     <defs>
       <filter id="pillLiquidDistortion" color-interpolation-filters="sRGB">
@@ -89,33 +89,38 @@
       </header>
 
       <div class="pill-scene__stage">
-        <figure class="pill-scene__reference" aria-hidden="true">
+        <figure class="pill-scene__reference">
           <img
             src="images/choice-scene.png"
             alt=""
             loading="eager"
             onerror="this.onerror=null;this.src='images/choice-placeholder.svg';"
           >
+          <a
+            class="pill-scene__img-hit pill-scene__img-hit--red"
+            href="easter-egg.html"
+            aria-label="손바닥의 레드 필 — Easter Egg 페이지로 이동"
+          ></a>
         </figure>
 
         <div class="pill-scene__paths">
           <div class="pill-column pill-column--red">
             <p id="pill-copy-red" class="pill-path__copy">
               <span lang="en">“You take the red pill—you stay in Wonderland, and I show you how deep the rabbit hole goes.”</span>
-              <span class="pill-path__copy-ko" lang="ko">레드 필을 삼키면—이상한 나라에 발 붙이는 거야. 토끼 굴이 어디까지 파였는지, 눈으로 확인시켜 줄게.</span>
+              <span class="pill-path__copy-ko" lang="ko">진실은 불편하다.<br />하지만 그 끝에서, 현실은 처음 시작된다.</span>
             </p>
             <button type="button" class="pill-3d pill-3d--red" id="pill-red" aria-describedby="pill-copy-red" aria-label="Red pill — continue to the page">
               <span class="pill-3d__body" aria-hidden="true"></span>
               <span class="pill-3d__shine" aria-hidden="true"></span>
               <span class="pill-3d__label" aria-hidden="true">RED</span>
             </button>
-            <p class="pill-path__cta">TAKE THE RED PILL</p>
+            <button id="pill-red-cta" type="button" class="pill-path__cta pill-path__cta-btn">TAKE THE RED PILL</button>
           </div>
 
           <div class="pill-column pill-column--blue">
             <p id="pill-copy-blue" class="pill-path__copy">
               <span lang="en">“You take the blue pill… the story ends, you wake up in your bed and believe whatever you want to believe.”</span>
-              <span class="pill-path__copy-ko" lang="ko">블루 필을 삼키면—이야기는 거기서 끝이야. 침대에서 눈 뜨고, 네가 믿고 싶은 것만 믿으면 돼.</span>
+              <span class="pill-path__copy-ko" lang="ko">거짓은 편안하다.<br />그리고 대부분은 그 안에서 안심한다.</span>
             </p>
             <button type="button" class="pill-3d pill-3d--blue" id="pill-blue" aria-describedby="pill-copy-blue" aria-label="Blue pill — continue to the page">
               <span class="pill-3d__route-wave" aria-hidden="true"></span>
@@ -124,7 +129,7 @@
               <span class="pill-3d__shine" aria-hidden="true"></span>
               <span class="pill-3d__label" aria-hidden="true">BLUE</span>
             </button>
-            <p class="pill-path__cta">TAKE THE BLUE PILL</p>
+            <button id="pill-blue-cta" type="button" class="pill-path__cta pill-path__cta-btn">TAKE THE BLUE PILL</button>
           </div>
         </div>
       </div>
@@ -155,19 +160,16 @@
       <header class="sidebar" aria-label="탐색">
         <div class="sidebar__inner">
           <div class="sidebar__top">
-            <h1 class="sidebar__name"><a href="#main">김현기</a></h1>
-            <p class="sidebar__role">실행 중심 · 문제 해결 · 실전형</p>
-            <p class="sidebar__tagline">생각에 머무르지 않고 움직이고, 원인을 구조적으로 파고들며 결과에 책임지는 편입니다. 페이스와 감정 관리로 성장 방향을 다듬어 가고 있습니다.</p>
+            <h1 class="sidebar__name"><a href="#main">THE MATRIX</a></h1>
+            <p class="sidebar__role">선택 · 각성 · 질서와 균열</p>
+            <p class="sidebar__tagline">첫 화면은 선택의 문이다. 아래 섹션에서 세계관의 흐름과 주요 인물의 결을 카드형으로 이어 본다.</p>
 
             <nav class="sidebar__nav" aria-label="페이지 섹션">
               <ul>
                 <li><a href="matrix-intro.html">The Matrix</a></li>
-                <li><a href="#about">소개</a></li>
-                <li><a href="#strengths">강점</a></li>
-                <li><a href="#weaknesses">약점</a></li>
-                <li><a href="#opportunities">기회</a></li>
-                <li><a href="#threats">위협</a></li>
-                <li><a href="#summary">한줄 요약</a></li>
+                <li><a href="#world-cards">세계관 3카드</a></li>
+                <li><a href="#character-grid">인물 그리드</a></li>
+                <li><a href="#character-detail">상세 패널</a></li>
               </ul>
             </nav>
           </div>
@@ -175,122 +177,119 @@
         </div>
       </header>
 
-      <main id="main" class="content">
-        <section id="about" class="section">
+      <main id="main" class="content matrix-home-main">
+        <section id="world-cards" class="section">
           <h2 class="section__heading">
             <span class="section__heading-main">
               <span class="section__num">01.</span>
-              <span class="section__title">소개</span>
+              <span class="section__title">세계관 3카드</span>
             </span>
             <span class="section__rule" aria-hidden="true"></span>
           </h2>
           <div class="section__body">
-            <p>개인 SWOT을 바탕으로 정리한 자기소개 페이지입니다. 실행력과 현실 감각을 바탕으로 과제를 끝까지 밀고 나가며, 동시에 스스로를 객관적으로 돌아보는 것을 중요하게 생각합니다.</p>
-            <ul class="tags" aria-label="핵심 키워드">
-              <li>빠른 학습</li>
-              <li>현실적 판단</li>
-              <li>책임감</li>
-              <li>문제 해결</li>
-            </ul>
+            <div class="matrix-home-world-grid" role="list">
+              <article class="matrix-home-world-card" role="listitem">
+                <p class="matrix-home-world-card__label" lang="en">Season 1</p>
+                <h3 class="matrix-home-world-card__title">각성</h3>
+                <p>세계가 가짜라는 사실을 알아차리고, 선택의 문 앞에 선다.</p>
+              </article>
+              <article class="matrix-home-world-card" role="listitem">
+                <p class="matrix-home-world-card__label" lang="en">Season 2</p>
+                <h3 class="matrix-home-world-card__title">저항</h3>
+                <p>인간과 기계의 충돌은 깊어지고, 전쟁은 신념을 시험한다.</p>
+              </article>
+              <article class="matrix-home-world-card" role="listitem">
+                <p class="matrix-home-world-card__label" lang="en">Season 3</p>
+                <h3 class="matrix-home-world-card__title">균형</h3>
+                <p>파괴 대신 균형을 택하며, 질서는 새로운 형태로 갱신된다.</p>
+              </article>
+            </div>
           </div>
         </section>
 
-        <section id="strengths" class="section">
+        <section id="character-grid" class="section">
           <h2 class="section__heading">
             <span class="section__heading-main">
               <span class="section__num">02.</span>
-              <span class="section__title">강점</span>
+              <span class="section__title">인물 선택</span>
             </span>
             <span class="section__rule" aria-hidden="true"></span>
           </h2>
           <div class="section__body">
-            <ul class="list">
-              <li><strong>높은 실행력</strong> — 생각에 머무르지 않고 바로 행동으로 옮기며, 시행착오를 두려워하지 않고 직접 부딪혀 배웁니다.</li>
-              <li><strong>문제 해결 중심 사고</strong> — 문제를 피하기보다 끝까지 파고들고, 원인을 구조적으로 이해하려 합니다.</li>
-              <li><strong>현실적인 판단력</strong> — 이상보다 현실을 기준으로 판단하고, 손익·결과 중심으로 사고합니다.</li>
-              <li><strong>빠른 학습 능력</strong> — 실전 경험을 통해 빠르게 습득하고, 새로운 환경 적응력이 높습니다.</li>
-              <li><strong>책임감과 몰입도</strong> — 맡은 일에 깊게 몰입하며, 결과에 대한 책임을 회피하지 않습니다.</li>
-            </ul>
+            <div class="matrix-home-char-grid" role="list" aria-label="등장인물">
+              <button type="button" class="matrix-home-char-card is-active" role="listitem" data-char="neo">
+                <span class="matrix-home-char-card__ko">네오</span>
+                <span class="matrix-home-char-card__en" lang="en">Neo</span>
+              </button>
+              <button type="button" class="matrix-home-char-card" role="listitem" data-char="trinity">
+                <span class="matrix-home-char-card__ko">트리니티</span>
+                <span class="matrix-home-char-card__en" lang="en">Trinity</span>
+              </button>
+              <button type="button" class="matrix-home-char-card" role="listitem" data-char="morpheus">
+                <span class="matrix-home-char-card__ko">모피어스</span>
+                <span class="matrix-home-char-card__en" lang="en">Morpheus</span>
+              </button>
+              <button type="button" class="matrix-home-char-card" role="listitem" data-char="smith">
+                <span class="matrix-home-char-card__ko">스미스</span>
+                <span class="matrix-home-char-card__en" lang="en">Agent Smith</span>
+              </button>
+              <button type="button" class="matrix-home-char-card" role="listitem" data-char="oracle">
+                <span class="matrix-home-char-card__ko">오라클</span>
+                <span class="matrix-home-char-card__en" lang="en">Oracle</span>
+              </button>
+              <button type="button" class="matrix-home-char-card" role="listitem" data-char="architect">
+                <span class="matrix-home-char-card__ko">아키텍트</span>
+                <span class="matrix-home-char-card__en" lang="en">The Architect</span>
+              </button>
+              <button type="button" class="matrix-home-char-card" role="listitem" data-char="merovingian">
+                <span class="matrix-home-char-card__ko">메로빈지언</span>
+                <span class="matrix-home-char-card__en" lang="en">The Merovingian</span>
+              </button>
+              <button type="button" class="matrix-home-char-card" role="listitem" data-char="deus">
+                <span class="matrix-home-char-card__ko">데우스 엑스 마키나</span>
+                <span class="matrix-home-char-card__en" lang="en">Deus Ex Machina</span>
+              </button>
+            </div>
           </div>
         </section>
 
-        <section id="weaknesses" class="section">
+        <section id="character-detail" class="section">
           <h2 class="section__heading">
             <span class="section__heading-main">
               <span class="section__num">03.</span>
-              <span class="section__title">약점</span>
+              <span class="section__title">상세 패널</span>
             </span>
             <span class="section__rule" aria-hidden="true"></span>
           </h2>
           <div class="section__body">
-            <ul class="list">
-              <li><strong>감정 기복에 따른 판단 영향</strong> — 스트레스 상황에서 판단이 급해질 수 있고, 감정이 올라올 때 의사결정이 흔들릴 수 있습니다.</li>
-              <li><strong>과도한 자기 부담</strong> — 스스로에게 높은 기준을 적용하고, 혼자 해결하려는 경향이 강합니다.</li>
-              <li><strong>장기적인 균형 관리 부족</strong> — 단기 집중은 강하나 페이스 조절·체력·멘탈 관리가 변수가 될 수 있습니다.</li>
-              <li><strong>구조보다 실행 우선</strong> — 계획·시스템보다 실행을 먼저 선택해 큰 그림 설계가 뒤로 밀릴 때가 있습니다.</li>
-            </ul>
+            <article class="matrix-home-detail-panel" aria-live="polite">
+              <div id="matrix-home-detail-thumb" class="matrix-home-detail-panel__thumb is-neo" aria-hidden="true"></div>
+              <p id="matrix-home-detail-kicker" class="matrix-home-detail-panel__kicker" lang="en">Awakening / Fracture</p>
+              <h3 id="matrix-home-detail-name" class="matrix-home-detail-panel__name">네오 <span lang="en">(Neo)</span></h3>
+              <p id="matrix-home-detail-keywords" class="matrix-home-detail-panel__keywords">핵심 키워드: 각성 / 선택 / 균열 / 구원</p>
+              <p id="matrix-home-detail-desc" class="matrix-home-detail-panel__desc">가짜 평온의 틈을 가장 먼저 의심하고, 선택으로 자신을 증명한 존재.</p>
+              <blockquote class="matrix-home-detail-panel__quote">
+                <p id="matrix-home-detail-quote-ko">“나는 예언이 만든 존재가 아니다. 내가 선택한 길이 곧 나다.”</p>
+                <p id="matrix-home-detail-quote-en" lang="en">“I am not what prophecy made me. I am what I chose to become.”</p>
+              </blockquote>
+              <p class="matrix-home-detail-panel__more">
+                자세한 내용은 <a href="matrix-intro.html#characters">Matrix 소개 페이지</a>에서 확인.
+              </p>
+            </article>
           </div>
         </section>
 
-        <section id="opportunities" class="section">
-          <h2 class="section__heading">
-            <span class="section__heading-main">
-              <span class="section__num">04.</span>
-              <span class="section__title">기회</span>
-            </span>
-            <span class="section__rule" aria-hidden="true"></span>
-          </h2>
-          <div class="section__body">
-            <ul class="list">
-              <li><strong>경험 기반 성장</strong> — 시행착오를 통해 빠르게 성장하고, 실전 경험이 쌓일수록 경쟁력이 커집니다.</li>
-              <li><strong>자기 인식</strong> — 강·약을 객관적으로 인지하고 개선 방향을 설정할 수 있습니다.</li>
-              <li><strong>실행력 기반 확장성</strong> — 아이디어를 결과로 바꾸는 능력은 범용 역량입니다.</li>
-              <li><strong>신뢰 구축</strong> — 책임감 있는 태도로 장기 관계에서 강점으로 작용할 수 있습니다.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section id="threats" class="section">
-          <h2 class="section__heading">
-            <span class="section__heading-main">
-              <span class="section__num">05.</span>
-              <span class="section__title">위협</span>
-            </span>
-            <span class="section__rule" aria-hidden="true"></span>
-          </h2>
-          <div class="section__body">
-            <ul class="list">
-              <li><strong>번아웃</strong> — 몰입도가 높아 에너지 소모가 크고, 장기 과부하 위험이 있습니다.</li>
-              <li><strong>감정 기반 리스크</strong> — 중요한 선택에서 감정이 손실로 이어질 수 있습니다.</li>
-              <li><strong>고립된 판단</strong> — 혼자 해결하려다 외부 피드백을 놓칠 위험이 있습니다.</li>
-              <li><strong>방향성 불균형</strong> — 실행이 빨라 방향이 틀어지면 잘못된 방향으로 빠르게 갈 수 있습니다.</li>
-            </ul>
-          </div>
-        </section>
-
-        <section id="summary" class="section">
-          <h2 class="section__heading">
-            <span class="section__heading-main">
-              <span class="section__num">06.</span>
-              <span class="section__title">한줄 요약</span>
-            </span>
-            <span class="section__rule" aria-hidden="true"></span>
-          </h2>
-          <div class="section__body">
-            <blockquote class="pullquote">
-              <p>강한 실행력과 현실 감각을 가진 <em>실전형</em>이지만, 감정과 페이스 관리에 따라 퍼포먼스 변동이 있는 <em>성장형</em> 타입.</p>
-            </blockquote>
-            <p>본문은 개인 SWOT을 바탕으로 정리했습니다.</p>
-          </div>
-        </section>
-
-        <footer class="content__footer">
-          <p><span class="content__footer-line">© 김현기 · 정적 페이지 (HTML/CSS/JS)</span></p>
+        <footer class="content__footer content__footer--main-end">
+          <p class="content__footer-main-copy">
+            <span class="content__footer-line">© 김현기</span>
+          </p>
+          <p class="content__footer-main-note">정적 페이지 (HTML/CSS/JS)</p>
         </footer>
       </main>
     </div>
   </div>
 
+  <script src="index-matrix-sections.js" defer></script>
   <script src="app.js" defer></script>
   <script src="pwa.js" defer></script>
 </body>
