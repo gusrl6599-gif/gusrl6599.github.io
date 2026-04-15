@@ -63,6 +63,14 @@ body {
   box-shadow: 0 0 30px rgba(0, 100, 255, 0.4);
 }
 
+/* Main pill scene: disable heavy hover effects to reduce lag */
+.pill-scene__paths .card:hover,
+.pill-scene__paths .red-card:hover,
+.pill-scene__paths .blue-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
 .matrix-card {
   position: relative;
   overflow: hidden;
@@ -623,15 +631,15 @@ body.entered .page-root{
 /* Gate redesign: apply only to first-load signal box */
 .matrix-gate {
   --bg: #03100c;
-  --panel: rgba(4, 22, 17, 0.78);
-  --line: rgba(149, 255, 222, 0.58);
-  --line-bright: rgba(185, 255, 234, 0.95);
+  --panel: rgba(3, 20, 15, 0.82);
+  --line: rgba(156, 255, 225, 0.68);
+  --line-bright: rgba(210, 255, 240, 0.98);
   --text: #d7f8ed;
   --muted: rgba(205, 244, 230, 0.78);
   --red: #ff6f62;
-  --red-glow: rgba(255, 103, 80, 0.42);
+  --red-glow: rgba(255, 103, 80, 0.58);
   --blue: #72d8ff;
-  --blue-glow: rgba(80, 189, 255, 0.42);
+  --blue-glow: rgba(80, 189, 255, 0.58);
   background: #000;
 }
 
@@ -642,8 +650,8 @@ body.entered .page-root{
   display: grid;
   place-items: center;
   background:
-    radial-gradient(circle at 50% 50%, rgba(63, 255, 198, 0.16), transparent 35%),
-    radial-gradient(circle at 50% 0%, rgba(80, 255, 200, 0.1), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(63, 255, 198, 0.22), transparent 38%),
+    radial-gradient(circle at 50% 0%, rgba(80, 255, 200, 0.13), transparent 42%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.45)),
     var(--bg);
 }
@@ -665,7 +673,7 @@ body.entered .page-root{
     rgba(0, 0, 0, 0.12) 2px,
     rgba(0, 0, 0, 0.12) 4px
   );
-  opacity: 0.18;
+  opacity: 0.24;
   mix-blend-mode: screen;
 }
 
@@ -674,7 +682,7 @@ body.entered .page-root{
 }
 
 .matrix-gate .noise {
-  opacity: 0.14;
+  opacity: 0.2;
   background-image:
     radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.65) 0 0.5px, transparent 0.8px),
     radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.55) 0 0.6px, transparent 0.9px),
@@ -720,20 +728,20 @@ body.entered .page-root{
   content: "";
   position: absolute;
   inset: 2.8% 2.6%;
-  border: 1px solid rgba(163, 255, 230, 0.18);
+  border: 1px solid rgba(163, 255, 230, 0.28);
   box-shadow:
-    0 0 25px rgba(109, 255, 214, 0.08),
-    inset 0 0 20px rgba(109, 255, 214, 0.04);
+    0 0 36px rgba(109, 255, 214, 0.14),
+    inset 0 0 28px rgba(109, 255, 214, 0.08);
 }
 
 .matrix-gate .frame-wrap::after {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(167, 255, 233, 0.15);
+  border: 1px solid rgba(167, 255, 233, 0.22);
   box-shadow:
-    inset 0 0 80px rgba(100, 255, 210, 0.06),
-    0 0 60px rgba(100, 255, 210, 0.08);
+    inset 0 0 88px rgba(100, 255, 210, 0.1),
+    0 0 72px rgba(100, 255, 210, 0.12);
   opacity: 0.9;
 }
 
@@ -800,17 +808,17 @@ body.entered .page-root{
   height: 82%;
   border: 2px solid var(--line);
   background:
-    linear-gradient(180deg, rgba(10, 37, 29, 0.4), rgba(5, 18, 14, 0.55)),
+    linear-gradient(180deg, rgba(12, 40, 31, 0.42), rgba(4, 16, 12, 0.62)),
     var(--panel);
   box-shadow:
-    0 0 12px rgba(127, 255, 218, 0.15),
-    inset 0 0 26px rgba(152, 255, 224, 0.08),
-    inset 0 0 0 1px rgba(194, 255, 237, 0.16);
+    0 0 18px rgba(127, 255, 218, 0.22),
+    inset 0 0 30px rgba(152, 255, 224, 0.12),
+    inset 0 0 0 1px rgba(194, 255, 237, 0.24);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 10%;
+  justify-content: center;
+  padding: clamp(54px, 9vh, 86px) clamp(16px, 2.2vw, 28px) clamp(18px, 3.2vh, 28px);
   overflow: hidden;
 }
 
@@ -818,12 +826,12 @@ body.entered .page-root{
   content: "";
   position: absolute;
   inset: 2.5%;
-  border: 1px solid rgba(176, 255, 231, 0.12);
+  border: 1px solid rgba(176, 255, 231, 0.2);
 }
 
 .matrix-gate .title {
   position: absolute;
-  top: -7.2%;
+  top: 2.4%;
   left: 50%;
   transform: translateX(-50%);
   font-size: clamp(18px, 2vw, 27px);
@@ -839,13 +847,14 @@ body.entered .page-root{
   font-size: clamp(17px, 2vw, 28px);
   text-transform: uppercase;
   color: var(--text);
-  margin-bottom: 9.5%;
-  text-shadow: 0 0 10px rgba(190, 255, 231, 0.14);
+  margin: 0 0 clamp(16px, 2.8vh, 26px);
+  text-align: center;
+  text-shadow: 0 0 12px rgba(190, 255, 231, 0.22);
 }
 
 .matrix-gate .divider-wrap {
   width: 80%;
-  margin-bottom: 11%;
+  margin-bottom: clamp(14px, 2.6vh, 24px);
 }
 
 .matrix-gate .divider {
@@ -859,10 +868,11 @@ body.entered .page-root{
   font-family: "Oxanium", sans-serif;
   font-size: clamp(18px, 2.15vw, 31px);
   text-transform: uppercase;
-  letter-spacing: 0.34em;
+  letter-spacing: 0.2em;
   color: rgba(225, 251, 243, 0.98);
-  text-shadow: 0 0 10px rgba(186, 255, 230, 0.12);
-  white-space: nowrap;
+  text-shadow: 0 0 12px rgba(186, 255, 230, 0.2);
+  white-space: normal;
+  text-align: center;
 }
 
 .matrix-gate .button-row {
@@ -870,13 +880,13 @@ body.entered .page-root{
   gap: 20px;
   width: 82%;
   justify-content: center;
-  margin-bottom: 7.5%;
+  margin-bottom: clamp(10px, 2vh, 18px);
   flex-wrap: wrap;
 }
 
 .matrix-gate .choice {
   position: relative;
-  min-width: 280px;
+  min-width: 240px;
   flex: 1 1 320px;
   max-width: 360px;
   height: 74px;
@@ -891,7 +901,7 @@ body.entered .page-root{
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, filter 0.18s ease;
   overflow: hidden;
   backdrop-filter: blur(1px);
 }
@@ -911,26 +921,27 @@ body.entered .page-root{
 
 .matrix-gate .choice:hover {
   transform: translateY(-2px);
+  filter: brightness(1.08);
 }
 
 .matrix-gate .choice.red {
   color: var(--red);
-  box-shadow: inset 0 0 12px rgba(255, 103, 80, 0.08), 0 0 16px rgba(255, 103, 80, 0.12);
+  box-shadow: inset 0 0 14px rgba(255, 103, 80, 0.12), 0 0 18px rgba(255, 103, 80, 0.2);
 }
 
 .matrix-gate .choice.red:hover {
   background: rgba(255, 103, 80, 0.05);
-  box-shadow: 0 0 18px var(--red-glow), inset 0 0 16px rgba(255, 103, 80, 0.1);
+  box-shadow: 0 0 24px var(--red-glow), inset 0 0 18px rgba(255, 103, 80, 0.15);
 }
 
 .matrix-gate .choice.blue {
   color: var(--blue);
-  box-shadow: inset 0 0 12px rgba(80, 189, 255, 0.08), 0 0 16px rgba(80, 189, 255, 0.12);
+  box-shadow: inset 0 0 14px rgba(80, 189, 255, 0.12), 0 0 18px rgba(80, 189, 255, 0.2);
 }
 
 .matrix-gate .choice.blue:hover {
   background: rgba(80, 189, 255, 0.05);
-  box-shadow: 0 0 18px var(--blue-glow), inset 0 0 16px rgba(80, 189, 255, 0.1);
+  box-shadow: 0 0 24px var(--blue-glow), inset 0 0 18px rgba(80, 189, 255, 0.15);
 }
 
 .matrix-gate .footer {
@@ -942,9 +953,9 @@ body.entered .page-root{
   letter-spacing: 0.1em;
   text-transform: uppercase;
   opacity: 0.88;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
 }
 
 .matrix-gate .flash-line {
@@ -993,55 +1004,58 @@ body.entered .page-root{
 @media (max-width: 760px) {
   .matrix-gate .frame-wrap {
     width: 96vw;
-    aspect-ratio: 0.88 / 1;
+    aspect-ratio: 1 / 1.12;
   }
 
   .matrix-gate .panel {
     width: 92%;
-    height: 84%;
-    padding-top: 18%;
+    height: 88%;
+    padding: 58px 12px 16px;
   }
 
   .matrix-gate .title {
-    top: -5.8%;
+    top: 2%;
+    font-size: 15px;
+    letter-spacing: 0.14em;
   }
 
   .matrix-gate .headline {
-    font-size: 16px;
-    margin-bottom: 15%;
+    font-size: 15px;
+    margin-bottom: 14px;
     text-align: center;
-    padding: 0 14px;
+    padding: 0 10px;
+    line-height: 1.35;
   }
 
   .matrix-gate .divider-wrap {
     width: 84%;
-    margin-bottom: 16%;
+    margin-bottom: 14px;
   }
 
   .matrix-gate .subhead {
     white-space: normal;
     text-align: center;
-    line-height: 1.45;
-    letter-spacing: 0.22em;
-    font-size: 18px;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    font-size: 16px;
   }
 
   .matrix-gate .button-row {
     width: 86%;
     gap: 14px;
-    margin-bottom: 10%;
+    margin-bottom: 10px;
   }
 
   .matrix-gate .choice {
     min-width: 100%;
-    height: 64px;
+    height: 58px;
     font-size: 14px;
   }
 
   .matrix-gate .footer {
     width: 88%;
     white-space: normal;
-    line-height: 1.5;
+    line-height: 1.35;
     font-size: 8px;
   }
 
