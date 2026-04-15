@@ -2194,13 +2194,13 @@ html.pill-choice-red:not(.red-prelude-pending) .page-shell {
   text-shadow: none;
 }
 
-.route--red .section__caption-ko {
-  font-family: "Share Tech Mono", "Noto Sans KR", monospace;
+.route--red .section__caption {
+  font-family: "Share Tech Mono", "Consolas", "Courier New", monospace;
   color: rgba(136, 146, 176, 0.92);
   text-shadow: none;
 }
 
-.route--red .section__ko-nobreak {
+.route--red .section__nobreak {
   white-space: nowrap;
 }
 
@@ -2330,7 +2330,7 @@ html.pill-choice-red:not(.red-prelude-pending) .page-shell {
   margin-bottom: 0;
 }
 
-.section__caption-ko {
+.section__caption {
   margin: 0.4rem 0 0;
   max-width: 40rem;
   font-size: 0.9rem;
@@ -2339,16 +2339,16 @@ html.pill-choice-red:not(.red-prelude-pending) .page-shell {
   color: var(--light-slate);
 }
 
-.section__body--pairs > p:not(.section__caption-ko) {
+.section__body--pairs > p:not(.section__caption) {
   margin-bottom: 0.35rem;
 }
 
-.section__body--pairs .section__caption-ko {
+.section__body--pairs .section__caption {
   margin-top: 0;
   margin-bottom: 1.15rem;
 }
 
-.section__body--pairs .section__caption-ko:last-child {
+.section__body--pairs .section__caption:last-child {
   margin-bottom: 0;
 }
 

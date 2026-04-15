@@ -353,14 +353,14 @@
     function syncMuteLabel() {
       if (!muteBtn || !ytPlayer) return;
       var m = ytPlayer.isMuted && ytPlayer.isMuted();
-      muteBtn.textContent = m ? "소리 켜기" : "음소거";
-      muteBtn.setAttribute("aria-label", m ? "소리 켜기" : "음소거");
+      muteBtn.textContent = m ? "Unmute" : "Mute";
+      muteBtn.setAttribute("aria-label", m ? "Unmute" : "Mute");
     }
 
     function createPlayer() {
       if (ytPlayer || creating) return;
       creating = true;
-      btn.textContent = "불러오는 중…";
+      btn.textContent = "Loading…";
       btn.disabled = true;
       loadYouTubeIframeAPI(function () {
         try {
@@ -388,18 +388,18 @@
                 setControlsEnabled(true);
                 syncMuteLabel();
                 p.playVideo();
-                btn.textContent = "■ 정지";
+                btn.textContent = "■ Stop";
               },
               onStateChange: function (e) {
                 var YPS = window.YT && window.YT.PlayerState;
                 if (YPS && e.data === YPS.ENDED) {
-                  btn.textContent = "▶ 매트릭스 클립";
+                  btn.textContent = "▶ Matrix clip";
                 }
               },
               onError: function () {
                 creating = false;
                 btn.disabled = false;
-                btn.textContent = "▶ 매트릭스 클립";
+                btn.textContent = "▶ Matrix clip";
                 setControlsEnabled(false);
               }
             }
@@ -407,7 +407,7 @@
         } catch (err) {
           creating = false;
           btn.disabled = false;
-          btn.textContent = "▶ 매트릭스 클립";
+          btn.textContent = "▶ Matrix clip";
         }
       });
     }
@@ -424,10 +424,10 @@
         var isPlaying = YPS ? st === YPS.PLAYING : st === 1;
         if (isPlaying) {
           ytPlayer.pauseVideo();
-          btn.textContent = "▶ 매트릭스 클립";
+          btn.textContent = "▶ Matrix clip";
         } else {
           ytPlayer.playVideo();
-          btn.textContent = "■ 정지";
+          btn.textContent = "■ Stop";
         }
       } catch (err2) {
         createPlayer();
@@ -899,11 +899,11 @@
       audioBtn.addEventListener("click", function () {
         if (!audioPlayer.getAttribute("src")) {
           audioPlayer.setAttribute("src", MATRIX_AUDIO_SRC);
-          audioBtn.textContent = "매트릭스 오디오 재생 중…";
+          audioBtn.textContent = "Matrix audio playing…";
           return;
         }
         audioPlayer.setAttribute("src", "");
-        audioBtn.textContent = "▶ 매트릭스 오디오 재생";
+        audioBtn.textContent = "▶ Play Matrix Audio";
       });
     }
 
