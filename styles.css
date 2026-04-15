@@ -1,6 +1,6 @@
 /*
   Brittany Chiang–style layout (reference: https://brittanychiang.com/)
-  GitHub Pages: images/profile.png, images/main-neo-bg.webp, images/*.png (ASCII paths).
+  GitHub Pages: images/profile.png, images/main-neo-bg.webp, images/*.png (ASCII paths). Pill buttons use CSS only.
 */
 
 :root {
@@ -762,9 +762,8 @@ html.pill-already-chosen #pill-scene {
   color: rgba(140, 185, 255, 0.95);
 }
 
-/* 실제 알약처럼 보이는 캡슐 버튼 */
+/* 실제 알약처럼 보이는 캡슐 버튼 (비트맵 텍스처 없음: 모바일에서 이중/깨짐 방지) */
 .pill-3d {
-  --pill-photo: url("images/blue-pill-pick.png");
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -870,10 +869,11 @@ html.pill-already-chosen #pill-scene {
 
 .pill-3d--red .pill-3d__body {
   background:
-    linear-gradient(180deg, rgba(255, 90, 110, 0.35) 0%, rgba(120, 12, 28, 0.18) 100%),
-    var(--pill-photo);
-  background-size: 100% 100%, 205% auto;
-  background-position: 0 0, left center;
+    linear-gradient(180deg, rgba(255, 110, 130, 0.42) 0%, rgba(95, 12, 26, 0.55) 42%, rgba(35, 4, 12, 0.95) 100%),
+    radial-gradient(ellipse 140% 100% at 22% 36%, rgba(255, 210, 220, 0.45), transparent 52%),
+    radial-gradient(ellipse 100% 80% at 82% 64%, rgba(90, 18, 32, 0.55), transparent 48%);
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
   background-repeat: no-repeat;
 }
 
@@ -895,10 +895,11 @@ html.pill-already-chosen #pill-scene {
 
 .pill-3d--blue .pill-3d__body {
   background:
-    linear-gradient(180deg, rgba(90, 150, 255, 0.34) 0%, rgba(10, 36, 92, 0.18) 100%),
-    var(--pill-photo);
-  background-size: 100% 100%, 205% auto;
-  background-position: 0 0, right center;
+    linear-gradient(180deg, rgba(120, 175, 255, 0.42) 0%, rgba(22, 56, 140, 0.55) 42%, rgba(8, 24, 72, 0.96) 100%),
+    radial-gradient(ellipse 140% 100% at 78% 36%, rgba(200, 225, 255, 0.42), transparent 52%),
+    radial-gradient(ellipse 100% 80% at 18% 64%, rgba(30, 70, 160, 0.5), transparent 48%);
+  background-size: cover, cover, cover;
+  background-position: center, center, center;
   background-repeat: no-repeat;
 }
 

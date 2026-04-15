@@ -77,14 +77,7 @@ $pen = New-Object System.Drawing.Pen ([System.Drawing.Color]::FromArgb(210, 100,
 $gp.DrawEllipse($pen, 44, 44, $S - 89, $S - 89)
 $pen.Dispose()
 
-$font = New-Object System.Drawing.Font('Segoe UI', 80, [System.Drawing.FontStyle]::Bold)
-$sf = New-Object System.Drawing.StringFormat
-$sf.Alignment = [System.Drawing.StringAlignment]::Center
-$sf.LineAlignment = [System.Drawing.StringAlignment]::Center
-$textRect = New-Object System.Drawing.RectangleF(0, [float]($S * 0.38), [float]$S, [float]($S * 0.35))
-$gp.DrawString('KH', $font, [System.Drawing.Brushes]::WhiteSmoke, $textRect, $sf)
-$font.Dispose()
-$sf.Dispose()
+# No overlaid initials: keeps profile.png neutral for the site (replace file with a real photo anytime).
 
 $outP = Join-Path $dir 'profile.png'
 $p.Save($outP, [System.Drawing.Imaging.ImageFormat]::Png)
