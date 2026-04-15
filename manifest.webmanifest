@@ -1,26 +1,16 @@
 {
-  "name": "choose — Red / Blue Pill",
+  "name": "choose",
   "short_name": "choose",
-  "description": "Red Pill / Blue Pill — 포트폴리오 & Matrix 루트",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
   "background_color": "#020806",
   "theme_color": "#0a192f",
-  "lang": "ko",
   "icons": [
     {
       "src": "images/pwa-icon.svg",
-      "sizes": "512x512",
+      "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
-    },
-    {
-      "src": "images/pwa-icon.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
     }
   ]
 }
