@@ -25,7 +25,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* smooth 스크롤은 메인 스크롤 성능·버벅임에 불리할 수 있음 —錨 이동은 브라우저 기본 */
+  scroll-behavior: auto;
   color-scheme: dark;
 }
 
@@ -95,6 +96,8 @@ html.pill-route-transition .page-shell {
   place-items: center;
   padding: 1rem 1rem 2rem;
   overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   color: #d8ffe9;
   opacity: 1;
   visibility: visible;
@@ -1180,6 +1183,7 @@ html.pill-choice-blue:not(.blue-reveal-pending) .page-shell {
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  contain: paint;
   background-color: var(--navy);
   background-image:
     linear-gradient(180deg, rgba(6, 22, 16, 0.78) 0%, rgba(3, 14, 11, 0.92) 100%),
@@ -1273,6 +1277,9 @@ html.pill-choice-blue:not(.blue-reveal-pending) .page-shell {
 .page-shell {
   position: relative;
   z-index: 1;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Red Pill route: subtle storm (rain + distant lightning) over page background */
@@ -2118,6 +2125,8 @@ html.pill-choice-red:not(.red-prelude-pending) .page-shell {
 
 .content {
   padding: 0 0 5rem;
+  transform: translateZ(0);
+  contain: content;
 }
 
 @media (min-width: 1024px) {
@@ -3704,10 +3713,6 @@ html.red-prelude-pending .red-route-atmosphere {
     overscroll-behavior-y: none;
   }
 
-  .page-shell {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-  }
 }
 
 /* ─── Blue Pill (you-choose-blue-pill): quiet morning, no flash — slow, soft, still ─── */
@@ -3721,6 +3726,7 @@ body.route--blue-morning {
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .blue-morning {
@@ -3729,7 +3735,7 @@ body.route--blue-morning {
   min-height: 100dvh;
   box-sizing: border-box;
   padding: clamp(1.25rem, 4vw, 2.5rem);
-  padding-bottom: 3rem;
+  padding-bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
 }
 
 .blue-morning__grain {
@@ -3768,7 +3774,7 @@ body.route--blue-morning {
     radial-gradient(ellipse 60% 40% at 38% 8%, rgba(255, 245, 230, 0.12) 0%, transparent 50%),
     linear-gradient(180deg, rgba(30, 45, 72, 0.35) 0%, transparent 72%);
   animation: blue-morning-breathe 14s ease-in-out infinite;
-  filter: blur(0.5px);
+  will-change: opacity;
 }
 
 .blue-morning__curtain {
@@ -3784,7 +3790,6 @@ body.route--blue-morning {
     rgba(55, 62, 78, 0.08) 100%
   );
   opacity: 0.88;
-  filter: blur(0.3px);
 }
 
 .blue-morning__curtain--a {
@@ -3802,12 +3807,10 @@ body.route--blue-morning {
 @keyframes blue-morning-breathe {
   0%,
   100% {
-    opacity: 0.85;
-    transform: scale(1);
+    opacity: 0.82;
   }
   50% {
     opacity: 1;
-    transform: scale(1.02);
   }
 }
 
@@ -3878,62 +3881,63 @@ body.route--blue-morning {
 .blue-morning__main {
   position: relative;
   z-index: 2;
-  max-width: 36rem;
+  max-width: 42rem;
   margin: 0 auto;
-  padding-top: min(20vh, 7rem);
+  padding-top: min(10vh, 3rem);
+  padding-bottom: 2rem;
 }
 
 .blue-morning__eyebrow {
-  margin: 0 0 2.5rem;
-  font-size: 0.72rem;
+  margin: 0 0 2rem;
+  font-size: clamp(0.8rem, 2.8vw, 0.95rem);
   font-weight: 400;
-  letter-spacing: 0.42em;
-  text-indent: 0.42em;
+  letter-spacing: 0.38em;
+  text-indent: 0.38em;
   text-transform: uppercase;
   color: rgba(160, 185, 220, 0.55);
 }
 
 .blue-morning__block {
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.85rem;
 }
 
 .blue-morning__line {
-  margin: 0.25rem 0;
-  font-size: 0.98rem;
+  margin: 0.3rem 0;
+  font-size: clamp(1.05rem, 3.2vw, 1.2rem);
   line-height: 1.65;
   font-weight: 300;
   color: rgba(230, 236, 248, 0.88);
 }
 
 .blue-morning__line--ko {
-  font-size: 0.94rem;
+  font-size: clamp(0.98rem, 2.9vw, 1.12rem);
   color: rgba(200, 210, 228, 0.72);
   letter-spacing: -0.01em;
 }
 
 .blue-morning__mid {
-  margin: 2.75rem 0 2.25rem;
-  padding-top: 2rem;
+  margin: 2.5rem 0 2rem;
+  padding-top: 1.75rem;
   border-top: 1px solid rgba(120, 140, 170, 0.15);
 }
 
 .blue-morning__mid-line {
-  margin: 0.5rem 0;
-  font-size: 1.05rem;
+  margin: 0.55rem 0;
+  font-size: clamp(1.12rem, 3.4vw, 1.28rem);
   font-weight: 300;
   letter-spacing: 0.02em;
   color: rgba(235, 240, 252, 0.92);
 }
 
 .blue-morning__essence {
-  margin: 2.5rem 0;
+  margin: 2.25rem 0;
   padding: 0 0 0 1.1rem;
   border-left: 1px solid rgba(140, 165, 205, 0.28);
 }
 
 .blue-morning__essence-en {
-  margin: 0 0 0.75rem;
-  font-size: 1.08rem;
+  margin: 0 0 0.85rem;
+  font-size: clamp(1.12rem, 3.5vw, 1.3rem);
   font-weight: 300;
   line-height: 1.55;
   color: rgba(238, 244, 255, 0.95);
@@ -3941,47 +3945,48 @@ body.route--blue-morning {
 
 .blue-morning__essence-ko {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: clamp(1.02rem, 3vw, 1.15rem);
   font-weight: 300;
   line-height: 1.65;
   color: rgba(200, 215, 235, 0.78);
 }
 
 .blue-morning__meta {
-  margin: 2rem 0;
-  padding-top: 1.5rem;
+  margin: 1.75rem 0;
+  padding-top: 1.25rem;
 }
 
 .blue-morning__meta-en,
 .blue-morning__meta-ko {
-  margin: 0.35rem 0;
-  font-size: 0.82rem;
+  margin: 0.4rem 0;
+  font-size: clamp(0.88rem, 2.5vw, 0.98rem);
   line-height: 1.7;
   font-weight: 300;
   color: rgba(160, 178, 205, 0.55);
 }
 
 .blue-morning__foot {
-  margin-top: 2.75rem;
-  padding-top: 1.75rem;
+  margin-top: 2.25rem;
+  padding: 1.5rem 0 calc(2rem + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid rgba(100, 120, 150, 0.12);
 }
 
 .blue-morning__foot-line {
-  margin: 0.4rem 0;
-  font-size: 0.8rem;
+  margin: 0.45rem 0;
+  font-size: clamp(0.88rem, 2.5vw, 0.98rem);
   line-height: 1.65;
   font-weight: 300;
   color: rgba(155, 175, 200, 0.5);
 }
 
 .blue-morning__back-wrap {
-  margin-top: 2rem;
+  margin-top: 1.75rem;
+  padding-bottom: 0.25rem;
 }
 
 .blue-morning__back {
   display: inline-block;
-  font-size: 0.78rem;
+  font-size: clamp(0.82rem, 2.4vw, 0.92rem);
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -4007,13 +4012,11 @@ body.route--blue-morning {
 @keyframes blue-morning-fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
-    filter: blur(6px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 

@@ -942,7 +942,17 @@
       }
     }
 
-    window.addEventListener("scroll", update, { passive: true });
+    var scrollTicking = false;
+    function onScroll() {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      window.requestAnimationFrame(function () {
+        update();
+        scrollTicking = false;
+      });
+    }
+
+    window.addEventListener("scroll", onScroll, { passive: true });
     update();
   }
 
