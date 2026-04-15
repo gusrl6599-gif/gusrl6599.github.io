@@ -1369,6 +1369,8 @@ html.pill-route-transition .page-shell {
 .pill-column--red {
   grid-column: 1;
   border-color: rgba(200, 60, 70, 0.35);
+  background:
+    linear-gradient(180deg, rgba(46, 14, 18, 0.78), rgba(18, 6, 8, 0.86));
   box-shadow:
     inset 0 0 36px rgba(120, 20, 30, 0.12),
     0 8px 24px rgba(0, 0, 0, 0.22);
@@ -1377,6 +1379,8 @@ html.pill-route-transition .page-shell {
 .pill-column--blue {
   grid-column: 2;
   border-color: rgba(70, 110, 200, 0.35);
+  background:
+    linear-gradient(180deg, rgba(14, 24, 52, 0.78), rgba(6, 10, 24, 0.86));
   box-shadow:
     inset 0 0 36px rgba(30, 60, 140, 0.1),
     0 8px 24px rgba(0, 0, 0, 0.22);
@@ -1486,6 +1490,21 @@ html.pill-route-transition .page-shell {
   color: rgba(255, 130, 130, 0.95);
 }
 
+.pill-column--red .pill-path__cta-btn {
+  border-color: rgba(255, 110, 120, 0.42);
+  background: rgba(40, 10, 14, 0.8);
+}
+
+.pill-column--red .pill-path__cta-btn:hover,
+.pill-column--red .pill-path__cta-btn:focus-visible {
+  border-color: rgba(255, 150, 160, 0.72);
+  background: rgba(60, 14, 22, 0.92);
+}
+
+.pill-column--red .pill-path__cta-btn:focus-visible {
+  outline: 2px solid rgba(255, 128, 140, 0.45);
+}
+
 .pill-column--blue .pill-path__copy {
   border-left: 2px solid rgba(100, 140, 230, 0.55);
   padding-left: 0.65rem;
@@ -1504,9 +1523,28 @@ html.pill-route-transition .page-shell {
   color: rgba(140, 185, 255, 0.95);
 }
 
+.pill-column--blue .pill-path__cta-btn {
+  border-color: rgba(110, 165, 255, 0.42);
+  background: rgba(10, 20, 44, 0.82);
+}
+
+.pill-column--blue .pill-path__cta-btn:hover,
+.pill-column--blue .pill-path__cta-btn:focus-visible {
+  border-color: rgba(150, 200, 255, 0.72);
+  background: rgba(14, 30, 62, 0.94);
+}
+
+.pill-column--blue .pill-path__cta-btn:focus-visible {
+  outline: 2px solid rgba(140, 195, 255, 0.45);
+}
+
 /* 실제 알약처럼 보이는 캡슐 버튼 — 스튜디오 젤 캡슐 참조 (반투명·상단 하이라이트·바닥 색 번짐) */
 .pill-3d {
   --pill-photo: url("images/pill-gelcaps-studio.png");
+  --pill-border-color: rgba(255, 255, 255, 0.4);
+  --pill-border-highlight: rgba(255, 255, 255, 0.4);
+  --pill-seam-top: rgba(255, 255, 255, 0.35);
+  --pill-seam-bottom: rgba(0, 0, 0, 0.15);
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -1540,9 +1578,9 @@ html.pill-route-transition .page-shell {
 
 .pill-3d::after {
   inset: 0.5px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--pill-border-color);
   box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.55),
+    inset 0 1px 2px var(--pill-border-highlight),
     inset 0 -2px 4px rgba(0, 0, 0, 0.22),
     0 0 0 1px rgba(0, 0, 0, 0.12);
   z-index: 2;
@@ -1579,7 +1617,7 @@ html.pill-route-transition .page-shell {
   bottom: 12%;
   width: 1px;
   transform: translateX(-50%);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4), rgba(0, 0, 0, 0.15));
+  background: linear-gradient(180deg, var(--pill-seam-top), var(--pill-seam-bottom));
   opacity: 0.75;
 }
 
@@ -1615,6 +1653,10 @@ html.pill-route-transition .page-shell {
 
 .pill-3d--red {
   --pill-crop-x: 36%;
+  --pill-border-color: rgba(255, 120, 130, 0.72);
+  --pill-border-highlight: rgba(255, 182, 188, 0.5);
+  --pill-seam-top: rgba(255, 168, 175, 0.62);
+  --pill-seam-bottom: rgba(68, 8, 18, 0.42);
 }
 
 .pill-3d--red .pill-3d__body {
@@ -1653,6 +1695,10 @@ html.pill-route-transition .page-shell {
 
 .pill-3d--blue {
   --pill-crop-x: 64%;
+  --pill-border-color: rgba(130, 185, 255, 0.72);
+  --pill-border-highlight: rgba(185, 220, 255, 0.46);
+  --pill-seam-top: rgba(172, 210, 255, 0.58);
+  --pill-seam-bottom: rgba(10, 30, 82, 0.42);
 }
 
 .pill-3d--blue .pill-3d__body {

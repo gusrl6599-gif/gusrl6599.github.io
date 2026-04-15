@@ -1201,6 +1201,7 @@
     var accessBtn = document.getElementById("enterMatrixBtn");
     var escapeBtn = document.getElementById("blueEscapeBtn");
     var params = new URLSearchParams(window.location.search);
+    var seenKey = "matrix_signal_seen";
     var gateEnterMs = 850;
     var isClosing = false;
     if (!overlay || !accessBtn || !escapeBtn) return;
@@ -1208,6 +1209,13 @@
       overlay.classList.add("hidden", "is-hidden");
       overlay.classList.remove("is-active");
       document.body.classList.remove("signal-open", "gate-lock");
+      return;
+    }
+    if (window.localStorage.getItem(seenKey) === "true") {
+      overlay.classList.add("hidden", "is-hidden");
+      overlay.classList.remove("is-active");
+      document.body.classList.remove("signal-open", "gate-lock");
+      document.body.classList.add("entered");
       return;
     }
     if (document.documentElement.classList.contains("pill-already-chosen")) {
@@ -1231,6 +1239,9 @@
         overlay.classList.remove("is-active");
         document.body.classList.remove("signal-open", "gate-lock");
         document.body.classList.add("entered");
+        if (mode === "red") {
+          window.localStorage.setItem(seenKey, "true");
+        }
 
         var cta = ctaId ? document.getElementById(ctaId) : null;
         if (cta) {
