@@ -882,7 +882,8 @@
       if (hudOverlay) hudOverlay.classList.add("pill-scene__hud--active");
 
       var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      var syncMs = reduceMotion ? 120 : 1520;
+      var narrow = window.matchMedia("(max-width: 768px)").matches;
+      var syncMs = reduceMotion ? 120 : narrow ? 980 : 1520;
 
       window.setTimeout(function () {
         beginLeaveOverlay("blue");
