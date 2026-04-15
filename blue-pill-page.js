@@ -42,6 +42,7 @@
   let rotateTimerId = 0;
   let idleTimerId = 0;
   let rafId = 0;
+  let scrollClassTid = 0;
   let pendingMx = 50;
   let pendingMy = 50;
 
@@ -208,6 +209,20 @@
       window.addEventListener(evt, resetIdle, { passive: true });
     });
   }
+
+  /* 모바일 스크롤 시 합성 부담이 큰 레이어를 잠깐 낮춰 끊김 완화 */
+  function markScrolling() {
+    if (!root) return;
+    root.classList.add("blue-dream--scrolling");
+    clearTimeout(scrollClassTid);
+    scrollClassTid = window.setTimeout(() => {
+      root.classList.remove("blue-dream--scrolling");
+    }, 140);
+  }
+
+  window.addEventListener("scroll", markScrolling, { passive: true });
+  window.addEventListener("touchmove", markScrolling, { passive: true });
+  window.addEventListener("wheel", markScrolling, { passive: true });
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {

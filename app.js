@@ -42,6 +42,7 @@
     var lines = prelude.querySelectorAll(".red-prelude__line");
     var glyphs = prelude.querySelector(".red-prelude__glyphs");
     var audioCtx = null;
+    var typeTickAt = 0;
 
     function initGlyphColumns() {
       if (!glyphs) return;
@@ -127,6 +128,45 @@
       }
     }
 
+    function playTypeTickSound() {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return;
+      try {
+        if (!audioCtx) audioCtx = new Ctx();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+
+        var nowMs = Date.now();
+        if (nowMs - typeTickAt < 18) return;
+        typeTickAt = nowMs;
+
+        var now = audioCtx.currentTime;
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        var filter = audioCtx.createBiquadFilter();
+
+        osc.type = "square";
+        osc.frequency.setValueAtTime(1300 + Math.random() * 700, now);
+        osc.frequency.exponentialRampToValueAtTime(500 + Math.random() * 260, now + 0.016);
+
+        filter.type = "bandpass";
+        filter.frequency.setValueAtTime(1900 + Math.random() * 900, now);
+        filter.Q.setValueAtTime(5, now);
+
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.018, now + 0.003);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.02);
+
+        osc.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start(now);
+        osc.stop(now + 0.022);
+      } catch (e) {
+        /* ignore audio issues */
+      }
+    }
+
     function typeLine(el, speedMin, speedMax, done) {
       if (!el) {
         if (done) done();
@@ -140,6 +180,7 @@
         idx += 1;
         var current = full.slice(0, idx);
         el.textContent = current;
+        playTypeTickSound();
         if (idx >= full.length) {
           el.classList.remove("is-typing");
           if (done) done();
@@ -956,6 +997,25 @@
     update();
   }
 
+  function initMainTyping() {
+    var text = "\"You've already made the choice.\"";
+    var i = 0;
+    var speed = 40;
+    var el = document.querySelector(".main-text");
+    if (!el) return;
+    el.textContent = "";
+
+    function typing() {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i += 1;
+        window.setTimeout(typing, speed);
+      }
+    }
+
+    typing();
+  }
+
   window.addEventListener("pageshow", function (ev) {
     if (!ev.persisted) return;
     if (!document.getElementById("pill-scene")) return;
@@ -981,5 +1041,6 @@
     initRedRouteLightning();
     initBlueMatrixEndless();
     initNavScroll();
+    initMainTyping();
   });
 })();

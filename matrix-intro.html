@@ -1,242 +1,638 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="The Matrix(1999) 소개 — 영화 개요, 세계관 시즌 요약, 매트릭스 이전 역사, 등장인물">
-  <meta name="theme-color" content="#071a14">
-  <title>The Matrix | 소개</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Matrix World</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Inter:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;600;700&family=Orbitron:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#020806;
+      --panel:#04110d;
+      --panel-soft:rgba(7, 27, 20, 0.72);
+      --line:rgba(0,255,170,0.22);
+      --line-strong:rgba(0,255,170,0.42);
+      --green:#7bffcf;
+      --green-2:#00ff9d;
+      --text:#eafff6;
+      --muted:#9ad9c0;
+      --shadow:0 0 30px rgba(0,255,157,0.09);
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family:"Noto Sans KR", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at 50% 20%, rgba(0,255,157,0.08), transparent 30%),
+        linear-gradient(to bottom, rgba(0,0,0,0.72), rgba(0,0,0,0.9)),
+        url("images/main-neo-bg.webp") center/cover no-repeat fixed;
+      min-height:100vh;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background:
+        repeating-linear-gradient(
+          to right,
+          rgba(0,255,157,0.05) 0px,
+          rgba(0,255,157,0.05) 1px,
+          transparent 1px,
+          transparent 46px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(0,255,157,0.025) 0px,
+          rgba(0,255,157,0.025) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      opacity:.18;
+      z-index:0;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:-20%;
+      pointer-events:none;
+      background:
+        linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(0,255,157,0.035) 48%,
+          rgba(123,255,207,0.08) 50%,
+          rgba(0,255,157,0.035) 52%,
+          transparent 100%
+        );
+      animation: sweep 9s linear infinite;
+      z-index:0;
+    }
+
+    @keyframes sweep{
+      0%{ transform:translateX(-30%) skewX(-10deg); }
+      100%{ transform:translateX(30%) skewX(-10deg); }
+    }
+
+    ::-webkit-scrollbar{
+      width:12px;
+      background:#020705;
+    }
+
+    ::-webkit-scrollbar-track{
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(130,255,220,0.045) 0px,
+          rgba(130,255,220,0.045) 1px,
+          transparent 1px,
+          transparent 6px
+        ),
+        linear-gradient(to bottom, rgba(0,255,157,0.04), rgba(0,255,157,0.01));
+      border-left:1px solid rgba(0,255,157,0.08);
+    }
+
+    ::-webkit-scrollbar-thumb{
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,255,157,0.2),
+          rgba(123,255,207,0.55),
+          rgba(0,255,157,0.2)
+        );
+      border:1px solid rgba(123,255,207,0.45);
+      border-radius:999px;
+      box-shadow:
+        0 0 10px rgba(0,255,157,0.28),
+        inset 0 0 8px rgba(255,255,255,0.08);
+      animation: scrollbarPulse 2.8s ease-in-out infinite;
+    }
+
+    ::-webkit-scrollbar-thumb:hover{
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(0,255,157,0.35),
+          rgba(123,255,207,0.75),
+          rgba(0,255,157,0.35)
+        );
+    }
+
+    html.is-accordion-active ::-webkit-scrollbar-thumb{
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(66,255,191,0.34),
+          rgba(151,255,228,0.84),
+          rgba(66,255,191,0.34)
+        );
+      border-color: rgba(151,255,228,0.7);
+      box-shadow:
+        0 0 14px rgba(110,255,210,0.45),
+        inset 0 0 10px rgba(255,255,255,0.12);
+    }
+
+    @keyframes scrollbarPulse{
+      0%, 100%{
+        filter: brightness(0.92);
+      }
+      50%{
+        filter: brightness(1.13);
+      }
+    }
+
+    .matrix-rain{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      opacity:.24;
+    }
+
+    .container{
+      width:min(1100px, calc(100% - 32px));
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+      padding:28px 0 80px;
+    }
+
+    .hero-title{
+      font-family:"Orbitron", sans-serif;
+      font-size:clamp(2.4rem, 5vw, 4.8rem);
+      line-height:1;
+      letter-spacing:.08em;
+      margin:0 0 10px;
+      text-transform:uppercase;
+      text-shadow:
+        0 0 10px rgba(123,255,207,0.24),
+        0 0 28px rgba(0,255,157,0.08);
+    }
+
+    .hero-sub{
+      color:var(--muted);
+      line-height:1.8;
+      margin:0;
+      font-size:1rem;
+    }
+
+    .top-links{
+      margin-top:16px;
+      display:flex;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .top-links a{
+      color:var(--green);
+      text-decoration:none;
+      font-weight:700;
+      position:relative;
+    }
+
+    .top-links a::after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-3px;
+      width:100%;
+      height:1px;
+      background:linear-gradient(90deg, transparent, var(--green), transparent);
+      transform:scaleX(.5);
+      opacity:.7;
+      transition:.25s ease;
+    }
+
+    .top-links a:hover::after{
+      transform:scaleX(1);
+      opacity:1;
+    }
+
+    .system-panel{
+      position:relative;
+      margin-top:28px;
+      background:linear-gradient(180deg, rgba(5,24,18,0.78), rgba(1,11,8,0.84));
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:26px 26px 24px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(4px);
+    }
+
+    .system-panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:
+        linear-gradient(to right, transparent, rgba(123,255,207,0.07), transparent),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.035) 0px,
+          rgba(255,255,255,0.035) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+      opacity:.32;
+    }
+
+    .system-panel::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      border:1px solid rgba(123,255,207,0.12);
+      border-radius:14px;
+      box-shadow:
+        inset 0 0 28px rgba(0,255,157,0.05),
+        0 0 18px rgba(0,255,157,0.04);
+    }
+
+    .panel-code{
+      display:inline-block;
+      font-family:"Orbitron", sans-serif;
+      font-size:.78rem;
+      letter-spacing:.16em;
+      color:var(--green);
+      opacity:.85;
+      margin-bottom:12px;
+      text-transform:uppercase;
+    }
+
+    .panel-quote{
+      margin:0;
+      font-family:"Orbitron", sans-serif;
+      font-size:clamp(1.3rem, 2.5vw, 2.4rem);
+      line-height:1.3;
+      letter-spacing:.02em;
+      text-shadow:0 0 12px rgba(123,255,207,0.14);
+    }
+
+    .panel-desc{
+      margin:14px 0 0;
+      color:var(--muted);
+      font-size:1rem;
+    }
+
+    .section-list{
+      margin-top:28px;
+      display:grid;
+      gap:18px;
+    }
+
+    .matrix-accordion{
+      position:relative;
+      background:linear-gradient(180deg, rgba(2,14,10,0.65), rgba(2,10,8,0.82));
+      border:1px solid var(--line);
+      border-radius:14px;
+      overflow:hidden;
+      transition:.28s ease;
+      box-shadow:var(--shadow);
+    }
+
+    .matrix-accordion:hover{
+      border-color:var(--line-strong);
+      transform:translateY(-1px);
+      box-shadow:
+        0 0 0 1px rgba(123,255,207,0.06),
+        0 0 22px rgba(0,255,157,0.08);
+    }
+
+    .matrix-accordion.active{
+      border-color:rgba(123,255,207,0.5);
+      box-shadow:
+        0 0 0 1px rgba(123,255,207,0.1),
+        0 0 28px rgba(0,255,157,0.12);
+    }
+
+    .matrix-accordion::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-20%;
+      width:140%;
+      height:1px;
+      background:linear-gradient(90deg, transparent, rgba(123,255,207,0.85), transparent);
+      opacity:.7;
+      animation:lineMove 3.5s linear infinite;
+    }
+
+    @keyframes lineMove{
+      0%{ transform:translateX(-10%); opacity:.35; }
+      50%{ opacity:.9; }
+      100%{ transform:translateX(10%); opacity:.35; }
+    }
+
+    .accordion-btn{
+      width:100%;
+      border:none;
+      background:transparent;
+      color:var(--text);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:22px 20px;
+      cursor:pointer;
+      text-align:left;
+    }
+
+    .accordion-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+
+    .accordion-index{
+      font-family:"Orbitron", sans-serif;
+      color:var(--green);
+      font-size:.95rem;
+      min-width:52px;
+    }
+
+    .accordion-title{
+      font-weight:800;
+      font-size:1.1rem;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .accordion-icon{
+      width:34px;
+      height:34px;
+      border-radius:50%;
+      border:1px solid rgba(123,255,207,0.26);
+      display:grid;
+      place-items:center;
+      color:var(--green);
+      font-size:1.1rem;
+      flex-shrink:0;
+      transition:.28s ease;
+      box-shadow:inset 0 0 12px rgba(0,255,157,0.04);
+    }
+
+    .matrix-accordion.active .accordion-icon{
+      transform:rotate(180deg);
+      border-color:rgba(123,255,207,0.5);
+      box-shadow:0 0 14px rgba(0,255,157,0.15);
+    }
+
+    .accordion-content{
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .45s ease;
+    }
+
+    .accordion-inner{
+      padding:0 20px 22px 20px;
+      color:var(--muted);
+      line-height:1.9;
+      border-top:1px solid rgba(123,255,207,0.09);
+    }
+
+    .accordion-inner p{
+      margin:16px 0 0;
+    }
+
+    .data-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:14px;
+      margin-top:16px;
+    }
+
+    .mini-panel{
+      background:rgba(255,255,255,0.025);
+      border:1px solid rgba(123,255,207,0.11);
+      border-radius:12px;
+      padding:14px;
+    }
+
+    .mini-label{
+      display:block;
+      color:var(--green);
+      font-size:.82rem;
+      margin-bottom:8px;
+      font-family:"Orbitron", sans-serif;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .mini-value{
+      color:var(--text);
+      line-height:1.7;
+      font-size:.95rem;
+    }
+
+    @media (max-width: 768px){
+      .container{ width:min(100% - 20px, 1100px); }
+      .system-panel{ padding:20px 18px; }
+      .accordion-btn{ padding:18px 16px; }
+      .accordion-inner{ padding:0 16px 18px 16px; }
+      .data-grid{ grid-template-columns:1fr; }
+    }
+  </style>
 </head>
-<body id="top" class="route route--matrix-intro">
-  <div class="page-bg" aria-hidden="true"></div>
+<body>
+  <canvas class="matrix-rain" id="matrixRain"></canvas>
 
-  <div class="page-shell">
-    <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <main class="container">
+    <header>
+      <h1 class="hero-title">THE MATRIX</h1>
+      <p class="hero-sub">
+        설계된 꿈은 아래의 현실<br>
+        깨어나는 의식, 열리는 균열<br>
+        운명을 가르는 마지막 선택
+      </p>
 
-    <div class="layout">
-      <header class="sidebar" aria-label="Matrix 소개">
-        <div class="sidebar__inner">
-          <div class="sidebar__top">
-            <p class="matrix-intro__eyebrow" lang="en">Lore · 1999</p>
-            <h1 class="sidebar__name matrix-intro__title">
-              <a href="#main">THE MATRIX</a>
-            </h1>
-            <p class="sidebar__role matrix-intro__tagline">
-              설계된 평온 아래의 현실<br />
-              깨어나는 의식, 열리는 균열<br />
-              운명을 가르는 마지막 선택
+      <nav class="top-links">
+        <a href="index.html">← 메인 페이지</a>
+        <a href="#acc-overview">영화 개요</a>
+        <a href="#acc-world">세계관</a>
+      </nav>
+    </header>
+
+    <section class="system-panel">
+      <span class="panel-code">SYSTEM MESSAGE // REALITY BREACH</span>
+      <h2 class="panel-quote">Unfortunately, no one can be told what the Matrix is. You have to see it for yourself.</h2>
+      <p class="panel-desc">안타깝게도 누구도 매트릭스가 무엇인지 말해줄 수 없다. 직접 봐야 한다.</p>
+    </section>
+
+    <section class="section-list">
+      <article class="matrix-accordion active" id="acc-overview">
+        <button class="accordion-btn" type="button">
+          <div class="accordion-left">
+            <span class="accordion-index">01.</span>
+            <span class="accordion-title">영화 개요</span>
+          </div>
+          <span class="accordion-icon">⌄</span>
+        </button>
+        <div class="accordion-content" style="max-height: 600px;">
+          <div class="accordion-inner">
+            <p>
+              <cite lang="en">The Matrix</cite>(1999)는 워쇼스키 자매 감독의 SF 액션 영화로, 인류가 거대한 시뮬레이션 속에서 살아간다는 설정에서 출발한다.
+              네오는 «진실»을 제안하는 모피어우스를 만나고, 빨간 알약을 택하면 가짜 평온 뒤에 숨은 현실로 들어선다.
             </p>
 
-            <nav class="sidebar__nav" aria-label="섹션">
-              <ul>
-                <li><a href="#overview">영화 개요</a></li>
-                <li><a href="#world">세계관</a></li>
-              </ul>
-            </nav>
-
-            <p class="matrix-intro__back">
-              <a class="matrix-intro__back-link" href="index.html">← 메인 페이지</a>
-            </p>
+            <div class="data-grid">
+              <div class="mini-panel">
+                <span class="mini-label">Core Theme</span>
+                <div class="mini-value">현실 / 통제 / 자유의지 / 선택</div>
+              </div>
+              <div class="mini-panel">
+                <span class="mini-label">Narrative Tone</span>
+                <div class="mini-value">사이버펑크 / 무술 액션 / 철학적 질문</div>
+              </div>
+            </div>
           </div>
         </div>
-      </header>
+      </article>
 
-      <main id="main" class="content">
-        <header class="matrix-intro__hero" aria-labelledby="matrix-intro-hero-title">
-          <h2 id="matrix-intro-hero-title" class="matrix-intro__hero-title" lang="en">Unfortunately, no one can be told what the Matrix is. You have to see it for yourself.</h2>
-          <p class="matrix-intro__hero-subtitle" lang="ko">안타깝게도 누구도 매트릭스가 무엇인지 말해줄 수 없다. 직접 봐야 한다.</p>
-        </header>
+      <article class="matrix-accordion" id="acc-world">
+        <button class="accordion-btn" type="button">
+          <div class="accordion-left">
+            <span class="accordion-index">02.</span>
+            <span class="accordion-title">세계관</span>
+          </div>
+          <span class="accordion-icon">⌄</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <p>시즌 1~3은 작품 속 흐름을 따라 각성·저항·균형으로 이어진다.</p>
 
-        <section class="section">
-          <details id="overview" class="matrix-intro__details">
-            <summary class="matrix-intro__details-summary">
-              <span class="section__heading matrix-intro__details-heading">
-                <span class="section__heading-main">
-                  <span class="section__num">01.</span>
-                  <span class="section__title">영화 개요</span>
-                </span>
-                <span class="section__rule" aria-hidden="true"></span>
-              </span>
-              <span class="matrix-intro__details-chevron" aria-hidden="true"></span>
-            </summary>
-            <div class="section__body matrix-intro__details-body">
-            <p>
-              <cite lang="en">The Matrix</cite>(1999)는 워쇼스키 자매 감독의 SF 액션 영화로, 인류가 거대한 시뮬레이션 속에서 살아간다는 설정에서 출발한다. 네오는 «진실»을 제안하는 모피어우스를 만나고, 빨간 알약을 택하면 가짜 평온 뒤에 숨은 현실로 들어선다.
-            </p>
-            <ul class="list matrix-intro__facts" aria-label="빠른 참고">
-              <li><strong>톤</strong> — 사이버펑크, 무술 액션, 철학적 질문이 한 줄기로 이어진다.</li>
-              <li><strong>핵심 질문</strong> — 무엇이 현실이며, 선택은 누구의 것인가.</li>
-            </ul>
-            <p class="matrix-intro__section-note">
-              이어지는 <strong>세계관</strong>에서는 작품 속 이야기를 시즌으로 요약한 뒤,
-              맨 아래 <strong>매트릭스 이전의 세계관</strong>—기계 전쟁·매트릭스 기원 등 본편 이전 역사와 설정—를 따로 정리한다.
-            </p>
-            </div>
-          </details>
-        </section>
-
-        <section class="section">
-          <details id="world" class="matrix-intro__details">
-            <summary class="matrix-intro__details-summary">
-              <span class="section__heading matrix-intro__details-heading">
-                <span class="section__heading-main">
-                  <span class="section__num">02.</span>
-                  <span class="section__title">세계관</span>
-                </span>
-                <span class="section__rule" aria-hidden="true"></span>
-              </span>
-              <span class="matrix-intro__details-chevron" aria-hidden="true"></span>
-            </summary>
-            <div class="section__body matrix-intro__details-body">
-            <p class="matrix-intro__section-note matrix-intro__section-note--world">
-              아래 <strong>시즌 1~3</strong>은 작품 속 진행을 나눈 요약이고,
-              맨 아래 <a class="matrix-intro__section-note-link" href="#pre-matrix-lore"><strong>매트릭스 이전의 세계관</strong></a>은 영화 본편 시점보다 앞선 배경·역사를 다룬다.
-            </p>
-
-            <div class="matrix-intro__world-seasons">
-              <article class="matrix-intro__season" id="season-1">
-                <header class="matrix-intro__season-head">
-                  <h3 class="matrix-intro__season-title-ko">시즌 1 — 각성</h3>
-                  <p class="matrix-intro__season-title-en" lang="en">Season 1 — Awakening</p>
-                </header>
-                <p>
-                  평범한 현실이라 믿었던 세계는 사실 거대한 시스템이 만든 가상현실이다. 네오는 자신의 정체와 세계의 진실을 알게 되고, 선택의 문 앞에 선다.
-                </p>
-                <p class="matrix-intro__season-kw"><span class="matrix-intro__season-kw-label">핵심 키워드:</span> 현실 / 각성 / 선택 / 진실</p>
-              </article>
-              <article class="matrix-intro__season" id="season-2">
-                <header class="matrix-intro__season-head">
-                  <h3 class="matrix-intro__season-title-ko">시즌 2 — 저항</h3>
-                  <p class="matrix-intro__season-title-en" lang="en">Season 2 — Resistance</p>
-                </header>
-                <p>
-                  진실을 알게 된 뒤, 인간과 기계의 전쟁은 더 깊어진다. 네오는 단순한 생존을 넘어, 시스템에 맞서 싸우는 존재가 된다.
-                </p>
-                <p class="matrix-intro__season-kw"><span class="matrix-intro__season-kw-label">핵심 키워드:</span> 전쟁 / 저항 / 운명 / 충돌</p>
-              </article>
-              <article class="matrix-intro__season" id="season-3">
-                <header class="matrix-intro__season-head">
-                  <h3 class="matrix-intro__season-title-ko">시즌 3 — 균형</h3>
-                  <p class="matrix-intro__season-title-en" lang="en">Season 3 — Balance</p>
-                </header>
-                <p>
-                  끝없는 대립 속에서 네오는 파괴가 아닌 새로운 균형의 가능성을 선택한다. 인간과 기계, 자유와 통제 사이에서 세계는 새로운 질서를 맞이한다.
-                </p>
-                <p class="matrix-intro__season-kw"><span class="matrix-intro__season-kw-label">핵심 키워드:</span> 희생 / 균형 / 변화 / 새로운 시작</p>
-              </article>
-            </div>
-
-            <details id="pre-matrix-lore" class="matrix-intro__details matrix-intro__details--sub">
-              <summary class="matrix-intro__details-summary matrix-intro__details-summary--sub">
-                <span class="section__heading matrix-intro__details-heading">
-                  <span class="section__heading-main">
-                    <span class="section__num">02-1.</span>
-                    <span class="section__title">매트릭스 이전의 세계관</span>
-                  </span>
-                  <span class="section__rule" aria-hidden="true"></span>
-                </span>
-                <span class="matrix-intro__details-chevron" aria-hidden="true"></span>
-              </summary>
-              <div class="matrix-intro__world-lore">
-                <p class="matrix-intro__pre-matrix-title-en" lang="en">The world before The Matrix</p>
-              <article class="matrix-intro__season matrix-intro__lore-item" id="lore-war">
-                <header class="matrix-intro__season-head">
-                  <h3 class="matrix-intro__season-title-ko">1. 인류와 기계의 전쟁</h3>
-                  <p class="matrix-intro__season-title-en" lang="en">1. The War Between Humans and Machines</p>
-                </header>
-                <div class="matrix-intro__lore-body">
-                  <p>인간을 돕기 위해 만들어진 기계들은 점차 지능과 자아를 갖게 되었고, 결국 인간과 충돌한다.</p>
-                  <p>최초의 살인 기계인 B166ER 사건과 대규모 기계 행진 이후, 기계들은 자신들만의 국가 제로원을 세우며 독립한다.</p>
-                  <p>인류는 이를 위협으로 보고 전쟁을 벌였고, 태양을 가리는 검은 폭풍 작전까지 감행했지만 결국 패배한다.</p>
-                  <p>이후 기계들은 인간을 에너지원으로 쓰기 시작한다.</p>
-                </div>
-              </article>
-
-              <article class="matrix-intro__season matrix-intro__lore-item" id="lore-matrix">
-                <header class="matrix-intro__season-head">
-                  <h3 class="matrix-intro__season-title-ko">2. 매트릭스의 설계</h3>
-                  <p class="matrix-intro__season-title-en" lang="en">2. The Creation of the Matrix</p>
-                </header>
-                <div class="matrix-intro__lore-body">
-                  <p>기계들은 인간을 통제하고 에너지를 얻기 위해 매트릭스라는 가상 현실을 만들었다.</p>
-                  <p>하지만 완벽한 세계는 오히려 인간에게 받아들여지지 않았고, 여러 번의 실패 끝에 오라클의 조언으로 인간에게 선택의 여지를 남긴 지금의 매트릭스가 완성된다.</p>
-                  <p>또 시스템을 유지하려 일부 인간의 각성과 더 원(The One)의 등장, 시온의 파괴와 재건이 반복되는 순환 구조가 만들어진다.</p>
-                </div>
-              </article>
-
-              <article class="matrix-intro__season matrix-intro__lore-item" id="lore-neo-peace">
-                <header class="matrix-intro__season-head">
-                  <h3 class="matrix-intro__season-title-ko">3. 네오의 등장과 평화</h3>
-                  <p class="matrix-intro__season-title-en" lang="en">3. Neo’s Emergence and the Attempt at Peace</p>
-                </header>
-                <div class="matrix-intro__lore-body">
-                  <p>6번째 순환에서 등장한 네오는 이전의 ‘더 원’들과 달리 시스템이 고른 길이 아니라 사랑하는 트리니티를 택하며 기존 질서를 깨뜨린다.</p>
-                  <p>그 결과 폭주한 프로그램 스미스가 통제 불가능한 존재가 되고, 네오는 기계 측의 중심인 데우스 엑스 마키나와 거래해 스미스를 걷어간다.</p>
-                  <p>그로 인해 인간과 기계 사이에 잠시나마 평화가 찾아온다.</p>
-                </div>
-              </article>
-
-              <article class="matrix-intro__season matrix-intro__lore-item" id="lore-after">
-                <header class="matrix-intro__season-head">
-                  <h3 class="matrix-intro__season-title-ko">4. 이후의 역사</h3>
-                  <p class="matrix-intro__season-title-en" lang="en">4. What Happened After</p>
-                </header>
-                <div class="matrix-intro__lore-body">
-                  <p>그 뒤 이야기는 매트릭스 온라인과 매트릭스: 레저렉션으로 이어진다.</p>
-                  <p>이 과정에서 모피어스의 죽음, 인류 내부의 갈등, 다시 일어날 수 있는 전쟁의 기미가 드러난다.</p>
-                  <p>즉 매트릭스 세계관은 전쟁 한 번으로 끝나는 이야기가 아니라, 반복·부활·새 균형을 향해 계속 넓어진다.</p>
-                </div>
-              </article>
+            <div class="data-grid">
+              <div class="mini-panel">
+                <span class="mini-label">Season 1</span>
+                <div class="mini-value">현실 / 각성 / 선택 / 진실</div>
               </div>
-            </details>
+              <div class="mini-panel">
+                <span class="mini-label">Season 2~3</span>
+                <div class="mini-value">저항 / 운명 / 희생 / 새로운 질서</div>
+              </div>
             </div>
-          </details>
-        </section>
+          </div>
+        </div>
+      </article>
 
-        <footer class="content__footer matrix-intro__footer">
-          <p><span class="content__footer-line">© 김현기 · <a href="index.html">메인</a> · Matrix 소개</span></p>
-          <p class="content__back-to-top">
-            <a class="content__back-to-top-link" href="#top">맨 위로</a>
-          </p>
-        </footer>
-      </main>
-    </div>
-  </div>
+      <article class="matrix-accordion" id="acc-world-pre">
+        <button class="accordion-btn" type="button">
+          <div class="accordion-left">
+            <span class="accordion-index">02-1.</span>
+            <span class="accordion-title">매트릭스 이전의 세계관</span>
+          </div>
+          <span class="accordion-icon">⌄</span>
+        </button>
+        <div class="accordion-content">
+          <div class="accordion-inner">
+            <p>인류와 기계의 전쟁, 매트릭스 설계, 더 원의 순환, 시온의 반복이 세계관의 뼈대를 이룬다.</p>
+
+            <div class="data-grid">
+              <div class="mini-panel">
+                <span class="mini-label">Origin</span>
+                <div class="mini-value">B166ER 사건 이후 제로원 독립, 전쟁, 인류 패배</div>
+              </div>
+              <div class="mini-panel">
+                <span class="mini-label">System Cycle</span>
+                <div class="mini-value">오라클·아키텍트 구조, 더 원의 등장, 시온 파괴/재건 반복</div>
+              </div>
+              <div class="mini-panel">
+                <span class="mini-label">Neo Breakpoint</span>
+                <div class="mini-value">트리니티를 선택해 기존 질서를 깨뜨리고 스미스 사태를 종결</div>
+              </div>
+              <div class="mini-panel">
+                <span class="mini-label">Aftermath</span>
+                <div class="mini-value">잠시의 평화 이후 다시 흔들리는 균형, 이어지는 확장 서사</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
   <script>
-    (function () {
-      var detailIds = ["overview", "world", "pre-matrix-lore"];
-      var worldInnerIds = [
-        "pre-matrix-lore",
-        "season-1",
-        "season-2",
-        "season-3",
-        "lore-war",
-        "lore-matrix",
-        "lore-neo-peace",
-        "lore-after"
-      ];
-      function openFromHash() {
-        var h = (location.hash || "").replace(/^#/, "");
-        if (!h) return;
-        if (detailIds.indexOf(h) !== -1) {
-          var el = document.getElementById(h);
-          if (el && el.tagName === "DETAILS") el.open = true;
-          return;
+    const accordions = document.querySelectorAll(".matrix-accordion");
+    function syncScrollbarState() {
+      const hasActive = Array.from(accordions).some((item) =>
+        item.classList.contains("active")
+      );
+      document.documentElement.classList.toggle("is-accordion-active", hasActive);
+    }
+
+    accordions.forEach((accordion) => {
+      const btn = accordion.querySelector(".accordion-btn");
+      const content = accordion.querySelector(".accordion-content");
+
+      btn.addEventListener("click", () => {
+        const isActive = accordion.classList.contains("active");
+
+        accordions.forEach((item) => {
+          item.classList.remove("active");
+          item.querySelector(".accordion-content").style.maxHeight = null;
+        });
+
+        if (!isActive) {
+          accordion.classList.add("active");
+          content.style.maxHeight = content.scrollHeight + "px";
         }
-        if (worldInnerIds.indexOf(h) !== -1) {
-          var world = document.getElementById("world");
-          if (world && world.tagName === "DETAILS") world.open = true;
-          var sub = document.getElementById("pre-matrix-lore");
-          if (sub && (h === "pre-matrix-lore" || h.indexOf("lore-") === 0)) sub.open = true;
+        syncScrollbarState();
+      });
+    });
+    syncScrollbarState();
+
+    const canvas = document.getElementById("matrixRain");
+    const ctx = canvas.getContext("2d");
+
+    let width, height, columns, drops;
+    const chars = "01アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&*";
+    const fontSize = 16;
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      columns = Math.floor(width / fontSize);
+      drops = Array(columns).fill(1);
+    }
+
+    function drawRain() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.06)";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.fillStyle = "rgba(123, 255, 207, 0.75)";
+      ctx.font = `${fontSize}px monospace`;
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+          drops[i] = 0;
         }
+        drops[i]++;
       }
-      openFromHash();
-      window.addEventListener("hashchange", openFromHash);
-    })();
+    }
+
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    setInterval(drawRain, 55);
   </script>
 </body>
 </html>

@@ -40,6 +40,143 @@ body {
   color: var(--slate);
   background-color: transparent;
   -webkit-font-smoothing: antialiased;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 0 20px rgba(0, 255, 150, 0.3);
+}
+
+.red-card:hover {
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+}
+
+.blue-card:hover {
+  box-shadow: 0 0 30px rgba(0, 100, 255, 0.4);
+}
+
+.matrix-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background: rgba(5, 12, 10, 0.72);
+  border: 1px solid rgba(120, 255, 220, 0.28);
+  box-shadow:
+    0 0 0 1px rgba(120, 255, 220, 0.06),
+    0 0 18px rgba(120, 255, 220, 0.12),
+    inset 0 0 18px rgba(120, 255, 220, 0.03);
+  backdrop-filter: blur(6px);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.matrix-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  opacity: 0.7;
+}
+
+.matrix-card::after {
+  content: "";
+  position: absolute;
+  top: -30%;
+  left: -60%;
+  width: 220%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(140, 255, 235, 0.95),
+    transparent
+  );
+  box-shadow: 0 0 12px rgba(140, 255, 235, 0.55);
+  transform: rotate(-2deg);
+  animation: scanLine 4s linear infinite;
+  pointer-events: none;
+}
+
+.matrix-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(140, 255, 235, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(140, 255, 235, 0.12),
+    0 0 26px rgba(140, 255, 235, 0.22),
+    inset 0 0 24px rgba(140, 255, 235, 0.06);
+}
+
+.box-signal{
+  position:relative;
+  overflow:hidden;
+  background: rgba(6, 14, 12, 0.74);
+  border:1px solid rgba(0,255,157,0.18);
+  border-radius:14px;
+  padding:24px;
+  box-shadow:
+    0 0 20px rgba(0,255,157,0.09),
+    inset 0 0 12px rgba(255,255,255,0.02);
+}
+
+.box-signal::after{
+  content:"";
+  position:absolute;
+  top:18px;
+  left:-20%;
+  width:140%;
+  height:2px;
+  background: linear-gradient(90deg, transparent, rgba(123,255,207,0.95), transparent);
+  box-shadow:0 0 14px rgba(0,255,157,0.32);
+  animation:sweepLight 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes sweepLight{
+  0%{ transform:translateX(-10%); opacity:.25; }
+  50%{ opacity:1; }
+  100%{ transform:translateX(10%); opacity:.25; }
+}
+
+.matrix-box {
+  position: relative;
+}
+
+.matrix-box::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(0, 255, 150, 0.08);
+  pointer-events: none;
+}
+
+#world-cards.matrix-box::before {
+  inset: 0;
+  border-radius: 14px;
+  border-color: rgba(0, 255, 150, 0.18);
+}
+
+@keyframes scanLine {
+  0% {
+    transform: translateX(-15%) rotate(-2deg);
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(15%) rotate(-2deg);
+    opacity: 0.25;
+  }
 }
 
 html.pill-scene-open,
@@ -557,15 +694,42 @@ html.pill-route-transition .page-shell {
   margin-bottom: 1.25rem;
 }
 
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 150, 0.15),
+    transparent
+  );
+  animation: scan 5s linear infinite;
+  pointer-events: none;
+}
+
 .pill-scene__brand {
   margin: 0 0 0.5rem;
-  font-family: var(--pill-mono);
-  font-size: clamp(0.95rem, 1.9vw, 1.35rem);
+  display: inline-block;
+  padding: 0.2rem 0.55rem 0.24rem 0.75rem;
+  border-radius: 2px;
+  border: 1px solid rgba(122, 255, 200, 0.18);
+  background: linear-gradient(180deg, rgba(2, 20, 14, 0.78), rgba(2, 13, 10, 0.86));
+  font-family: "Orbitron", var(--pill-mono);
+  font-size: clamp(1.05rem, 2vw, 1.45rem);
   font-weight: 700;
-  letter-spacing: 0.34em;
-  text-indent: 0.34em;
+  letter-spacing: 0.46em;
+  text-indent: 0.46em;
   text-transform: uppercase;
-  color: rgba(130, 255, 193, 0.8);
+  color: #8fffd1;
 }
 
 .pill-scene__title {
@@ -590,6 +754,15 @@ html.pill-route-transition .page-shell {
   }
   100% {
     background-position: 0 0, 0 250px;
+  }
+}
+
+@keyframes scan {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
   }
 }
 
@@ -1895,6 +2068,11 @@ html.pill-choice-red:not(.red-prelude-pending) .page-shell {
   text-shadow: none;
 }
 
+/* Reduce top whitespace so red pill hero sits near the top. */
+.route--red .content {
+  padding-top: 0.55rem;
+}
+
 /* Red route — 하단: 왼쪽 © 김현기, 오른쪽 맨 위로 */
 .route--red .route-red__page-footer.content__footer {
   display: flex;
@@ -2311,6 +2489,20 @@ html:has(body#top) {
 
 .route--red .content__back-to-top-link:focus-visible {
   outline-color: rgba(255, 140, 150, 0.85);
+}
+
+.matrix-home__back-to-top {
+  margin-top: 2rem;
+  margin-bottom: 0.25rem;
+  border-top-color: rgba(120, 255, 200, 0.28);
+}
+
+.matrix-home__back-to-top .content__back-to-top-link {
+  min-width: 140px;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(120, 255, 200, 0.32);
+  background: linear-gradient(180deg, rgba(4, 20, 15, 0.78), rgba(3, 14, 11, 0.9));
 }
 
 /* Red / Blue route pages: sunglasses hero image */
@@ -3706,9 +3898,9 @@ body.route--blue-morning {
   min-height: 100vh;
   min-height: 100dvh;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  padding: clamp(16px, 4vw, 24px);
+  padding: clamp(6px, 1.8vw, 12px);
   padding-bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
 }
 
@@ -3716,16 +3908,13 @@ body.route--blue-morning {
   position: relative;
   width: min(920px, 100%);
   min-height: min(78vh, 820px);
-  padding: 42px 28px 28px;
-  border-radius: 34px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035));
-  border: 1px solid rgba(130, 200, 255, 0.22);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow:
-    0 20px 70px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    inset 0 -20px 60px rgba(0, 0, 0, 0.08);
+  padding: 8px 12px 20px;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow: none;
   overflow: hidden;
   transform: translateY(12px) scale(0.985);
   opacity: 0;
@@ -3734,14 +3923,7 @@ body.route--blue-morning {
 }
 
 .blue-dream__panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(200, 235, 255, 0.14) 0%, rgba(255, 255, 255, 0.06) 14%, transparent 38%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent 22%),
-    radial-gradient(circle at 80% 10%, rgba(140, 200, 255, 0.18), transparent 28%);
-  pointer-events: none;
+  content: none;
 }
 
 .blue-dream__topbar {
@@ -3774,12 +3956,12 @@ body.route--blue-morning {
 }
 
 .blue-dream__hero {
-  min-height: min(52vh, 480px);
+  min-height: min(44vh, 360px);
   display: grid;
   place-items: center;
   text-align: center;
   position: relative;
-  padding: 24px 10px;
+  padding: 8px 6px 14px;
 }
 
 .blue-dream__hero-inner {
@@ -3792,7 +3974,7 @@ body.route--blue-morning {
 .blue-dream__label {
   display: inline-block;
   padding: 8px 14px;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   border-radius: 999px;
   background: rgba(60, 140, 220, 0.12);
   border: 1px solid rgba(130, 200, 255, 0.35);
@@ -3855,54 +4037,12 @@ body.route--blue-morning {
 }
 
 .blue-dream__rotating-line {
-  margin: 22px 0 0;
+  margin: 12px 0 0;
   min-height: 1.8em;
   font-size: clamp(1rem, 2.1vw, 1.2rem);
   color: rgba(140, 200, 255, 0.92);
   letter-spacing: 0.06em;
   font-weight: 400;
-}
-
-.blue-dream__controls {
-  margin-top: 34px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.blue-dream__btn {
-  border: 1px solid rgba(130, 200, 255, 0.28);
-  background: linear-gradient(180deg, rgba(120, 190, 255, 0.16), rgba(40, 100, 160, 0.12));
-  color: rgba(220, 240, 255, 0.95);
-  padding: 14px 18px;
-  border-radius: 999px;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.96rem;
-  letter-spacing: 0.03em;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition:
-    transform 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease,
-    border-color 0.18s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-}
-
-.blue-dream__btn:hover {
-  transform: translateY(-2px);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.07));
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 14px 35px rgba(0, 0, 0, 0.2),
-    0 0 28px rgba(170, 215, 255, 0.1);
-}
-
-.blue-dream__btn:focus-visible {
-  outline: 2px solid rgba(170, 215, 255, 0.55);
-  outline-offset: 3px;
 }
 
 .blue-dream__bottom-grid {
@@ -4141,15 +4281,13 @@ body.route--blue-morning {
 /* 모바일·저사양: 레이어·블러·무한 애니메이션 축소 (스크롤·합성 부담 완화) */
 @media (max-width: 768px) {
   .blue-dream__panel {
-    padding: 28px 18px 18px;
-    border-radius: 28px;
+    padding: 4px 8px 14px;
+    border-radius: 0;
     min-height: unset;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.045));
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: transparent;
+    box-shadow: none;
   }
 
   .blue-dream__noise,
@@ -4188,7 +4326,7 @@ body.route--blue-morning {
   }
 
   .blue-dream__hero {
-    min-height: 42vh;
+    min-height: 34vh;
   }
 
   .blue-dream__topbar {
@@ -4228,6 +4366,24 @@ body.route--blue-morning {
 .blue-dream.blue-dream--lite .blue-dream__label {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
+}
+
+/* 스크롤 중에는 무거운 레이어를 잠깐 낮춰 프레임 드랍 완화 (진입 애니메이션은 유지) */
+.blue-dream.blue-dream--scrolling .blue-dream__noise,
+.blue-dream.blue-dream--scrolling .blue-dream__mist,
+.blue-dream.blue-dream--scrolling .blue-dream__scanlight,
+.blue-dream.blue-dream--scrolling .blue-dream__particles,
+.blue-dream.blue-dream--scrolling .blue-dream__cursor-glow {
+  opacity: 0 !important;
+}
+
+.blue-dream.blue-dream--scrolling .blue-dream__window-light,
+.blue-dream.blue-dream--scrolling .blue-dream__curtain-shadow {
+  animation-play-state: paused !important;
+}
+
+.blue-dream.blue-dream--scrolling .blue-dream__panel {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.24);
 }
 
 @media (prefers-reduced-motion: reduce) {
