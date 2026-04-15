@@ -100,14 +100,21 @@
     window.setTimeout(function () {
       window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
     }, 500);
+    window.setTimeout(function () {
+      document.body.style.filter = "";
+    }, 1100);
   }
 
   function bluePill() {
-    document.body.style.filter = "blur(2px)";
+    /* Keep blue route readable: use subtle tint, not heavy blur. */
+    document.body.style.filter = "saturate(1.08) brightness(1.02)";
     document.body.style.transition = "0.6s";
     window.setTimeout(function () {
       window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
     }, 500);
+    window.setTimeout(function () {
+      document.body.style.filter = "";
+    }, 1100);
   }
 
   window.redPill = redPill;
@@ -121,8 +128,12 @@
       scene.setAttribute("aria-hidden", "true");
       scene.classList.remove("is-leaving", "pill-scene--blue-route");
     }
+    /* Critical: unlock page scroll after leaving pill scene. */
+    html.classList.remove("pill-scene-open");
     html.classList.add("pill-already-chosen");
     html.classList.remove("pill-route-transition", "pill-choice-red", "pill-choice-blue");
+    document.body.style.filter = "";
+    document.body.style.transition = "";
     try {
       sessionStorage.setItem("cursorstudy_pillChoice", "skip");
     } catch (e) {
@@ -132,7 +143,7 @@
 
   function bindHeroCtaScroll(panelController) {
     var map = [
-      { id: "pill-red-cta", target: "#world-cards" },
+      { id: "pill-red-cta", target: "#character-grid" },
       { id: "pill-blue-cta", target: "#character-grid" }
     ];
 

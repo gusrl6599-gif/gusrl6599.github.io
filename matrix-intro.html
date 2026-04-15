@@ -96,6 +96,13 @@
 
     ::-webkit-scrollbar-track{
       background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(130,255,220,0.045) 0px,
+          rgba(130,255,220,0.045) 1px,
+          transparent 1px,
+          transparent 6px
+        ),
         linear-gradient(to bottom, rgba(0,255,157,0.04), rgba(0,255,157,0.01));
       border-left:1px solid rgba(0,255,157,0.08);
     }
@@ -113,6 +120,7 @@
       box-shadow:
         0 0 10px rgba(0,255,157,0.28),
         inset 0 0 8px rgba(255,255,255,0.08);
+      animation: scrollbarPulse 2.8s ease-in-out infinite;
     }
 
     ::-webkit-scrollbar-thumb:hover{
@@ -123,6 +131,29 @@
           rgba(123,255,207,0.75),
           rgba(0,255,157,0.35)
         );
+    }
+
+    html.is-accordion-active ::-webkit-scrollbar-thumb{
+      background:
+        linear-gradient(
+          to bottom,
+          rgba(66,255,191,0.34),
+          rgba(151,255,228,0.84),
+          rgba(66,255,191,0.34)
+        );
+      border-color: rgba(151,255,228,0.7);
+      box-shadow:
+        0 0 14px rgba(110,255,210,0.45),
+        inset 0 0 10px rgba(255,255,255,0.12);
+    }
+
+    @keyframes scrollbarPulse{
+      0%, 100%{
+        filter: brightness(0.92);
+      }
+      50%{
+        filter: brightness(1.13);
+      }
     }
 
     .matrix-rain{
@@ -539,6 +570,13 @@
 
   <script>
     const accordions = document.querySelectorAll(".matrix-accordion");
+    function syncScrollbarState() {
+      const hasActive = Array.from(accordions).some((item) =>
+        item.classList.contains("active")
+      );
+      document.documentElement.classList.toggle("is-accordion-active", hasActive);
+    }
+
     accordions.forEach((accordion) => {
       const btn = accordion.querySelector(".accordion-btn");
       const content = accordion.querySelector(".accordion-content");
@@ -555,8 +593,10 @@
           accordion.classList.add("active");
           content.style.maxHeight = content.scrollHeight + "px";
         }
+        syncScrollbarState();
       });
     });
+    syncScrollbarState();
 
     const canvas = document.getElementById("matrixRain");
     const ctx = canvas.getContext("2d");
